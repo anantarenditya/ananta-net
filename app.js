@@ -87,8 +87,51 @@ function renderDetail(){
 function initFAQ(){document.querySelectorAll('[data-faq-item]').forEach(item=>item.querySelector('.faq-q')?.addEventListener('click',()=>item.classList.toggle('open')))}
 function initTerms(){document.querySelectorAll('[data-term-item]').forEach(item=>item.querySelector('.term-head')?.addEventListener('click',()=>item.classList.toggle('open')))}
 function initGallery(){
-  const buttons=document.querySelectorAll('[data-filter]'); const items=document.querySelectorAll('[data-gallery-item]');
-  buttons.forEach(b=>b.addEventListener('click',()=>{buttons.forEach(x=>x.classList.remove('active'));b.classList.add('active'); const f=b.dataset.filter; items.forEach(i=>{i.style.display=(f==='all'||i.dataset.cat===f)?'block':'none'})}));
+  const buttons=document.querySelectorAll('[data-filter]');
+  const items=document.querySelectorAll('[data-gallery-item]');
+  buttons.forEach(b=>b.addEventListener('click',()=>{
+    buttons.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const f=b.dataset.filter;
+    items.forEach(i=>{
+      const show=f==='all'||i.dataset.cat===f;
+      i.style.display=show?'block':'none';
+    });
+  }));
+
+  if(!items.length) return;
+
+  const lightbox=document.createElement('div');
+  lightbox.className='gallery-lightbox';
+  lightbox.innerHTML=`<div class="gallery-lightbox-inner" role="dialog" aria-modal="true" aria-label="Pratinjau foto galeri"><button class="gallery-lightbox-close" aria-label="Tutup">×</button><img alt=""><div class="gallery-lightbox-title"></div></div>`;
+  document.body.appendChild(lightbox);
+  const img=lightbox.querySelector('img');
+  const title=lightbox.querySelector('.gallery-lightbox-title');
+  const closeBtn=lightbox.querySelector('.gallery-lightbox-close');
+
+  function open(item){
+    const source=item.querySelector('[data-gallery-src]');
+    if(!source) return;
+    img.src=source.dataset.gallerySrc;
+    img.alt=source.alt||'';
+    title.textContent=source.dataset.galleryTitle||'';
+    lightbox.classList.add('open');
+    document.body.classList.add('no-scroll');
+    closeBtn.focus();
+  }
+  function close(){
+    lightbox.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+    img.src='';
+  }
+
+  items.forEach(item=>{
+    item.addEventListener('click',()=>open(item));
+    item.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(item);}});
+  });
+  closeBtn.addEventListener('click',close);
+  lightbox.addEventListener('click',e=>{if(e.target===lightbox) close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox.classList.contains('open')) close();});
 }
 function initCalculator(){
   const count=document.querySelector('#deviceCount'); const use=document.querySelector('#useType'); const result=document.querySelector('[data-calc-result]'); if(!count||!use||!result) return;

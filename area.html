@@ -1,0 +1,57 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Area Layanan — ANANTA.NET</title><link rel="stylesheet" href="styles.css"></head><body><div data-site-header></div><section class="page-hero"><div class="container page-hero-inner"><div class="breadcrumb">Home / Area Layanan</div><h1>Area Layanan</h1><p style="margin:0;color:var(--muted)">Kami melayani pemasangan WiFi di wilayah berikut.</p></div></section><main><section class="section"><div class="container"><div class="area-layout"><div class="area-map-wrap compact-map">
+  <div class="osm-map-shell">
+    <iframe id="serviceMapFrame" class="osm-map-frame" title="Peta area layanan ANANTA.NET" loading="lazy" referrerpolicy="no-referrer-when-downgrade" scrolling="no"></iframe>
+    <a id="mapOverlayLink" class="map-overlay-btn" href="#" target="_blank" rel="noopener">Buka Google Maps ↗</a>
+  </div>
+  <div class="map-note"><span>Peta area layanan</span><a id="mapGoogleLink" class="map-google-link" href="#" target="_blank" rel="noopener">Buka Google Maps ↗</a></div>
+</div><div class="card area-copy"><div class="eyebrow">Jangkauan layanan</div><h2>Wilayah Layanan</h2><p class="area-intro">Kami melayani pemasangan WiFi di wilayah berikut:</p><ul class="list-check"><li>✓ Kalibendo</li><li>✓ Bades</li><li>✓ Gondoruso</li><li>✓ dan sekitarnya</li></ul><div class="form-row" style="margin-top:22px"><label for="areaSelect">Pilih wilayah</label><select id="areaSelect"><option value="Kalibendo">Kalibendo</option><option value="Bades">Bades</option><option value="Gondoruso">Gondoruso</option></select></div><div class="location-actions"><button id="openMapsBtn" class="btn btn-secondary" type="button">Buka di Google Maps ↗</button><button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya ingin cek ketersediaan pemasangan WiFi di wilayah saya.">Hubungi WhatsApp</button></div><div class="card availability-card" style="padding:15px;background:var(--surface-2);border-color:transparent"><strong>Info ketersediaan</strong><p data-area-result style="margin:6px 0 0;color:var(--muted)">Pilih wilayah pada daftar untuk melihat lokasi dan membuka Google Maps.</p></div></div></div></div></section><section class="section soft"><div class="container"><div class="card content-card"><h2>Perlu pengecekan titik?</h2><p style="color:var(--muted)">Untuk memastikan ketersediaan pemasangan di lokasi tertentu, silakan kirim alamat atau lokasi Anda kepada admin.</p><button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya ingin cek titik pemasangan WiFi. Lokasi saya: ">Kirim Lokasi via WhatsApp</button></div></div></section></main><button class="float-wa" data-float-wa aria-label="WhatsApp">☎</button><div data-site-footer></div><script>
+document.addEventListener('DOMContentLoaded', function(){
+  const frame = document.getElementById('serviceMapFrame');
+  const select = document.getElementById('areaSelect');
+  const result = document.querySelector('[data-area-result]');
+  const openMapsBtn = document.getElementById('openMapsBtn');
+  const mapGoogleLink = document.getElementById('mapGoogleLink');
+  const overlayLink = document.getElementById('mapOverlayLink');
+  if (!frame || !select) return;
+
+  const areas = {
+    Kalibendo: {lat:-8.2288, lng:113.1021, label:'Desa Kalibendo'},
+    Bades: {lat:-8.2342, lng:113.1095, label:'Desa Bades'},
+    Gondoruso: {lat:-8.2423, lng:113.0714, label:'Desa Gondoruso'}
+  };
+
+  // Bounding box mencakup ketiga wilayah sekaligus sehingga peta tetap fokus dan tidak terlalu lebar.
+  const bbox = '113.055,-8.275,113.125,-8.215';
+
+  function mapsUrlFor(name){
+    const a = areas[name];
+    return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(a.lat + ',' + a.lng);
+  }
+
+  function osmEmbedUrl(name){
+    const a = areas[name];
+    return 'https://www.openstreetmap.org/export/embed.html?bbox=' + encodeURIComponent(bbox) + '&layer=mapnik&marker=' + encodeURIComponent(a.lat + ',' + a.lng);
+  }
+
+  function updateArea(name){
+    const a = areas[name];
+    if(!a) return;
+    const mapsUrl = mapsUrlFor(name);
+    frame.src = osmEmbedUrl(name);
+    if(result) result.textContent = a.label + ' — pilih tombol Google Maps untuk membuka lokasi secara langsung.';
+    if(openMapsBtn) openMapsBtn.onclick = function(){ window.open(mapsUrl, '_blank', 'noopener'); };
+    if(mapGoogleLink){
+      mapGoogleLink.href = mapsUrl;
+      mapGoogleLink.textContent = 'Buka ' + name + ' di Google Maps ↗';
+    }
+    if(overlayLink){
+      overlayLink.href = mapsUrl;
+      overlayLink.textContent = 'Buka ' + name + ' ↗';
+    }
+  }
+
+  updateArea(select.value);
+  select.addEventListener('change', function(){ updateArea(select.value); });
+});
+</script>
+<script src="app.js"></script></body></html>
