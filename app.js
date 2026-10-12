@@ -79,9 +79,14 @@ function injectFooter(){
   </div><div class="footer-bottom"><span>© 2026 ANANTA.NET. Seluruh hak dilindungi.</span><span>WiFi Hemat Koneksi Mantap</span></div></div></footer>`;
 }
 function initWhatsApp(){
-  document.querySelectorAll('[data-wa]').forEach(btn=>btn.addEventListener('click',()=>{const msg=btn.dataset.wa || 'Halo Admin ANANTA.NET, saya ingin bertanya tentang layanan WiFi.'; window.open(waLink(msg),'_blank','noopener');}));
+  document.querySelectorAll('[data-wa]').forEach(btn=>{
+    if(btn.dataset.waReady==='true') return;
+    btn.dataset.waReady='true';
+    btn.addEventListener('click',()=>{const msg=btn.dataset.wa || 'Halo Admin ANANTA.NET, saya ingin bertanya tentang layanan WiFi.'; window.open(waLink(msg),'_blank','noopener');});
+  });
   const float=document.querySelector('[data-float-wa]');
-  if(float){
+  if(float && float.dataset.floatWaReady!=='true'){
+    float.dataset.floatWaReady='true';
     float.innerHTML = `<svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false"><path class="wa-bubble" d="M20.45 11.62a8.37 8.37 0 0 1-12.36 7.31l-4.2 1.12 1.12-4.1a8.37 8.37 0 1 1 15.44-4.33Z"/><path class="wa-handset" d="M8.14 6.6c-.23-.5-.48-.51-.7-.52h-.6c-.21 0-.55.08-.83.39-.28.31-1.08 1.06-1.08 2.58s1.11 2.99 1.26 3.2c.16.2 2.18 3.5 5.38 4.77 2.66 1.05 3.2.84 3.78.79.58-.06 1.87-.76 2.13-1.49.27-.73.27-1.36.19-1.49-.08-.13-.28-.2-.58-.35l-2.03-.96c-.27-.1-.46-.15-.65.15-.19.29-.74.95-.9 1.15-.17.2-.33.22-.6.08-.28-.15-1.17-.43-2.23-1.37-.82-.73-1.38-1.63-1.54-1.91-.16-.29-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.19-.28.28-.47.09-.19.05-.36-.02-.51L8.14 6.6Z"/></svg>`;
     float.setAttribute('aria-label','Hubungi ANANTA.NET melalui WhatsApp');
     float.setAttribute('title','Hubungi melalui WhatsApp');
@@ -93,27 +98,94 @@ function renderPackages(){
   wraps.forEach(wrap=>{
     const compact=wrap.dataset.compact==='true';
     const catalog=wrap.dataset.catalog==='true';
-    wrap.innerHTML=packages.map((p)=>{
-      const summary=p.description.split(/,(?=\s)|\.(?=\s|$)/)[0].trim();
-      const list=compact
-        ? `<ul><li>${p.devices} · ${p.activeDevices}</li><li>${summary}</li></ul>`
-        : catalog
-          ? `<ul><li>Biaya pemasangan: Rp100.000</li><li>${p.devices} (perkiraan)</li><li>${p.activeDevices} (perkiraan)</li><li>${p.description}</li></ul>`
-          : `<ul><li>Biaya pemasangan: Rp100.000</li><li>${p.devices} (perkiraan)</li><li>${p.activeDevices} (perkiraan)</li><li>${p.description}</li></ul>`;
-      return `<article class="card package-card ${p.id==='normal'?'featured':''} ${compact?'package-card-compact':''}">
-        ${p.id==='normal'?'<span class="ribbon">Pilihan Populer</span>':''}
-        <h3>Paket ${p.name}</h3><div class="speed">${p.speed} Mbps</div><div class="price">${money(p.price)}<small>/bulan</small></div>
-        ${list}
-        <div class="card-actions"><a class="btn btn-ghost" href="detail-paket.html?plan=${p.id}">Lihat Detail</a><button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya ingin berlangganan Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan.">Berlangganan</button></div>
+    const carousel=wrap.dataset.carousel==='true';
+    const renderCard=(p,index)=>{
+      const isPopular=p.id==='normal';
+      const features=compact
+        ? [`Paket ${p.speed} Mbps`,p.devices, p.description]
+        : [`Kecepatan paket ${p.speed} Mbps`,`${p.devices} (perkiraan)`,`${p.activeDevices} (perkiraan)`,p.description];
+      const list=features.map((item)=>`<li><span class="plan-check" aria-hidden="true">✓</span><span>${item}</span></li>`).join('');
+      const message=`Halo Admin ANANTA.NET, saya ingin berlangganan Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan. Saya ingin mengecek ketersediaan pemasangan.`;
+      return `<article class="card package-card plan-carousel-card ${isPopular?'featured is-popular':''} ${compact?'package-card-compact':''}" data-plan-slide aria-label="Paket ${p.name}">
+        <div class="plan-card-topline"><span class="plan-card-brand">ANANTA.NET <span>· PAKET INTERNET</span></span><span class="plan-card-number">${String(index+1).padStart(2,'0')}</span></div>
+        ${isPopular?'<span class="ribbon">Pilihan Populer</span>':''}
+        <h3>Paket ${p.name}</h3>
+        <div class="plan-price-layout"><div class="speed">${p.speed} <small>Mbps</small></div><div class="price">${money(p.price)}<small>/bulan</small></div></div>
+        <p class="plan-card-description">${p.description}</p>
+        <div class="plan-card-divider"></div>
+        <ul class="plan-feature-list">${list}</ul>
+        <div class="card-actions plan-card-actions"><a class="btn btn-ghost" href="detail-paket.html?plan=${p.id}">Lihat Detail</a><button class="btn btn-primary" data-wa="${message}">Berlangganan</button></div>
       </article>`;
-    }).join('');
+    };
+    if(carousel){
+      wrap.classList.add('plan-carousel-mount',compact?'plan-carousel-home':'plan-carousel-catalog');
+      wrap.innerHTML=`<div class="plan-carousel" data-plan-carousel><div class="plan-carousel-viewport"><div class="plan-carousel-track" data-plan-track>${packages.map((p,i)=>`<div class="plan-slide">${renderCard(p,i)}</div>`).join('')}</div></div><div class="plan-carousel-navigation"><div class="plan-carousel-arrows"><button type="button" class="plan-arrow" data-plan-prev aria-label="Paket sebelumnya">←</button><div class="plan-carousel-dots" aria-label="Pilih paket">${packages.map((p,i)=>`<button type="button" class="plan-dot ${i===0?'active':''}" data-plan-index="${i}" aria-label="Paket ${p.name}" aria-current="${i===0?'true':'false'}"></button>`).join('')}</div><button type="button" class="plan-arrow" data-plan-next aria-label="Paket berikutnya">→</button></div><span class="plan-carousel-count" data-plan-count>01 / ${String(packages.length).padStart(2,'0')}</span></div></div>`;
+      initPlanCarousel(wrap);
+    } else {
+      wrap.innerHTML=packages.map((p,i)=>renderCard(p,i)).join('');
+    }
   });
   initWhatsApp();
 }
+function initPlanCarousel(wrap){
+  const carousel=wrap.querySelector('[data-plan-carousel]'); if(!carousel) return;
+  const track=carousel.querySelector('[data-plan-track]');
+  const slides=Array.from(carousel.querySelectorAll('[data-plan-slide]'));
+  const dots=Array.from(carousel.querySelectorAll('[data-plan-index]'));
+  const count=carousel.querySelector('[data-plan-count]');
+  let current=0;
+  const go=(index)=>{
+    current=(index+slides.length)%slides.length;
+    track.style.transform=`translateX(-${current*100}%)`;
+    slides.forEach((slide,i)=>{slide.setAttribute('aria-hidden',i===current?'false':'true');slide.querySelectorAll('a,button').forEach(el=>{el.tabIndex=i===current?0:-1;});});
+    dots.forEach((dot,i)=>{dot.classList.toggle('active',i===current);dot.setAttribute('aria-current',i===current?'true':'false');});
+    if(count) count.textContent=`${String(current+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}`;
+  };
+  carousel.querySelector('[data-plan-prev]')?.addEventListener('click',()=>go(current-1));
+  carousel.querySelector('[data-plan-next]')?.addEventListener('click',()=>go(current+1));
+  dots.forEach(dot=>dot.addEventListener('click',()=>go(Number(dot.dataset.planIndex))));
+  let startX=0,startY=0;
+  const viewport=carousel.querySelector('.plan-carousel-viewport');
+  viewport?.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX;startY=e.changedTouches[0].clientY;},{passive:true});
+  viewport?.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;const dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.2)go(current+(dx<0?1:-1));},{passive:true});
+  viewport?.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();go(current+1);}if(e.key==='ArrowLeft'){e.preventDefault();go(current-1);}});
+  go(0);
+}
 function renderDetail(){
   const mount=document.querySelector('[data-package-detail]'); if(!mount) return;
-  const id=new URLSearchParams(location.search).get('plan')||'hemat'; const p=packages.find(x=>x.id===id)||packages[0];
-  mount.innerHTML=`<div class="two-col"><div class="card content-card"><span class="badge" style="background:var(--surface-2);color:var(--primary-dark);border-color:var(--border)">Paket Internet</span><h2 style="font-size:2.2rem;margin:16px 0 4px">Paket ${p.name}</h2><div class="speed">${p.speed} Mbps</div><div class="price" style="font-size:1.55rem">${money(p.price)}<small>/bulan</small></div><p style="color:var(--muted)">${p.description}</p><ul class="list-check"><li>✓ Biaya pemasangan Rp100.000</li><li>✓ Perkiraan ${p.devices}</li><li>✓ ${p.activeDevices} untuk penggunaan umum</li><li>✓ Kecepatan mengikuti paket yang dipilih</li></ul><div class="btns"><button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya tertarik Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan. Saya ingin mengetahui ketersediaan pemasangan.">Berlangganan via WhatsApp</button><a class="btn btn-ghost" href="paket.html">Kembali ke Paket</a></div></div><div class="card content-card"><h3>Keterangan</h3><p class="prose">${p.description}</p><div style="margin-top:28px;padding:18px;border-radius:16px;background:var(--surface-2)"><strong>Catatan kecepatan</strong><p style="margin:6px 0 0;color:var(--muted)">Kecepatan layanan dapat dipengaruhi kondisi jaringan, perangkat pelanggan, jumlah perangkat yang terhubung, dan kondisi penggunaan.</p></div></div></div>`;
+  const id=new URLSearchParams(location.search).get('plan')||'hemat';
+  const selectedIndex=Math.max(0,packages.findIndex(x=>x.id===id));
+  const p=packages[selectedIndex]||packages[0];
+  const popular=p.id==='normal';
+  const nextPlans=packages.filter(x=>x.id!==p.id);
+  const features=[
+    `Paket kecepatan ${p.speed} Mbps`,
+    `${p.devices} (perkiraan)`,
+    `${p.activeDevices} untuk penggunaan umum (perkiraan)`,
+    'Biaya pemasangan Rp100.000 di awal',
+    'Pembayaran bulanan dimulai bulan berikutnya'
+  ];
+  const message=`Halo Admin ANANTA.NET, saya tertarik Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan. Saya ingin mengecek ketersediaan pemasangan di lokasi saya.`;
+  mount.innerHTML=`
+    <div class="package-detail-layout">
+      <article class="package-detail-card ${popular?'is-popular':''}">
+        <div class="plan-card-topline"><span class="plan-card-brand">ANANTA.NET <span>· DETAIL PAKET</span></span><span class="plan-card-number">${String(selectedIndex+1).padStart(2,'0')}</span></div>
+        ${popular?'<span class="detail-popular-tag">Pilihan Populer</span>':''}
+        <div class="package-detail-heading"><div><span class="detail-package-label">PAKET INTERNET</span><h2>Paket ${p.name}</h2><p>${p.description}</p></div><div class="detail-speed-badge"><strong>${p.speed}</strong><span>Mbps</span></div></div>
+        <div class="detail-price-block"><strong>${money(p.price)}</strong><span>/bulan</span></div>
+        <div class="plan-card-divider"></div>
+        <ul class="plan-feature-list detail-feature-list">${features.map(item=>`<li><span class="plan-check" aria-hidden="true">✓</span><span>${item}</span></li>`).join('')}</ul>
+        <div class="package-detail-actions"><button class="btn btn-primary" data-wa="${message}">Berlangganan via WhatsApp</button><a class="btn btn-ghost" href="paket.html">Lihat Paket Lain</a></div>
+      </article>
+      <aside class="package-detail-aside card">
+        <span class="eyebrow">SESUAIKAN DENGAN KEBUTUHAN</span><h3>Apakah paket ini cocok untuk Anda?</h3>
+        <p>${p.description} Paket ini dapat menjadi pilihan awal berdasarkan jumlah perangkat dan aktivitas internet di rumah.</p>
+        <div class="detail-aside-stat"><span class="detail-aside-icon">⌁</span><div><small>Perangkat terhubung</small><strong>${p.devices}</strong></div></div>
+        <div class="detail-aside-stat"><span class="detail-aside-icon">◷</span><div><small>Aktif bersamaan</small><strong>${p.activeDevices}</strong></div></div>
+        <div class="detail-note"><strong>Catatan</strong><p>Jumlah perangkat adalah perkiraan, bukan jaminan performa. Hasil dipengaruhi aktivitas bersamaan, router, jangkauan WiFi, dan kondisi jaringan. Ketersediaan pemasangan tetap perlu dikonfirmasi oleh admin.</p></div>
+      </aside>
+    </div>
+    <section class="other-plans"><div class="other-plans-heading"><div><span class="eyebrow">BANDINGKAN</span><h3>Paket lainnya</h3></div><a href="paket.html">Lihat semua paket →</a></div><div class="other-plan-links">${nextPlans.map(x=>`<a class="other-plan-link" href="detail-paket.html?plan=${x.id}"><span><strong>${x.name}</strong><small>${x.speed} Mbps</small></span><b>${money(x.price)}<small>/bulan</small></b><span class="other-plan-arrow">→</span></a>`).join('')}</div></section>`;
   initWhatsApp();
 }
 function initFAQ(){document.querySelectorAll('[data-faq-item]').forEach(item=>item.querySelector('.faq-q')?.addEventListener('click',()=>item.classList.toggle('open')))}
