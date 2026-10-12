@@ -1,12 +1,9 @@
-ANANTA.NET Website — pembaruan halaman Tentang Kami
+# ANANTA.NET — Area Layanan
 
-Pembaruan:
-- Logo asli ANANTA.NET tetap dipertahankan.
-- Judul halaman Tentang Kami ditampilkan memanjang satu baris dengan animasi huruf dan warna navy/teal.
-- Judul perjalanan diperbarui menjadi “Memperluas berbagai potensi dan kesempatan dengan memanfaatkan teknologi” dengan penekanan warna dan garis bawah teal.
-- Penjelasan menegaskan ANANTA.NET bukan ISP, menjalankan layanan melalui kemitraan jaringan, serta memperhatikan kejelasan kerja sama dan legalitas usaha sesuai ketentuan berlaku.
-- Kartu identitas memakai logo asli dengan label mengambang “4 Pilihan Paket Layanan” dan “250+ Pelanggan”; slogan lama di bawah logo dihapus.
-- Bagian komitmen menampilkan kembali Legalitas Usaha Kemitraan.
-- Tombol kontak melayang tetap memiliki animasi halus dan mengikuti pengaturan reduced motion.
+Pembaruan halaman Area Layanan:
+- Mengganti peta embed yang menampilkan teks footer panjang dengan peta Leaflet interaktif.
+- Mempertahankan kredit peta yang ringkas: © OpenStreetMap contributors.
+- Menambahkan penanda khusus berwarna teal untuk Kalibendo, Bades, dan Gondoruso.
+- Menata ulang kontrol zoom, label wilayah, tombol Google Maps, dan bingkai peta agar lebih rapi di HP.
 
-Untuk publikasi, salin isi arsip ke repository lokal tanpa menghapus folder .git, lalu commit dan push ke branch main agar Cloudflare Pages melakukan deployment.
+Untuk menerapkan, salin isi arsip ke repository ANANTA.NET yang sudah ada tanpa menghapus folder `.git`, lalu commit dan push seperti biasa. Halaman menggunakan Leaflet 1.9.4 dan tile OpenStreetMap dari internet.

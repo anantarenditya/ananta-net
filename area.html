@@ -6,6 +6,7 @@
   <title>Area Layanan — ANANTA.NET</title>
   <meta name="description" content="Cek area layanan WiFi ANANTA.NET di Kalibendo, Bades, Gondoruso, dan sekitarnya.">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 </head>
 <body>
   <div data-site-header></div>
@@ -53,9 +54,10 @@
               <div><h3>Peta area layanan</h3><p>Kalibendo · Bades · Gondoruso</p></div>
             </div>
             <div class="area-map-wrap compact-map">
-              <div class="osm-map-shell">
-                <iframe id="serviceMapFrame" class="osm-map-frame" title="Peta area layanan ANANTA.NET" loading="lazy" referrerpolicy="no-referrer-when-downgrade" scrolling="no"></iframe>
-                <a id="mapOverlayLink" class="map-overlay-btn" href="#" target="_blank" rel="noopener">Buka Google Maps ↗</a>
+              <div class="area-leaflet-shell">
+                <div id="serviceMap" class="area-leaflet-map" role="application" aria-label="Peta interaktif wilayah layanan ANANTA.NET"></div>
+                <div class="map-area-chip" aria-hidden="true"><span class="map-area-chip-dot"></span>Kalibendo · Bades · Gondoruso</div>
+                <a id="mapOverlayLink" class="map-overlay-btn" href="#" target="_blank" rel="noopener">Buka Kalibendo ↗</a>
               </div>
             </div>
             <div class="area-map-bottom">
@@ -114,15 +116,16 @@
   <button class="float-wa" data-float-wa aria-label="Hubungi admin ANANTA.NET melalui WhatsApp"></button>
   <div data-site-footer></div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script>
   document.addEventListener('DOMContentLoaded', function(){
-    const frame = document.getElementById('serviceMapFrame');
+    const mapElement = document.getElementById('serviceMap');
     const select = document.getElementById('areaSelect');
     const result = document.querySelector('[data-area-result]');
     const openMapsBtn = document.getElementById('openMapsBtn');
     const mapGoogleLink = document.getElementById('mapGoogleLink');
     const overlayLink = document.getElementById('mapOverlayLink');
-    if (!frame || !select) return;
+    if (!mapElement || !select || !window.L) return;
 
     const areas = {
       Kalibendo: {lat:-8.2288, lng:113.1021, label:'Desa Kalibendo'},
@@ -130,36 +133,74 @@
       Gondoruso: {lat:-8.2423, lng:113.0714, label:'Desa Gondoruso'}
     };
 
-    // Tetap menggunakan satu peta yang mencakup ketiga wilayah utama.
-    const bbox = '113.055,-8.275,113.125,-8.215';
     function mapsUrlFor(name){
-      const a = areas[name];
-      return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(a.lat + ',' + a.lng);
+      const area = areas[name];
+      return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(area.lat + ',' + area.lng);
     }
-    function osmEmbedUrl(name){
-      const a = areas[name];
-      return 'https://www.openstreetmap.org/export/embed.html?bbox=' + encodeURIComponent(bbox) + '&layer=mapnik&marker=' + encodeURIComponent(a.lat + ',' + a.lng);
-    }
-    function updateArea(name){
-      const a = areas[name];
-      if(!a) return;
+
+    const serviceMap = L.map(mapElement, {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: true,
+      keyboard: true,
+      tap: true
+    });
+    L.control.zoom({position:'bottomright'}).addTo(serviceMap);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
+    }).addTo(serviceMap);
+
+    const normalPin = L.divIcon({
+      className: 'ananta-map-pin-wrap',
+      html: '<span class="ananta-map-pin"><span></span></span>',
+      iconSize: [34, 42],
+      iconAnchor: [17, 39],
+      popupAnchor: [0, -37]
+    });
+    const selectedPin = L.divIcon({
+      className: 'ananta-map-pin-wrap',
+      html: '<span class="ananta-map-pin is-selected"><span></span></span>',
+      iconSize: [38, 46],
+      iconAnchor: [19, 43],
+      popupAnchor: [0, -41]
+    });
+
+    const markers = {};
+    Object.entries(areas).forEach(([name, area]) => {
+      const marker = L.marker([area.lat, area.lng], {icon: normalPin, title: area.label, alt: area.label, keyboard: true}).addTo(serviceMap);
+      marker.bindPopup('<div class="ananta-map-popup"><strong>' + area.label + '</strong><a href="' + mapsUrlFor(name) + '" target="_blank" rel="noopener">Buka di Google Maps ↗</a></div>');
+      marker.on('click', function(){ if (select.value !== name) { select.value = name; updateArea(name, false); } });
+      markers[name] = marker;
+    });
+
+    const allPoints = L.latLngBounds(Object.values(areas).map(area => [area.lat, area.lng]));
+    serviceMap.fitBounds(allPoints, {padding:[48,48], maxZoom:13});
+
+    function updateArea(name, panToArea){
+      const area = areas[name];
+      if(!area) return;
       const mapsUrl = mapsUrlFor(name);
-      frame.src = osmEmbedUrl(name);
-      if(result) result.textContent = a.label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.';
-      if(openMapsBtn) openMapsBtn.onclick = function(){ window.open(mapsUrl, '_blank', 'noopener'); };
-      if(mapGoogleLink){
+      Object.entries(markers).forEach(([markerName, marker]) => marker.setIcon(markerName === name ? selectedPin : normalPin));
+      if (result) result.textContent = area.label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.';
+      if (openMapsBtn) openMapsBtn.onclick = function(){ window.open(mapsUrl, '_blank', 'noopener'); };
+      if (mapGoogleLink) {
         mapGoogleLink.href = mapsUrl;
         mapGoogleLink.textContent = 'Buka ' + name + ' ↗';
         mapGoogleLink.setAttribute('aria-label', 'Buka ' + name + ' di Google Maps');
       }
-      if(overlayLink){
+      if (overlayLink) {
         overlayLink.href = mapsUrl;
         overlayLink.textContent = 'Buka ' + name + ' ↗';
         overlayLink.setAttribute('aria-label', 'Buka ' + name + ' di Google Maps');
       }
+      if(panToArea) serviceMap.panTo([area.lat, area.lng], {animate:true, duration:.45});
     }
-    updateArea(select.value);
-    select.addEventListener('change', function(){ updateArea(select.value); });
+
+    updateArea(select.value, false);
+    select.addEventListener('change', function(){ updateArea(select.value, true); });
+    window.setTimeout(function(){ serviceMap.invalidateSize(); }, 150);
+    window.addEventListener('resize', function(){ serviceMap.invalidateSize(); }, {passive:true});
   });
   </script>
   <script src="app.js"></script>
