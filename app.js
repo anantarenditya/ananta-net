@@ -13,6 +13,32 @@ function waLink(message='Halo Admin ANANTA.NET, saya ingin bertanya tentang laya
   return `${WA_BASE}?text=${encodeURIComponent(message)}`;
 }
 
+function initHeroLetterAnimation(){
+  const heading = document.querySelector('.hero-home .hero-title-motion');
+  if (!heading || heading.dataset.letterAnimationReady === 'true') return;
+  heading.dataset.letterAnimationReady = 'true';
+
+  const words = Array.from(heading.querySelectorAll('.hero-word'));
+  let characterIndex = 0;
+  const staggerSeconds = 0.055;
+
+  words.forEach((word, wordIndex) => {
+    const text = word.textContent || '';
+    word.textContent = '';
+    Array.from(text).forEach((character) => {
+      const letter = document.createElement('span');
+      letter.className = 'hero-char';
+      letter.textContent = character;
+      letter.style.setProperty('--char-delay', `${(characterIndex * staggerSeconds).toFixed(3)}s`);
+      letter.setAttribute('aria-hidden', 'true');
+      word.appendChild(letter);
+      characterIndex += 1;
+    });
+    // Leave a small timing gap between words while retaining their original layout.
+    if (wordIndex < words.length - 1) characterIndex += 1;
+  });
+}
+
 function injectHeader(){
   const el=document.querySelector('[data-site-header]');
   if(!el) return;
@@ -158,4 +184,4 @@ function initAreaChecker(){
   select.addEventListener('change',()=>{const v=select.value; result.textContent=v==='Lainnya'?'Silakan hubungi admin untuk pengecekan titik pemasangan di area Anda.':`Area ${v} tercantum dalam wilayah layanan ANANTA.NET. Ketersediaan pemasangan tetap perlu dikonfirmasi melalui WhatsApp.`;});
 }
 
-injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initWhatsApp();
+initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initWhatsApp();

@@ -1,4 +1,4 @@
-# ANANTA.NET Website v20
+# ANANTA.NET Website v21
 
 Pembaruan v18 menyelaraskan katalog website dengan brosur ANANTA.NET terbaru:
 
@@ -22,3 +22,7 @@ Pembaruan v19:
 
 - Hero tagline now reveals word-by-word with a horizontal slide, disappears, and repeats in a loop.
 - Reduced-motion preferences show the complete headline without animation.
+
+
+
+Pembaruan v21: animasi hero diubah agar setiap huruf masuk dan keluar bergeser satu per satu secara berulang.

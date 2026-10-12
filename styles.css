@@ -412,7 +412,7 @@ body.no-scroll{overflow:hidden}
 }
 
 
-/* ===== HOME HERO SEQUENTIAL SLIDE TEXT + WHATSAPP BRAND ICON ===== */
+/* ===== HOME HERO PER-LETTER SLIDE LOOP + WHATSAPP BRAND ICON ===== */
 .hero-home .hero-title-motion{
   transform-origin:left center;
   transition:text-shadow .28s ease;
@@ -421,17 +421,23 @@ body.no-scroll{overflow:hidden}
 .hero-home .hero-word{
   display:inline-block;
   white-space:nowrap;
+  opacity:1;
+  transform:none;
+  animation:none;
+}
+.hero-home .hero-char{
+  display:inline-block;
   opacity:0;
   transform:translate3d(-.42em,0,0);
-  animation:heroWordCycle 4.8s cubic-bezier(.2,.72,.25,1) var(--word-delay,0s) infinite both;
+  animation:heroCharCycle 8s cubic-bezier(.2,.72,.25,1) var(--char-delay,0s) infinite both;
   will-change:transform,opacity;
 }
-@keyframes heroWordCycle{
-  0%,100%{opacity:0;transform:translate3d(-.42em,0,0)}
-  6%{opacity:0;transform:translate3d(-.42em,0,0)}
-  14%{opacity:1;transform:translate3d(0,0,0)}
-  49%{opacity:1;transform:translate3d(0,0,0)}
-  60%{opacity:0;transform:translate3d(.42em,0,0)}
+@keyframes heroCharCycle{
+  0%,5%{opacity:0;transform:translate3d(-.42em,0,0)}
+  12%{opacity:1;transform:translate3d(0,0,0)}
+  54%{opacity:1;transform:translate3d(0,0,0)}
+  63%{opacity:0;transform:translate3d(.42em,0,0)}
+  100%{opacity:0;transform:translate3d(.42em,0,0)}
 }
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   .hero-home .hero-title-motion:hover{text-shadow:0 8px 26px rgba(47,190,160,.16)}
@@ -443,6 +449,6 @@ body.no-scroll{overflow:hidden}
 .float-wa:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 20px 40px rgba(20,110,65,.36)}
 .float-wa:focus-visible{outline:3px solid rgba(47,190,160,.55);outline-offset:4px}
 @media (prefers-reduced-motion:reduce){
-  .hero-home .hero-word{animation:none!important;opacity:1;transform:none}
+  .hero-home .hero-char{animation:none!important;opacity:1;transform:none}
   .hero-home .hero-title-motion,.float-wa{transition:none}
 }
