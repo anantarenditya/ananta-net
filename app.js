@@ -54,7 +54,13 @@ function injectFooter(){
 }
 function initWhatsApp(){
   document.querySelectorAll('[data-wa]').forEach(btn=>btn.addEventListener('click',()=>{const msg=btn.dataset.wa || 'Halo Admin ANANTA.NET, saya ingin bertanya tentang layanan WiFi.'; window.open(waLink(msg),'_blank','noopener');}));
-  const float=document.querySelector('[data-float-wa]'); if(float) float.addEventListener('click',()=>window.open(waLink(),'_blank','noopener'));
+  const float=document.querySelector('[data-float-wa]');
+  if(float){
+    float.innerHTML = `<svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false"><path class="wa-bubble" d="M20.45 11.62a8.37 8.37 0 0 1-12.36 7.31l-4.2 1.12 1.12-4.1a8.37 8.37 0 1 1 15.44-4.33Z"/><path class="wa-handset" d="M8.14 6.6c-.23-.5-.48-.51-.7-.52h-.6c-.21 0-.55.08-.83.39-.28.31-1.08 1.06-1.08 2.58s1.11 2.99 1.26 3.2c.16.2 2.18 3.5 5.38 4.77 2.66 1.05 3.2.84 3.78.79.58-.06 1.87-.76 2.13-1.49.27-.73.27-1.36.19-1.49-.08-.13-.28-.2-.58-.35l-2.03-.96c-.27-.1-.46-.15-.65.15-.19.29-.74.95-.9 1.15-.17.2-.33.22-.6.08-.28-.15-1.17-.43-2.23-1.37-.82-.73-1.38-1.63-1.54-1.91-.16-.29-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.19-.28.28-.47.09-.19.05-.36-.02-.51L8.14 6.6Z"/></svg>`;
+    float.setAttribute('aria-label','Hubungi ANANTA.NET melalui WhatsApp');
+    float.setAttribute('title','Hubungi melalui WhatsApp');
+    float.addEventListener('click',()=>window.open(waLink(),'_blank','noopener'));
+  }
 }
 function renderPackages(){
   const wraps=document.querySelectorAll('[data-package-grid]'); if(!wraps.length) return;
