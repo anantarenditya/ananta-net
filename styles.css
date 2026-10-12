@@ -650,3 +650,58 @@ body.no-scroll{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   .hero-home .floating-highlight{animation:none!important;translate:none!important;transform:none!important}
 }
+
+
+/* ===== HERO BENEFITS + CTA ORDER FIX (v25) =====
+   Keep all original ANANTA.NET benefit cards and the added highlights,
+   but keep both card groups still. Place the primary actions below them,
+   following the CTA-after-benefits flow from the reference. */
+.hero-home .hero-benefit{
+  animation:none !important;
+  transform:none !important;
+}
+.hero-home .hero-floating-highlights{
+  margin-top:26px;
+  margin-bottom:0;
+  column-gap:16px;
+  row-gap:16px;
+  align-items:stretch;
+}
+.hero-home .floating-highlight,
+.hero-home .floating-highlight-two,
+.hero-home .floating-highlight-three,
+.hero-home .floating-highlight-four{
+  animation:none !important;
+  translate:none !important;
+  transform:none !important;
+}
+.hero-home .floating-highlight{
+  min-height:68px;
+  box-shadow:0 8px 18px rgba(11,36,64,.06);
+}
+.hero-home .hero-btns{
+  margin-top:30px;
+  margin-bottom:4px;
+}
+@media (max-width:900px){
+  .hero-home .hero-floating-highlights{row-gap:14px;margin-top:24px}
+}
+@media (max-width:580px){
+  .hero-home .hero-floating-highlights{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:10px;
+    row-gap:12px;
+    margin-top:23px;
+  }
+  .hero-home .floating-highlight{
+    min-height:72px;
+    padding:10px 9px;
+    gap:9px;
+  }
+  .hero-home .floating-highlight-copy strong{font-size:.74rem}
+  .hero-home .floating-highlight-copy small{font-size:.64rem}
+  .hero-home .hero-btns{margin-top:25px}
+}
+@media (max-width:350px){
+  .hero-home .hero-floating-highlights{grid-template-columns:1fr;max-width:340px}
+}
