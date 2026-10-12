@@ -802,3 +802,95 @@ body.no-scroll{overflow:hidden}
   .hero-home .hero-btns{margin-top:30px}
   .hero-home .hero-floating-highlights{margin-top:36px;row-gap:24px}
 }
+
+
+/* ===== COMPACT TRUST STRIP (v29) =====
+   Keep both trust metrics side-by-side on mobile, inspired by the compact
+   social-proof panel in the reference. No invented star ratings or reviews. */
+.hero-home .hero-trust-card{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:min(760px,100%);
+  margin:24px auto 0;
+  padding:12px 16px;
+  gap:8px;
+  border-color:#d9e8ef;
+  border-radius:20px;
+  box-shadow:0 10px 22px rgba(11,36,64,.065);
+}
+.hero-home .hero-trust-item{
+  display:grid;
+  grid-template-columns:32px minmax(0,1fr);
+  justify-content:initial;
+  align-items:center;
+  gap:8px;
+  padding:4px 10px;
+}
+.hero-home .hero-trust-item:first-child{
+  border-right:1px solid #d9e9e6;
+  border-bottom:0;
+}
+.hero-home .hero-trust-icon{
+  flex-basis:32px;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  box-shadow:none;
+}
+.hero-home .hero-trust-icon svg{width:17px;height:17px}
+.hero-home .hero-trust-copy{gap:2px}
+.hero-home .hero-trust-copy small{font-size:.72rem;line-height:1.25}
+.hero-home .hero-trust-copy strong{font-size:.9rem;line-height:1.25;overflow-wrap:anywhere}
+
+@media(max-width:580px){
+  .hero-home .hero-trust-card{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    margin-top:24px;
+    padding:11px 8px;
+    gap:4px;
+    border-radius:18px;
+  }
+  .hero-home .hero-trust-item{
+    grid-template-columns:28px minmax(0,1fr);
+    align-items:center;
+    justify-content:initial;
+    gap:7px;
+    padding:6px 5px;
+    min-width:0;
+  }
+  .hero-home .hero-trust-item:first-child{
+    border-right:1px solid #d9e9e6;
+    border-bottom:0;
+    padding-bottom:6px;
+  }
+  .hero-home .hero-trust-icon{width:28px;height:28px;flex-basis:28px;border-radius:50%}
+  .hero-home .hero-trust-icon svg{width:16px;height:16px}
+  .hero-home .hero-trust-copy small{font-size:.64rem;line-height:1.25}
+  .hero-home .hero-trust-copy strong{font-size:.76rem;line-height:1.3}
+}
+
+@media(max-width:370px){
+  /* Unlike earlier revisions, do not stack the trust metrics vertically. */
+  .hero-home .hero-trust-card{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    max-width:none;
+    margin-top:22px;
+    padding:9px 6px;
+    gap:2px;
+  }
+  .hero-home .hero-trust-item{
+    grid-template-columns:24px minmax(0,1fr);
+    gap:5px;
+    padding:5px 3px;
+    min-width:0;
+  }
+  .hero-home .hero-trust-item:first-child{
+    border-right:1px solid #d9e9e6;
+    border-bottom:0;
+    padding-bottom:5px;
+  }
+  .hero-home .hero-trust-icon{width:24px;height:24px;flex-basis:24px;border-radius:50%}
+  .hero-home .hero-trust-icon svg{width:14px;height:14px}
+  .hero-home .hero-trust-copy small{font-size:.59rem;line-height:1.2}
+  .hero-home .hero-trust-copy strong{font-size:.69rem;line-height:1.25}
+  .dark-mode .hero-home .hero-trust-item:first-child{border-right-color:#31576b;border-bottom:0}
+}

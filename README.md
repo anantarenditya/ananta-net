@@ -9,3 +9,6 @@ v26 changes: restored the original CTA position immediately after the original f
 
 
 Versi v27 menambahkan panel kepercayaan di Home: “Dipercaya oleh 250+ pelanggan” serta “4 paket · 20–100 Mbps”. Panel ditempatkan setelah keunggulan utama dan sebelum tombol Lihat Paket/Hubungi Admin. Rating bintang tidak digunakan karena belum ada rating publik terverifikasi.
+
+
+Version v29: compacted the homepage trust strip into a horizontal two-column layout on mobile. It displays 250+ customers and four available packages without unverified star ratings or review claims.
