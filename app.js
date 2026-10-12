@@ -42,6 +42,7 @@ function initHeroLetterAnimation(){
 function injectHeader(){
   const el=document.querySelector('[data-site-header]');
   if(!el) return;
+  el.classList.add('site-header-shell');
   el.innerHTML=`
     <div class="topbar"><div class="container inner"><span>ANANTA.NET — WiFi Hemat Koneksi Mantap</span><span>Internet rumahan lokal untuk Kalibendo, Bades, Gondoruso & sekitarnya.</span></div></div>
     <header class="navbar">
@@ -58,7 +59,7 @@ function injectHeader(){
           <a href="syarat-ketentuan.html" data-nav="syarat-ketentuan.html">S&K</a>
           <a href="kontak.html" data-nav="kontak.html">Kontak</a>
         </nav>
-        <div class="actions"><button class="icon-btn" id="themeToggle" aria-label="Ubah tema">◐</button><button class="menu-btn" id="menuToggle" aria-label="Buka menu">☰</button></div>
+        <div class="actions"><button class="menu-btn" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button></div>
       </div>
       <div class="container nav-mobile" id="mobileNav">
         <a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a>
@@ -66,9 +67,20 @@ function injectHeader(){
     </header>`;
   const path=location.pathname.split('/').pop()||'index.html';
   el.querySelectorAll('[data-nav]').forEach(a=>{ if(a.getAttribute('data-nav')===path) a.classList.add('active'); });
-  document.getElementById('menuToggle')?.addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open')); document.querySelectorAll('#mobileNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileNav').classList.remove('open')));
-  document.getElementById('themeToggle')?.addEventListener('click',()=>{document.body.classList.toggle('dark-mode');localStorage.setItem('ananta-theme',document.body.classList.contains('dark-mode')?'dark':'light')});
-  if(localStorage.getItem('ananta-theme')==='dark') document.body.classList.add('dark-mode');
+  const menuToggle=document.getElementById('menuToggle');
+  const mobileNav=document.getElementById('mobileNav');
+  menuToggle?.addEventListener('click',()=>{
+    const isOpen=mobileNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded',String(isOpen));
+  });
+  document.querySelectorAll('#mobileNav a').forEach(a=>a.addEventListener('click',()=>{
+    mobileNav.classList.remove('open');
+    menuToggle?.setAttribute('aria-expanded','false');
+  }));
+  // Keep the brand/navigation visible while scrolling. Collapse the utility topbar after scroll.
+  const updateStickyHeader=()=>el.classList.toggle('is-scrolled',window.scrollY>28);
+  updateStickyHeader();
+  window.addEventListener('scroll',updateStickyHeader,{passive:true});
 }
 function injectFooter(){
   const el=document.querySelector('[data-site-footer]'); if(!el) return;
