@@ -895,6 +895,13 @@ body.no-scroll{overflow:hidden}
   .dark-mode .hero-home .hero-trust-item:first-child{border-right-color:#31576b;border-bottom:0}
 }
 
+/* ===== v32: concise package trust label ===== */
+.hero-home .hero-trust-copy strong{overflow-wrap:normal;word-break:normal}
+@media(max-width:580px){
+  .hero-home .hero-trust-copy small{font-size:.65rem}
+  .hero-home .hero-trust-copy strong{font-size:.75rem;line-height:1.25}
+}
+
 /* ===== v30: COMPACT CHAYO-INSPIRED HOMEPAGE HERO =====
    Short copy, flat 2x2 benefit layout, CTA below benefits, compact trust strip,
    and small supporting chips. Keep ANANTA.NET brand colours and site content. */
