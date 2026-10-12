@@ -652,46 +652,43 @@ body.no-scroll{overflow:hidden}
 }
 
 
-/* ===== HERO BENEFITS + CTA ORDER FIX (v25) =====
-   Keep all original ANANTA.NET benefit cards and the added highlights,
-   but keep both card groups still. Place the primary actions below them,
-   following the CTA-after-benefits flow from the reference. */
+/* ===== HERO ADDITIONAL HIGHLIGHTS MOTION + CTA ORDER (v26) =====
+   Keep the four original ANANTA.NET benefit cards static and unchanged.
+   Place the primary CTA after those cards (in index.html), then show the
+   additional CHAYO-inspired highlights with a clearer, quicker floating motion. */
 .hero-home .hero-benefit{
   animation:none !important;
   transform:none !important;
 }
 .hero-home .hero-floating-highlights{
-  margin-top:26px;
-  margin-bottom:0;
+  margin:34px auto 8px;
   column-gap:16px;
-  row-gap:16px;
+  row-gap:34px;
   align-items:stretch;
-}
-.hero-home .floating-highlight,
-.hero-home .floating-highlight-two,
-.hero-home .floating-highlight-three,
-.hero-home .floating-highlight-four{
-  animation:none !important;
-  translate:none !important;
-  transform:none !important;
 }
 .hero-home .floating-highlight{
   min-height:68px;
-  box-shadow:0 8px 18px rgba(11,36,64,.06);
+  box-shadow:0 8px 18px rgba(11,36,64,.075);
+  animation:floatingHighlightDriftV26 3.25s ease-in-out infinite;
+  will-change:translate;
 }
-.hero-home .hero-btns{
-  margin-top:30px;
-  margin-bottom:4px;
+.hero-home .floating-highlight-one{animation-delay:0s}
+.hero-home .floating-highlight-two{animation-delay:-.8s}
+.hero-home .floating-highlight-three{animation-delay:-1.6s}
+.hero-home .floating-highlight-four{animation-delay:-2.4s}
+@keyframes floatingHighlightDriftV26{
+  0%,100%{translate:0 0}
+  50%{translate:0 -11px}
 }
 @media (max-width:900px){
-  .hero-home .hero-floating-highlights{row-gap:14px;margin-top:24px}
+  .hero-home .hero-floating-highlights{row-gap:28px;margin-top:30px}
 }
 @media (max-width:580px){
   .hero-home .hero-floating-highlights{
     grid-template-columns:repeat(2,minmax(0,1fr));
     column-gap:10px;
-    row-gap:12px;
-    margin-top:23px;
+    row-gap:26px;
+    margin-top:28px;
   }
   .hero-home .floating-highlight{
     min-height:72px;
@@ -700,8 +697,11 @@ body.no-scroll{overflow:hidden}
   }
   .hero-home .floating-highlight-copy strong{font-size:.74rem}
   .hero-home .floating-highlight-copy small{font-size:.64rem}
-  .hero-home .hero-btns{margin-top:25px}
+  .hero-home .hero-btns{margin-top:25px;margin-bottom:4px}
 }
 @media (max-width:350px){
-  .hero-home .hero-floating-highlights{grid-template-columns:1fr;max-width:340px}
+  .hero-home .hero-floating-highlights{grid-template-columns:1fr;max-width:340px;row-gap:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-home .floating-highlight{animation:none!important;translate:none!important;will-change:auto}
 }
