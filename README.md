@@ -1,5 +1,5 @@
-# ANANTA.NET Website v22
+# ANANTA.NET Website v23
 
-Penyempurnaan halaman Home berdasarkan referensi tampilan: hero putih dengan pola titik halus, judul “WiFi Hemat, Koneksi Mantap.” beranimasi per huruf, empat sorotan layanan, tombol Lihat Paket dan Hubungi Admin, serta penghapusan bagian statistik cepat 20–100 Mbps dan seterusnya. Data katalog paket dan halaman lain dipertahankan dari versi sebelumnya.
+Pembaruan halaman Home berdasarkan referensi Chayo: empat keunggulan dipindah ke bawah tombol “Lihat Paket” dan “Hubungi Admin”, kemudian ditampilkan sebagai kartu kecil horizontal dengan animasi mengambang halus. Link “Lihat semua keunggulan” tetap tersedia setelah kartu. Warna, copywriting, paket, dan halaman lainnya dipertahankan. Animasi otomatis dinonaktifkan bila perangkat meminta reduced motion.
 
-Jalankan lokal dengan membuka `index.html` atau melalui Live Server.
+Jalankan lokal dengan membuka `index.html` atau menggunakan Live Server.
