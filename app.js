@@ -68,8 +68,8 @@ function renderPackages(){
         : catalog
           ? `<ul><li>Biaya pemasangan: Rp100.000</li><li>${p.devices} (perkiraan)</li><li>${p.activeDevices} (perkiraan)</li><li>${p.description}</li></ul>`
           : `<ul><li>Biaya pemasangan: Rp100.000</li><li>${p.devices} (perkiraan)</li><li>${p.activeDevices} (perkiraan)</li><li>${p.description}</li></ul>`;
-      return `<article class="card package-card ${p.id==='premium'?'featured':''} ${compact?'package-card-compact':''}">
-        ${p.id==='premium'?'<span class="ribbon">Pilihan Populer</span>':''}
+      return `<article class="card package-card ${p.id==='normal'?'featured':''} ${compact?'package-card-compact':''}">
+        ${p.id==='normal'?'<span class="ribbon">Pilihan Populer</span>':''}
         <h3>Paket ${p.name}</h3><div class="speed">${p.speed} Mbps</div><div class="price">${money(p.price)}<small>/bulan</small></div>
         ${list}
         <div class="card-actions"><a class="btn btn-ghost" href="detail-paket.html?plan=${p.id}">Lihat Detail</a><button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya ingin berlangganan Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan.">Berlangganan</button></div>

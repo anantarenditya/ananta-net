@@ -1,6 +1,6 @@
-# ANANTA.NET Website v17
+# ANANTA.NET Website v18
 
-Pembaruan v17 menyelaraskan katalog website dengan brosur ANANTA.NET terbaru:
+Pembaruan v18 menyelaraskan katalog website dengan brosur ANANTA.NET terbaru:
 
 - Paket Hemat: 20 Mbps — Rp115.000/bulan.
 - Paket Normal: 35 Mbps — Rp165.000/bulan.
@@ -11,3 +11,6 @@ Pembaruan v17 menyelaraskan katalog website dengan brosur ANANTA.NET terbaru:
 - Kalkulator paket disesuaikan dengan empat paket baru.
 
 Jalankan secara lokal dengan membuka `index.html` menggunakan Live Server.
+
+
+Pembaruan v18: label “Pilihan Populer” dan penekanan visual dipindahkan ke Paket Normal 35 Mbps.
