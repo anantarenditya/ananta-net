@@ -766,3 +766,39 @@ body.no-scroll{overflow:hidden}
   .dark-mode .hero-home .hero-trust-item:first-child{border-bottom-color:#31576b}
   .hero-home .hero-trust-copy strong{font-size:.86rem}
 }
+
+
+/* ===== HERO SPACING REFINEMENT (v28) =====
+   Add breathing room between the intro, original benefits, trust strip,
+   call-to-action buttons, and CHAYO-inspired feature chips. Keep existing
+   content, colours, and animations intact. */
+.hero-home .hero-inner{padding-bottom:58px}
+.hero-home .hero-benefits{margin-top:44px;row-gap:22px;column-gap:24px}
+.hero-home .hero-trust-card{margin-top:36px;padding:19px 22px}
+.hero-home .hero-btns{margin-top:40px;margin-bottom:10px}
+.hero-home .hero-floating-highlights{margin-top:48px;margin-bottom:16px;row-gap:36px;column-gap:20px}
+
+@media (max-width:900px){
+  .hero-home .hero-inner{padding-bottom:54px}
+  .hero-home .hero-benefits{margin-top:38px;row-gap:20px;column-gap:16px}
+  .hero-home .hero-trust-card{margin-top:32px}
+  .hero-home .hero-btns{margin-top:36px;margin-bottom:10px}
+  .hero-home .hero-floating-highlights{margin-top:44px;margin-bottom:14px;row-gap:32px}
+}
+@media (max-width:580px){
+  .hero-home .hero-inner{padding-top:42px;padding-bottom:54px}
+  .hero-home .hero-benefits{margin-top:36px;gap:18px 13px}
+  .hero-home .hero-benefit{min-height:100px;padding:14px 12px}
+  .hero-home .hero-trust-card{margin-top:30px;padding:17px 12px;gap:10px}
+  .hero-home .hero-trust-item{padding:8px 4px;gap:8px}
+  .hero-home .hero-btns{margin-top:36px;margin-bottom:12px;gap:12px}
+  .hero-home .hero-floating-highlights{margin-top:44px;margin-bottom:16px;row-gap:32px;column-gap:12px}
+  .hero-home .floating-highlight{min-height:74px;padding:11px 10px}
+}
+@media (max-width:370px){
+  .hero-home .hero-inner{padding-bottom:48px}
+  .hero-home .hero-benefits{margin-top:30px;gap:16px}
+  .hero-home .hero-trust-card{margin-top:25px}
+  .hero-home .hero-btns{margin-top:30px}
+  .hero-home .hero-floating-highlights{margin-top:36px;row-gap:24px}
+}
