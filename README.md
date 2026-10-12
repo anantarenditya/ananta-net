@@ -1,10 +1,12 @@
 ANANTA.NET Website — pembaruan halaman Tentang Kami
 
-Perubahan utama:
-- Logo asli ANANTA.NET dipertahankan tanpa mengedit file gambar.
-- Judul "Tentang Kami" memakai animasi per huruf dengan warna navy dan teal.
-- Isi halaman menjelaskan bahwa usaha layanan WiFi rumahan ini berjalan sejak 2021 dan dilakukan melalui kemitraan jaringan, bukan sebagai ISP.
-- Kartu logo, komitmen layanan, dan CTA menggunakan gaya visual yang selaras dengan Home dan Paket Internet.
-- Tombol telepon melayang di pojok kanan bawah mendapat animasi mengambang halus; animasi nonaktif jika perangkat meminta reduced motion.
+Pembaruan:
+- Logo asli ANANTA.NET tetap dipertahankan.
+- Judul halaman Tentang Kami ditampilkan memanjang satu baris dengan animasi huruf dan warna navy/teal.
+- Judul perjalanan diperbarui menjadi “Memperluas berbagai potensi dan kesempatan dengan memanfaatkan teknologi” dengan penekanan warna dan garis bawah teal.
+- Penjelasan menegaskan ANANTA.NET bukan ISP, menjalankan layanan melalui kemitraan jaringan, serta memperhatikan kejelasan kerja sama dan legalitas usaha sesuai ketentuan berlaku.
+- Kartu identitas memakai logo asli dengan label mengambang “4 Pilihan Paket Layanan” dan “250+ Pelanggan”; slogan lama di bawah logo dihapus.
+- Bagian komitmen menampilkan kembali Legalitas Usaha Kemitraan.
+- Tombol kontak melayang tetap memiliki animasi halus dan mengikuti pengaturan reduced motion.
 
-Untuk publikasi, salin isi arsip ke repository lokal (jangan hapus .git), lalu commit dan push ke branch main agar Cloudflare Pages melakukan deployment.
+Untuk publikasi, salin isi arsip ke repository lokal tanpa menghapus folder .git, lalu commit dan push ke branch main agar Cloudflare Pages melakukan deployment.

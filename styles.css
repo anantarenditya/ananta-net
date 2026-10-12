@@ -1588,3 +1588,143 @@ body.no-scroll{overflow:hidden}
   .about-page-hero .hero-char{animation:none!important;opacity:1!important;transform:none!important;will-change:auto}
   .float-wa{animation:none!important;will-change:auto}
 }
+
+/* Tentang Kami: single-line animated title, technology-led profile heading, and floating trust badges. */
+.about-page-hero .about-title-motion{
+  white-space:nowrap;
+  font-size:clamp(2.1rem,5.2vw,4.25rem);
+  letter-spacing:-.025em;
+}
+.about-page-hero .hero-title-line{
+  display:inline;
+  white-space:nowrap;
+  line-height:1.08;
+}
+.about-profile-card h2.about-profile-heading{
+  position:relative;
+  padding-bottom:20px;
+  margin-bottom:22px;
+  font-size:clamp(1.7rem,3vw,2.5rem);
+  line-height:1.12;
+  letter-spacing:-.025em;
+  color:#102b43;
+  overflow-wrap:normal;
+}
+.about-profile-card h2.about-profile-heading span{color:#1d9f87}
+.about-profile-card h2.about-profile-heading::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:74px;
+  height:5px;
+  border-radius:99px;
+  background:linear-gradient(90deg,#2fbea0,#1d9f87);
+}
+.about-logo-card{gap:13px}
+.about-logo-stage{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:100%;
+  min-height:370px;
+  padding:42px 0 38px;
+}
+.about-logo-stage .about-logo-orbit{
+  position:absolute;
+  z-index:0;
+  width:min(360px,92%);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:rgba(47,190,160,.10);
+  box-shadow:0 0 0 20px rgba(47,190,160,.05);
+}
+.about-logo-stage .about-logo-image-wrap{position:relative;z-index:1;width:min(260px,70%);padding:23px}
+.about-floating-badge{
+  position:absolute;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:max-content;
+  max-width:min(290px,90%);
+  padding:11px 14px;
+  border:1px solid rgba(217,233,230,.95);
+  border-radius:17px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 12px 27px rgba(11,36,64,.13);
+  animation:aboutBadgeFloat 2.25s ease-in-out infinite;
+  will-change:transform;
+}
+.about-floating-badge-top{top:7%;right:0;animation-delay:-.2s}
+.about-floating-badge-bottom{bottom:5%;left:0;animation-delay:-1.15s}
+.about-floating-badge-icon{
+  width:39px;height:39px;flex:0 0 39px;border-radius:12px;
+  display:grid;place-items:center;background:#eaf7f4;color:#167f78;
+}
+.about-floating-badge-icon svg{display:block;width:21px;height:21px}
+.about-floating-badge-copy{display:grid;gap:2px;min-width:0}
+.about-floating-badge-copy strong{font-size:.86rem;line-height:1.25;font-weight:900;color:#102b43}
+.about-floating-badge-copy small{font-size:.73rem;line-height:1.3;color:#5c7183}
+@keyframes aboutBadgeFloat{
+  0%,100%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(0,-7px,0)}
+}
+@media(max-width:760px){
+  .about-page-hero .about-title-motion{font-size:clamp(2rem,7.3vw,2.8rem);letter-spacing:-.025em}
+  .about-profile-card h2.about-profile-heading{font-size:clamp(1.65rem,6.3vw,2.2rem);line-height:1.14;padding-bottom:17px}
+  .about-logo-stage{min-height:320px;padding:38px 0 35px}
+  .about-logo-stage .about-logo-image-wrap{width:min(220px,64%);padding:18px;border-radius:25px}
+  .about-floating-badge{gap:8px;padding:9px 11px;border-radius:15px;max-width:88%}
+  .about-floating-badge-icon{width:34px;height:34px;flex-basis:34px;border-radius:10px}
+  .about-floating-badge-icon svg{width:19px;height:19px}
+  .about-floating-badge-copy strong{font-size:.78rem}
+  .about-floating-badge-copy small{font-size:.68rem}
+  .about-floating-badge-top{top:5%;right:-1px}
+  .about-floating-badge-bottom{bottom:3%;left:-1px}
+}
+@media(max-width:380px){
+  .about-page-hero .about-title-motion{font-size:1.92rem;letter-spacing:-.03em}
+  .about-logo-stage{min-height:300px}
+  .about-logo-stage .about-logo-image-wrap{width:58%;padding:14px}
+  .about-floating-badge{padding:8px 9px;gap:7px}
+  .about-floating-badge-icon{width:30px;height:30px;flex-basis:30px}
+  .about-floating-badge-copy strong{font-size:.72rem}
+  .about-floating-badge-copy small{font-size:.63rem}
+}
+@media(prefers-reduced-motion:reduce){.about-floating-badge{animation:none!important;will-change:auto}}
+
+/* About page refinements requested on 12 Oct: technology headline and single-line page title. */
+.about-profile-card h2.about-profile-heading span{
+  color:#2864f0;
+  background:linear-gradient(90deg,#2864f0,#4388ff);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.about-profile-card h2.about-profile-heading::after{
+  width:120px;height:5px;
+  background:linear-gradient(90deg,#2864f0 0%,#2864f0 72%,#f52b69 72%,#f52b69 100%);
+}
+.about-page-hero .about-title-motion{white-space:nowrap;}
+.about-page-hero .about-title-motion .hero-title-line{display:inline;white-space:nowrap;}
+.about-logo-stage{padding-top:64px;}
+.about-logo-message{
+  position:absolute;z-index:2;top:0;left:50%;width:min(440px,96%);transform:translateX(-50%);
+  color:#102b43;text-align:center;font-weight:850;line-height:1.12;letter-spacing:-.035em;
+  font-size:clamp(1.1rem,2.1vw,1.65rem);animation:aboutMessageFloat 2.4s ease-in-out infinite;
+}
+.about-logo-message span{color:#2864f0;}
+@keyframes aboutMessageFloat{
+  0%,100%{transform:translate(-50%,0)}
+  50%{transform:translate(-50%,-6px)}
+}
+@media(max-width:760px){
+  .about-page-hero .about-title-motion{font-size:clamp(1.55rem,6.4vw,2.65rem);letter-spacing:-.035em;}
+  .about-logo-stage{padding-top:58px;min-height:340px;}
+  .about-logo-message{font-size:clamp(1rem,4.3vw,1.35rem);width:100%;}
+}
+@media(max-width:380px){
+  .about-page-hero .about-title-motion{font-size:1.48rem;letter-spacing:-.045em;}
+  .about-logo-stage{padding-top:60px;min-height:320px;}
+  .about-logo-message{font-size:.95rem;}
+}
+@media(prefers-reduced-motion:reduce){.about-logo-message{animation:none!important;}}
