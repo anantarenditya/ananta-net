@@ -1,4 +1,4 @@
-# ANANTA.NET Website v19
+# ANANTA.NET Website v20
 
 Pembaruan v18 menyelaraskan katalog website dengan brosur ANANTA.NET terbaru:
 
@@ -19,3 +19,6 @@ Pembaruan v18: label “Pilihan Populer” dan penekanan visual dipindahkan ke P
 Pembaruan v19:
 - Judul hero “WiFi Hemat, Koneksi Mantap.” mendapat animasi masuk bertahap dan gerakan mengambang yang halus. Animasi dinonaktifkan bila pengguna memilih pengurangan gerakan di sistemnya.
 - Tombol WhatsApp mengambang kini menggunakan ikon percakapan/telepon bergaya WhatsApp, dengan label aksesibel dan efek hover ringan.
+
+- Hero tagline now reveals word-by-word with a horizontal slide, disappears, and repeats in a loop.
+- Reduced-motion preferences show the complete headline without animation.
