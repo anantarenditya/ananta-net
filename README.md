@@ -1,14 +1,12 @@
-# ANANTA.NET Website v26
+# ANANTA.NET Website v30
 
-Perubahan v26 bersifat tambahan: kartu keunggulan ANANTA.NET yang sudah ada dipertahankan, dan ditambahkan empat kartu informasi bergaya floating/animated yang terinspirasi dari referensi CHAYO. Isi lainnya tetap menggunakan versi sebelumnya.
+Versi v30 merapikan Home agar lebih ringkas seperti referensi CHAYO, dengan warna dan identitas ANANTA.NET tetap dipertahankan.
+
+- Deskripsi hero dipersingkat menjadi: “WiFi rumahan untuk belajar, kerja, streaming, dan gaming.”
+- Empat keunggulan utama ditampilkan dalam grid ikon 2×2 pada layar HP, tanpa kartu tinggi yang memenuhi satu baris.
+- Tombol “Lihat Paket” dan “Hubungi Admin” ditempatkan tepat di bawah keunggulan; pada layar HP tombol tersusun vertikal seperti referensi.
+- Panel “Dipercaya oleh 250+ pelanggan” dan “4 paket · 20–100 Mbps” diringkas menjadi satu panel dua kolom.
+- Empat chip informasi tambahan tetap tersedia, dengan teks lebih pendek dan animasi mengambang halus.
+- Tidak menampilkan rating bintang atau jumlah ulasan yang belum diverifikasi.
 
 Buka `index.html` dengan Live Server untuk melihat website secara lokal.
-
-
-v26 changes: restored the original CTA position immediately after the original four ANANTA.NET benefit cards, removed the “Lihat semua keunggulan” link, and added a faster, more visible floating animation to the four additional CHAYO-inspired highlight cards.
-
-
-Versi v27 menambahkan panel kepercayaan di Home: “Dipercaya oleh 250+ pelanggan” serta “4 paket · 20–100 Mbps”. Panel ditempatkan setelah keunggulan utama dan sebelum tombol Lihat Paket/Hubungi Admin. Rating bintang tidak digunakan karena belum ada rating publik terverifikasi.
-
-
-Version v29: compacted the homepage trust strip into a horizontal two-column layout on mobile. It displays 250+ customers and four available packages without unverified star ratings or review claims.

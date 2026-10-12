@@ -894,3 +894,222 @@ body.no-scroll{overflow:hidden}
   .hero-home .hero-trust-copy strong{font-size:.69rem;line-height:1.25}
   .dark-mode .hero-home .hero-trust-item:first-child{border-right-color:#31576b;border-bottom:0}
 }
+
+/* ===== v30: COMPACT CHAYO-INSPIRED HOMEPAGE HERO =====
+   Short copy, flat 2x2 benefit layout, CTA below benefits, compact trust strip,
+   and small supporting chips. Keep ANANTA.NET brand colours and site content. */
+.hero-home .hero-inner{
+  width:min(1040px,92%);
+  padding:34px 0 32px;
+}
+.hero-home .hero-local-badge{
+  padding:8px 13px;
+  font-size:.82rem;
+}
+.hero-home .hero-title-motion{
+  margin:20px auto 12px;
+  font-size:clamp(2.35rem,7vw,4.15rem);
+  line-height:1.02;
+}
+.hero-home .lead{
+  max-width:680px;
+  font-size:clamp(.98rem,1.7vw,1.14rem);
+  line-height:1.55;
+}
+.hero-home .hero-benefits{
+  width:min(820px,100%);
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:24px 18px;
+  margin:29px auto 0;
+}
+.hero-home .hero-benefit{
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:9px;
+  padding:0 6px;
+  text-align:center;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  animation:none!important;
+  transform:none!important;
+}
+.hero-home .hero-benefit-icon{
+  flex:0 0 44px;
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  margin:0;
+  box-shadow:0 7px 16px rgba(29,159,135,.18);
+}
+.hero-home .hero-benefit-icon svg{width:23px;height:23px}
+.hero-home .hero-benefit-copy{width:100%;min-width:0}
+.hero-home .hero-benefit h3{
+  margin:0 0 3px;
+  font-size:.91rem;
+  line-height:1.25;
+}
+.hero-home .hero-benefit p{
+  margin:0;
+  font-size:.76rem;
+  line-height:1.35;
+}
+.hero-home .hero-btns{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  width:min(660px,100%);
+  margin:26px auto 0;
+}
+.hero-home .hero-btns .btn{
+  min-width:0;
+  width:auto;
+  min-height:54px;
+  padding:12px 24px;
+  font-size:.97rem;
+}
+.hero-home .hero-trust-card{
+  width:min(660px,100%);
+  margin:23px auto 0;
+  padding:13px 15px;
+  gap:8px;
+  border-radius:20px;
+}
+.hero-home .hero-trust-item{
+  grid-template-columns:30px minmax(0,1fr);
+  gap:8px;
+  padding:4px 8px;
+}
+.hero-home .hero-trust-icon{
+  width:30px;
+  height:30px;
+  flex-basis:30px;
+  border-radius:50%;
+}
+.hero-home .hero-trust-icon svg{width:16px;height:16px}
+.hero-home .hero-trust-copy{gap:2px}
+.hero-home .hero-trust-copy small{font-size:.7rem;line-height:1.2}
+.hero-home .hero-trust-copy strong{font-size:.86rem;line-height:1.25;overflow-wrap:anywhere}
+.hero-home .hero-floating-highlights{
+  width:min(660px,100%);
+  margin:24px auto 0;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:14px;
+  row-gap:12px;
+  align-items:stretch;
+}
+.hero-home .floating-highlight{
+  min-height:58px;
+  gap:9px;
+  padding:9px 11px;
+  border-radius:15px;
+  box-shadow:0 6px 15px rgba(11,36,64,.065);
+  animation:floatingHighlightDriftV30 3.4s ease-in-out infinite;
+  will-change:translate;
+}
+.hero-home .floating-highlight-one{animation-delay:0s}
+.hero-home .floating-highlight-two{animation-delay:-.85s}
+.hero-home .floating-highlight-three{animation-delay:-1.7s}
+.hero-home .floating-highlight-four{animation-delay:-2.55s}
+.hero-home .floating-highlight-icon{
+  flex-basis:32px;
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  box-shadow:none;
+}
+.hero-home .floating-highlight-icon svg{width:18px;height:18px}
+.hero-home .floating-highlight-copy{gap:2px}
+.hero-home .floating-highlight-copy strong{font-size:.8rem;line-height:1.2}
+.hero-home .floating-highlight-copy small{font-size:.68rem;line-height:1.25}
+@keyframes floatingHighlightDriftV30{
+  0%,100%{translate:0 0}
+  50%{translate:0 -6px}
+}
+@media(max-width:760px){
+  .hero-home .hero-inner{padding:29px 0 30px}
+  .hero-home .hero-benefits{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:min(460px,100%);
+    gap:25px 14px;
+    margin-top:25px;
+  }
+  .hero-home .hero-benefit{padding:0 4px;gap:8px}
+  .hero-home .hero-benefit-icon{width:42px;height:42px;flex-basis:42px;border-radius:12px}
+  .hero-home .hero-benefit h3{font-size:.88rem}
+  .hero-home .hero-benefit p{font-size:.73rem;line-height:1.32}
+  .hero-home .hero-btns{
+    flex-direction:column;
+    width:min(320px,100%);
+    gap:11px;
+    margin-top:24px;
+  }
+  .hero-home .hero-btns .btn{width:100%;min-height:53px;padding:12px 18px;font-size:.95rem}
+  .hero-home .hero-trust-card{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:100%;
+    margin-top:21px;
+    padding:12px 8px;
+    gap:5px;
+    border-radius:18px;
+  }
+  .hero-home .hero-trust-item{
+    grid-template-columns:27px minmax(0,1fr);
+    align-items:center;
+    gap:6px;
+    padding:5px 4px;
+  }
+  .hero-home .hero-trust-item:first-child{border-right:1px solid #d9e9e6;border-bottom:0}
+  .hero-home .hero-trust-icon{width:27px;height:27px;flex-basis:27px}
+  .hero-home .hero-trust-icon svg{width:15px;height:15px}
+  .hero-home .hero-trust-copy small{font-size:.64rem}
+  .hero-home .hero-trust-copy strong{font-size:.75rem;line-height:1.25}
+  .hero-home .hero-floating-highlights{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:100%;
+    margin-top:20px;
+    column-gap:10px;
+    row-gap:11px;
+  }
+  .hero-home .floating-highlight{min-height:54px;padding:8px 9px;gap:7px}
+  .hero-home .floating-highlight-icon{width:29px;height:29px;flex-basis:29px;border-radius:9px}
+  .hero-home .floating-highlight-icon svg{width:17px;height:17px}
+  .hero-home .floating-highlight-copy strong{font-size:.73rem}
+  .hero-home .floating-highlight-copy small{font-size:.63rem}
+}
+@media(max-width:370px){
+  .hero-home .hero-inner{padding:25px 0 26px}
+  .hero-home .hero-local-badge{font-size:.72rem;padding:7px 10px}
+  .hero-home .hero-title-motion{font-size:2.12rem;margin:18px auto 10px}
+  .hero-home .lead{font-size:.92rem;line-height:1.45}
+  .hero-home .hero-benefits{grid-template-columns:repeat(2,minmax(0,1fr));gap:21px 8px;margin-top:22px}
+  .hero-home .hero-benefit-icon{width:38px;height:38px;flex-basis:38px}
+  .hero-home .hero-benefit h3{font-size:.79rem}
+  .hero-home .hero-benefit p{font-size:.67rem}
+  .hero-home .hero-btns{margin-top:21px}
+  .hero-home .hero-trust-card{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px 5px;gap:2px}
+  .hero-home .hero-trust-item{grid-template-columns:23px minmax(0,1fr);gap:4px;padding:4px 3px}
+  .hero-home .hero-trust-item:first-child{border-right:1px solid #d9e9e6;border-bottom:0}
+  .hero-home .hero-trust-icon{width:23px;height:23px;flex-basis:23px}
+  .hero-home .hero-trust-icon svg{width:13px;height:13px}
+  .hero-home .hero-trust-copy small{font-size:.58rem}
+  .hero-home .hero-trust-copy strong{font-size:.67rem}
+  .hero-home .hero-floating-highlights{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .hero-home .floating-highlight{min-height:51px;padding:7px 6px;gap:5px}
+  .hero-home .floating-highlight-icon{width:25px;height:25px;flex-basis:25px}
+  .hero-home .floating-highlight-icon svg{width:15px;height:15px}
+  .hero-home .floating-highlight-copy strong{font-size:.66rem}
+  .hero-home .floating-highlight-copy small{font-size:.58rem}
+}
+@media(max-width:580px){
+  .float-wa{width:58px;height:58px;right:15px;bottom:16px}
+  .float-wa svg{width:27px;height:27px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-home .floating-highlight{animation:none!important;translate:none!important;will-change:auto}
+}
