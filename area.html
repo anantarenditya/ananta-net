@@ -57,7 +57,6 @@
               <div class="area-leaflet-shell">
                 <div id="serviceMap" class="area-leaflet-map" role="application" aria-label="Peta interaktif wilayah layanan ANANTA.NET"></div>
                 <div class="map-area-chip" aria-hidden="true"><span class="map-area-chip-dot"></span>Kalibendo · Bades · Gondoruso</div>
-                <a id="mapOverlayLink" class="map-overlay-btn" href="#" target="_blank" rel="noopener">Buka Kalibendo ↗</a>
               </div>
             </div>
             <div class="area-map-bottom">
@@ -124,7 +123,6 @@
     const result = document.querySelector('[data-area-result]');
     const openMapsBtn = document.getElementById('openMapsBtn');
     const mapGoogleLink = document.getElementById('mapGoogleLink');
-    const overlayLink = document.getElementById('mapOverlayLink');
     if (!mapElement || !select || !window.L) return;
 
     const areas = {
@@ -188,11 +186,6 @@
         mapGoogleLink.href = mapsUrl;
         mapGoogleLink.textContent = 'Buka ' + name + ' ↗';
         mapGoogleLink.setAttribute('aria-label', 'Buka ' + name + ' di Google Maps');
-      }
-      if (overlayLink) {
-        overlayLink.href = mapsUrl;
-        overlayLink.textContent = 'Buka ' + name + ' ↗';
-        overlayLink.setAttribute('aria-label', 'Buka ' + name + ' di Google Maps');
       }
       if(panToArea) serviceMap.panTo([area.lat, area.lng], {animate:true, duration:.45});
     }
