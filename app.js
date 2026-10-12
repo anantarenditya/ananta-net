@@ -14,28 +14,30 @@ function waLink(message='Halo Admin ANANTA.NET, saya ingin bertanya tentang laya
 }
 
 function initHeroLetterAnimation(){
-  const heading = document.querySelector('.hero-home .hero-title-motion');
-  if (!heading || heading.dataset.letterAnimationReady === 'true') return;
-  heading.dataset.letterAnimationReady = 'true';
+  // Reuse the same per-letter animation on the Home and Paket Internet headings.
+  document.querySelectorAll('.hero-title-motion').forEach((heading) => {
+    if (heading.dataset.letterAnimationReady === 'true') return;
+    heading.dataset.letterAnimationReady = 'true';
 
-  const words = Array.from(heading.querySelectorAll('.hero-word'));
-  let characterIndex = 0;
-  const staggerSeconds = 0.04;
+    const words = Array.from(heading.querySelectorAll('.hero-word'));
+    let characterIndex = 0;
+    const staggerSeconds = 0.04;
 
-  words.forEach((word, wordIndex) => {
-    const text = word.textContent || '';
-    word.textContent = '';
-    Array.from(text).forEach((character) => {
-      const letter = document.createElement('span');
-      letter.className = 'hero-char';
-      letter.textContent = character;
-      letter.style.setProperty('--char-delay', `${(characterIndex * staggerSeconds).toFixed(3)}s`);
-      letter.setAttribute('aria-hidden', 'true');
-      word.appendChild(letter);
-      characterIndex += 1;
+    words.forEach((word, wordIndex) => {
+      const text = word.textContent || '';
+      word.textContent = '';
+      Array.from(text).forEach((character) => {
+        const letter = document.createElement('span');
+        letter.className = 'hero-char';
+        letter.textContent = character;
+        letter.style.setProperty('--char-delay', `${(characterIndex * staggerSeconds).toFixed(3)}s`);
+        letter.setAttribute('aria-hidden', 'true');
+        word.appendChild(letter);
+        characterIndex += 1;
+      });
+      // Leave a small timing gap between lines while retaining their original layout.
+      if (wordIndex < words.length - 1) characterIndex += 1;
     });
-    // Leave a small timing gap between words while retaining their original layout.
-    if (wordIndex < words.length - 1) characterIndex += 1;
   });
 }
 
