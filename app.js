@@ -64,7 +64,7 @@ function injectHeader(){
         <div class="actions"><button class="menu-btn" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button></div>
       </div>
       <div class="container nav-mobile" id="mobileNav">
-        <a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a>
+        <a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket Langganan</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a>
       </div>
     </header>`;
   const path=location.pathname.split('/').pop()||'index.html';
@@ -101,7 +101,7 @@ function initWhatsApp(){
   const float=document.querySelector('[data-float-wa]');
   if(float && float.dataset.floatWaReady!=='true'){
     float.dataset.floatWaReady='true';
-    float.innerHTML = `<svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false"><path class="wa-bubble" d="M20.45 11.62a8.37 8.37 0 0 1-12.36 7.31l-4.2 1.12 1.12-4.1a8.37 8.37 0 1 1 15.44-4.33Z"/><path class="wa-handset" d="M8.14 6.6c-.23-.5-.48-.51-.7-.52h-.6c-.21 0-.55.08-.83.39-.28.31-1.08 1.06-1.08 2.58s1.11 2.99 1.26 3.2c.16.2 2.18 3.5 5.38 4.77 2.66 1.05 3.2.84 3.78.79.58-.06 1.87-.76 2.13-1.49.27-.73.27-1.36.19-1.49-.08-.13-.28-.2-.58-.35l-2.03-.96c-.27-.1-.46-.15-.65.15-.19.29-.74.95-.9 1.15-.17.2-.33.22-.6.08-.28-.15-1.17-.43-2.23-1.37-.82-.73-1.38-1.63-1.54-1.91-.16-.29-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.19-.28.28-.47.09-.19.05-.36-.02-.51L8.14 6.6Z"/></svg>`;
+    float.innerHTML = `<svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false"><path class="wa-bubble" d="M20.15 11.45a8.15 8.15 0 0 1-12.08 7.12L4 19.72l1.1-3.97a8.15 8.15 0 1 1 15.05-4.3Z"/><path class="wa-handset" d="M8.7 8.2c-.35-.48-.75-.5-1.08-.18l-.65.64c-.43.43-.46.98-.22 1.56.83 2.02 2.44 3.63 4.46 4.46.58.24 1.13.21 1.56-.22l.64-.65c.32-.33.3-.73-.18-1.08l-1.03-.76c-.34-.25-.73-.22-1.02.07l-.48.48a6.94 6.94 0 0 1-1.79-1.79l.48-.48c.29-.29.32-.68.07-1.02L8.7 8.2Z"/></svg>`;
     float.setAttribute('aria-label','Hubungi ANANTA.NET melalui WhatsApp');
     float.setAttribute('title','Hubungi melalui WhatsApp');
     float.addEventListener('click',()=>window.open(waLink(),'_blank','noopener'));
@@ -116,9 +116,16 @@ function renderPackages(){
     const renderCard=(p,index)=>{
       const isPopular=p.id==='normal';
       const features=compact
-        ? [`Paket ${p.speed} Mbps`,p.devices, p.description]
-        : [`Kecepatan paket ${p.speed} Mbps`,`${p.devices} (perkiraan)`,`${p.activeDevices} (perkiraan)`,p.description];
-      const list=features.map((item)=>`<li><span class="plan-check" aria-hidden="true">✓</span><span>${item}</span></li>`).join('');
+        ? [
+            {label:'Perangkat terhubung',detail:p.devices.replace(' perangkat terhubung',' perangkat')},
+            {label:'Aktif bersamaan',detail:`${p.activeDevices.replace(' aktif bersamaan',' perangkat')} (perkiraan)`}
+          ]
+        : [
+            {label:`Kecepatan paket ${p.speed} Mbps`},
+            {label:'Perangkat terhubung',detail:`${p.devices.replace(' perangkat terhubung',' perangkat')} (perkiraan)`},
+            {label:'Aktif bersamaan',detail:`${p.activeDevices.replace(' aktif bersamaan',' perangkat')} (perkiraan)`}
+          ];
+      const list=features.map((item)=>`<li><span class="plan-check" aria-hidden="true">✓</span><span class="plan-feature-copy"><span class="plan-feature-label">${item.label}</span>${item.detail?`<small class="plan-feature-detail">${item.detail}</small>`:''}</span></li>`).join('');
       const message=`Halo Admin ANANTA.NET, saya ingin berlangganan Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan. Saya ingin mengecek ketersediaan pemasangan.`;
       return `<article class="card package-card plan-carousel-card ${isPopular?'featured is-popular':''} ${compact?'package-card-compact':''}" data-plan-slide aria-label="Paket ${p.name}">
         <div class="plan-card-topline"><span class="plan-card-brand">ANANTA.NET <span>· PAKET INTERNET</span></span><span class="plan-card-number">${String(index+1).padStart(2,'0')}</span></div>
@@ -173,11 +180,11 @@ function renderDetail(){
   const popular=p.id==='normal';
   const nextPlans=packages.filter(x=>x.id!==p.id);
   const features=[
-    `Paket kecepatan ${p.speed} Mbps`,
-    `${p.devices} (perkiraan)`,
-    `${p.activeDevices} untuk penggunaan umum (perkiraan)`,
-    'Biaya pemasangan Rp100.000 di awal',
-    'Pembayaran bulanan dimulai bulan berikutnya'
+    {label:`Kecepatan paket ${p.speed} Mbps`},
+    {label:'Perangkat terhubung',detail:`${p.devices.replace(' perangkat terhubung',' perangkat')} (perkiraan)`},
+    {label:'Aktif bersamaan',detail:`${p.activeDevices.replace(' aktif bersamaan',' perangkat')} untuk penggunaan umum (perkiraan)`},
+    {label:'Biaya pemasangan',detail:'Rp100.000 dibayar di awal'},
+    {label:'Pembayaran bulanan',detail:'Dimulai bulan berikutnya'}
   ];
   const message=`Halo Admin ANANTA.NET, saya tertarik Paket ${p.name} ${p.speed} Mbps seharga ${money(p.price)}/bulan. Saya ingin mengecek ketersediaan pemasangan di lokasi saya.`;
   mount.innerHTML=`
@@ -188,7 +195,7 @@ function renderDetail(){
         <div class="package-detail-heading"><div><span class="detail-package-label">PAKET INTERNET</span><h2>Paket ${p.name}</h2><p>${p.description}</p></div><div class="detail-speed-badge"><strong>${p.speed}</strong><span>Mbps</span></div></div>
         <div class="detail-price-block"><strong>${money(p.price)}</strong><span>/bulan</span></div>
         <div class="plan-card-divider"></div>
-        <ul class="plan-feature-list detail-feature-list">${features.map(item=>`<li><span class="plan-check" aria-hidden="true">✓</span><span>${item}</span></li>`).join('')}</ul>
+        <ul class="plan-feature-list detail-feature-list">${features.map(item=>`<li><span class="plan-check" aria-hidden="true">✓</span><span class="plan-feature-copy"><span class="plan-feature-label">${item.label}</span>${item.detail?`<small class="plan-feature-detail">${item.detail}</small>`:''}</span></li>`).join('')}</ul>
         <div class="package-detail-actions"><button class="btn btn-primary" data-wa="${message}">Berlangganan via WhatsApp</button><a class="btn btn-ghost" href="paket.html">Lihat Paket Lain</a></div>
       </article>
       <aside class="package-detail-aside card">

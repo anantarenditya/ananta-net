@@ -1454,3 +1454,21 @@ body.no-scroll{overflow:hidden}
 .package-page-intro .hero-title-line-one,.package-page-intro .hero-title-line-one .hero-char{color:#102b43!important}
 .package-page-intro .hero-title-line-two,.package-page-intro .hero-title-line-two .hero-char{color:#1d9f87!important}
 @media(max-width:580px){.package-page-intro .hero-title-motion{letter-spacing:-.005em;line-height:1.08}}
+
+
+/* ===== v38: align package device notes and use consistent Wi-Fi / WhatsApp icons ===== */
+.eyebrow-mark svg{display:block;width:16px;height:16px}
+.plan-feature-copy{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0;overflow-wrap:anywhere}
+.plan-feature-label{display:block;line-height:1.35;font-weight:800}
+.plan-feature-detail{display:block;color:var(--muted);font-size:.86em;line-height:1.38;overflow-wrap:anywhere}
+.plan-carousel-card.is-popular .plan-feature-detail,.package-detail-card.is-popular .plan-feature-detail{color:#d6e5eb}
+.home-package-grid .package-card-compact .plan-feature-list{min-height:0;gap:12px}
+.home-package-grid .package-card-compact .plan-feature-list li{display:flex;align-items:flex-start;overflow:visible;-webkit-line-clamp:unset;-webkit-box-orient:initial}
+.home-package-grid .package-card-compact .plan-feature-list li:nth-child(2){display:flex;-webkit-line-clamp:unset;-webkit-box-orient:initial;overflow:visible}
+.package-detail-card .plan-feature-copy{gap:3px}
+.package-detail-card .plan-feature-detail{font-size:.86em}
+.float-wa svg{display:block;width:31px;height:31px;overflow:visible}
+.float-wa .wa-bubble{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.float-wa .wa-handset{fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+.hero-cta-icon svg,.floating-icon-chat svg{display:block;width:21px;height:21px}
+.floating-icon-chat svg{stroke-width:1.85}

@@ -1,10 +1,10 @@
-# ANANTA.NET Website v35
+# ANANTA.NET Website v38
 
-Perbaikan header dan kartu populer:
-- Logo ANANTA.NET dan menu navigasi tetap terlihat ketika halaman digulir. Baris slogan atas disembunyikan setelah scroll agar header tetap ringkas.
-- Tombol dark mode dihapus dari navigasi; website menggunakan tampilan terang saja.
-- Label “Pilihan Populer” pada Paket Normal diposisikan di tengah bagian atas kartu, dengan gaya pill kuning seperti referensi CHAYO.
-- Penempatan label populer juga diselaraskan pada halaman detail Paket Normal.
-- Katalog paket, harga, fitur, halaman lain, dan fungsi menu tetap dipertahankan.
+Perbaikan tampilan paket dan ikon: 
+- Informasi jumlah perangkat dan perangkat aktif pada kartu Paket di Home kini dipisah menjadi label dan keterangan di bawahnya agar tidak bertumpuk atau terlihat kosong.
+- Halaman detail paket menggunakan format label/keterangan yang konsisten untuk perangkat, penggunaan bersamaan, dan biaya.
+- Ikon di sebelah label Paket Internet diganti dengan ikon Wi-Fi SVG.
+- Label di menu hamburger diganti menjadi “Paket Langganan”.
+- Ikon WhatsApp Admin dan tombol WhatsApp mengambang menggunakan ikon SVG yang konsisten; simbol telepon fallback dihapus.
 
-Website statis HTML/CSS/JS. Untuk deploy: ganti file pada repository lokal `ananta-net`, lalu push ke branch `main` agar Cloudflare Pages memperbarui situs.
+Website statis HTML/CSS/JavaScript. Untuk deploy, salin isi ZIP ke repository lokal `ananta-net` tanpa menghapus `.git`, lalu push ke branch `main`.
