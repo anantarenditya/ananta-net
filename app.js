@@ -101,7 +101,7 @@ function initWhatsApp(){
   const float=document.querySelector('[data-float-wa]');
   if(float && float.dataset.floatWaReady!=='true'){
     float.dataset.floatWaReady='true';
-    float.innerHTML = `<svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false"><path class="wa-bubble" d="M20.15 11.45a8.15 8.15 0 0 1-12.08 7.12L4 19.72l1.1-3.97a8.15 8.15 0 1 1 15.05-4.3Z"/><path class="wa-handset" d="M8.7 8.2c-.35-.48-.75-.5-1.08-.18l-.65.64c-.43.43-.46.98-.22 1.56.83 2.02 2.44 3.63 4.46 4.46.58.24 1.13.21 1.56-.22l.64-.65c.32-.33.3-.73-.18-1.08l-1.03-.76c-.34-.25-.73-.22-1.02.07l-.48.48a6.94 6.94 0 0 1-1.79-1.79l.48-.48c.29-.29.32-.68.07-1.02L8.7 8.2Z"/></svg>`;
+    float.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.56.57 1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1A17 17 0 0 1 2.98 4.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.56 1 1 0 0 1-.25 1.02Z"/></svg>`;
     float.setAttribute('aria-label','Hubungi ANANTA.NET melalui WhatsApp');
     float.setAttribute('title','Hubungi melalui WhatsApp');
     float.addEventListener('click',()=>window.open(waLink(),'_blank','noopener'));
