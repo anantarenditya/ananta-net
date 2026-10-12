@@ -1472,3 +1472,119 @@ body.no-scroll{overflow:hidden}
 .float-wa .wa-handset{fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
 .hero-cta-icon svg,.floating-icon-chat svg{display:block;width:21px;height:21px}
 .floating-icon-chat svg{stroke-width:1.85}
+
+
+/* About page refinement: same ANANTA.NET visual language as Home and Paket Internet. */
+.about-page-hero{
+  position:relative;isolation:isolate;overflow:hidden;background:#f7fafc;border-bottom:1px solid var(--border)
+}
+.about-page-hero:before{
+  content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.72;
+  background-image:radial-gradient(circle,#d9e9e6 2.5px,transparent 3px);background-size:30px 30px
+}
+.about-page-hero:after{
+  content:"";position:absolute;z-index:-1;width:min(560px,82vw);height:min(560px,82vw);left:-18%;top:22%;
+  border-radius:50%;background:#eaf7f4;opacity:.82;pointer-events:none
+}
+.about-page-hero .page-hero-inner{padding:42px 0 50px;position:relative;z-index:1}
+.about-page-hero .breadcrumb{margin-bottom:21px}
+.about-hero-copy{max-width:900px;margin:0 auto;text-align:center}
+.about-local-badge{
+  display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);color:#2c5e61;
+  border:1px solid #d6ebe7;border-radius:999px;padding:10px 17px;font-size:.88rem;font-weight:750;
+  box-shadow:0 5px 18px rgba(11,36,64,.035)
+}
+.about-badge-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 4px rgba(47,190,160,.12)}
+.about-page-hero .about-title-motion{
+  display:block;margin:26px auto 17px;font-size:clamp(2.7rem,6vw,4.6rem);line-height:1.03;
+  letter-spacing:-.015em;font-weight:900;text-align:center;color:#102b43
+}
+.about-page-hero .hero-title-line{display:block;line-height:1.08;white-space:normal}
+.about-page-hero .hero-title-line-one,.about-page-hero .hero-title-line-one .hero-char{color:#102b43!important}
+.about-page-hero .hero-title-line-two,.about-page-hero .hero-title-line-two .hero-char{color:#1d9f87!important}
+.about-page-hero .hero-word{display:inline;white-space:normal;letter-spacing:inherit}
+.about-page-hero .hero-char{
+  display:inline-block;white-space:pre;color:inherit;opacity:0;transform:translate3d(-.34em,0,0);
+  animation:heroCharCycle 7.4s cubic-bezier(.2,.72,.25,1) var(--char-delay,0s) infinite both;will-change:transform,opacity
+}
+.about-hero-copy>p{max-width:760px;margin:0 auto;color:var(--muted);font-size:clamp(1.05rem,2.1vw,1.28rem);line-height:1.7}
+.about-profile-section{padding-top:54px;padding-bottom:64px}
+.about-profile{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr);gap:24px;align-items:stretch}
+.about-profile-card{padding:clamp(24px,3.3vw,38px);border-radius:26px}
+.about-profile-card .eyebrow{margin-bottom:12px}
+.about-profile-card h2{margin:0 0 17px;font-size:clamp(1.8rem,3vw,2.55rem);line-height:1.12;letter-spacing:-.025em;color:var(--navy)}
+.about-profile-card p{font-size:1rem;line-height:1.78;color:#465d6d;margin:0 0 17px}
+.about-profile-card p:last-child{margin-bottom:0}
+.about-logo-card{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:21px;
+  min-height:100%;padding:34px 25px;border-radius:28px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(145deg,#ffffff 0%,#f0faf7 100%);box-shadow:0 18px 45px rgba(11,36,64,.08)
+}
+.about-logo-card:before{
+  content:"";position:absolute;z-index:-2;width:310px;height:310px;max-width:90%;aspect-ratio:1;
+  left:50%;top:39%;transform:translate(-50%,-50%);border-radius:50%;background:rgba(47,190,160,.12)
+}
+.about-logo-card:after{
+  content:"";position:absolute;z-index:-3;inset:0;opacity:.58;pointer-events:none;
+  background-image:radial-gradient(circle,#d9e9e6 2px,transparent 2.5px);background-size:26px 26px
+}
+.about-logo-image-wrap{
+  width:min(270px,84%);aspect-ratio:1;display:grid;place-items:center;padding:24px;
+  border:1px solid rgba(217,233,230,.9);border-radius:32px;background:rgba(255,255,255,.88);
+  box-shadow:0 18px 38px rgba(11,36,64,.08)
+}
+.about-logo-image-wrap img{width:100%;height:100%;object-fit:contain;border-radius:0;background:transparent}
+.about-logo-caption{text-align:center;display:grid;gap:3px}
+.about-logo-caption .eyebrow{margin:0}
+.about-logo-caption strong{color:var(--navy);font-size:1.32rem;letter-spacing:.025em}
+.about-logo-caption small{color:var(--muted);font-size:.9rem}
+.about-highlight-card{grid-template-columns:minmax(0,1fr) auto}
+.about-highlight-mark{white-space:nowrap}
+.about-highlight-mark strong{display:block;font-size:1.7rem;line-height:1.15;margin-top:5px;color:#fff}
+.about-commitments-section{padding-top:64px}
+.about-commitments .feature-card{border-radius:22px;box-shadow:0 12px 30px rgba(11,36,64,.055)}
+.about-cta{gap:30px}
+/* Floating phone CTA: a gentle, continuous bob rather than a static badge. */
+.float-wa{animation:aboutPhoneFloat 2.8s ease-in-out infinite;will-change:transform,box-shadow}
+@keyframes aboutPhoneFloat{
+  0%,100%{transform:translate3d(0,0,0);box-shadow:0 18px 36px rgba(20,110,65,.28)}
+  50%{transform:translate3d(0,-8px,0);box-shadow:0 24px 42px rgba(20,110,65,.34)}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){.float-wa:hover{animation-play-state:paused;transform:translateY(-3px) scale(1.04)}}
+@media(max-width:760px){
+  .about-page-hero .page-hero-inner{padding:28px 0 36px}
+  .about-page-hero .breadcrumb{margin-bottom:16px}
+  .about-page-hero .about-title-motion{font-size:clamp(2.45rem,9vw,3.4rem);margin:22px auto 14px;letter-spacing:-.012em}
+  .about-hero-copy>p{font-size:1rem;line-height:1.65;padding:0 6px}
+  .about-profile-section{padding-top:30px;padding-bottom:42px}
+  .about-profile{grid-template-columns:1fr;gap:18px}
+  .about-profile-card{padding:24px 22px}
+  .about-profile-card p{font-size:.96rem;line-height:1.72}
+  .about-logo-card{min-height:0;padding:25px 20px;gap:14px;border-radius:24px}
+  .about-logo-image-wrap{width:min(220px,65%);padding:18px;border-radius:26px}
+  .about-logo-caption strong{font-size:1.2rem}
+  .about-highlight{padding-bottom:44px}
+  .about-highlight-card{grid-template-columns:1fr;gap:19px;padding:26px 23px;border-radius:25px}
+  .about-highlight-card h2{font-size:clamp(1.8rem,7vw,2.35rem)}
+  .about-highlight-mark{justify-self:start;white-space:normal}
+  .about-commitments-section{padding-top:42px}
+  .about-commitments{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .about-commitments .feature-card{padding:15px 13px}
+  .about-commitments .feature-card h3{font-size:.91rem;line-height:1.3}
+  .about-commitments .feature-card p{font-size:.78rem;line-height:1.48}
+  .about-cta-section{padding:44px 0 54px}
+  .about-cta{padding:25px 22px;border-radius:25px}
+}
+@media(max-width:380px){
+  .about-page-hero .about-title-motion{font-size:2.25rem;letter-spacing:-.01em}
+  .about-local-badge{font-size:.76rem;padding:9px 12px}
+  .about-commitments{gap:9px}
+  .about-commitments .feature-card{padding:12px 10px}
+  .about-commitments .feature-card .icon{width:38px;height:38px;font-size:1.1rem}
+  .about-commitments .feature-card h3{font-size:.84rem}
+  .about-commitments .feature-card p{font-size:.72rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .about-page-hero .hero-char{animation:none!important;opacity:1!important;transform:none!important;will-change:auto}
+  .float-wa{animation:none!important;will-change:auto}
+}
