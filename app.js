@@ -20,7 +20,7 @@ function initHeroLetterAnimation(){
 
   const words = Array.from(heading.querySelectorAll('.hero-word'));
   let characterIndex = 0;
-  const staggerSeconds = 0.055;
+  const staggerSeconds = 0.04;
 
   words.forEach((word, wordIndex) => {
     const text = word.textContent || '';

@@ -412,35 +412,87 @@ body.no-scroll{overflow:hidden}
 }
 
 
-/* ===== HOME HERO PER-LETTER SLIDE LOOP + WHATSAPP BRAND ICON ===== */
+/* ===== HOME HERO: CHAYO-INSPIRED LIGHT LAYOUT + ANANTA BRAND ===== */
+.hero-home{
+  color:var(--navy);
+  background-color:#fff;
+  background-image:radial-gradient(circle,rgba(47,190,160,.14) 1.25px,transparent 1.5px),linear-gradient(180deg,#fff 0%,#fcfefd 100%);
+  background-size:27px 27px,100% 100%;
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+.hero-home:before,.hero-home:after{display:none;content:none}
+.hero-home .hero-inner{display:block;width:min(1160px,92%);padding:58px 0 48px}
+.hero-home .hero-copy{width:100%;max-width:1040px;margin:0 auto;text-align:center;min-width:0}
+.hero-home .hero-local-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  color:#2c5e61;background:rgba(255,255,255,.94);
+  border:1px solid #d6ebe7;border-radius:999px;
+  padding:9px 16px;font-size:.88rem;font-weight:700;
+  box-shadow:0 5px 18px rgba(11,36,64,.035);
+}
+.hero-badge-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 4px rgba(47,190,160,.12)}
 .hero-home .hero-title-motion{
-  transform-origin:left center;
-  transition:text-shadow .28s ease;
+  display:block;margin:24px auto 16px;
+  font-size:clamp(2.45rem,5.8vw,4.4rem);
+  line-height:1.02;letter-spacing:-.045em;font-weight:900;
+  text-align:center;transform-origin:center;
+  transition:text-shadow .25s ease;
 }
-.hero-home .hero-title-line{display:block;line-height:1.02}
-.hero-home .hero-word{
-  display:inline-block;
-  white-space:nowrap;
-  opacity:1;
-  transform:none;
-  animation:none;
-}
+.hero-home .hero-title-line{display:block;line-height:1.04;white-space:normal}
+.hero-home .hero-title-line-one{color:#102b43}
+.hero-home .hero-title-line-two{color:#1d9f87}
+.hero-home .hero-word{display:inline;white-space:normal;opacity:1;transform:none;animation:none}
 .hero-home .hero-char{
-  display:inline-block;
-  opacity:0;
-  transform:translate3d(-.42em,0,0);
-  animation:heroCharCycle 8s cubic-bezier(.2,.72,.25,1) var(--char-delay,0s) infinite both;
+  display:inline-block;white-space:pre;color:inherit;
+  opacity:0;transform:translate3d(-.34em,0,0);
+  animation:heroCharCycle 7.4s cubic-bezier(.2,.72,.25,1) var(--char-delay,0s) infinite both;
   will-change:transform,opacity;
 }
+.hero-home .lead{
+  max-width:790px;margin:0 auto;
+  color:#172f42;font-size:clamp(1.02rem,1.8vw,1.22rem);
+  line-height:1.7;font-weight:450;
+}
+.hero-home .hero-benefits{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:24px;max-width:970px;margin:34px auto 0;
+}
+.hero-home .hero-benefit{min-width:0;padding:0 7px;text-align:center}
+.hero-home .hero-benefit-icon{
+  display:grid;place-items:center;width:56px;height:56px;margin:0 auto 12px;
+  border-radius:17px;color:#fff;
+  background:linear-gradient(145deg,#2fbea0 0%,#168e83 100%);
+  box-shadow:0 9px 20px rgba(29,159,135,.2);
+}
+.hero-home .hero-benefit-icon svg{display:block;width:27px;height:27px}
+.hero-home .hero-benefit h3{margin:0 0 4px;color:#102b43;font-size:1rem;font-weight:850;line-height:1.35}
+.hero-home .hero-benefit p{max-width:210px;margin:0 auto;color:#5c7183;font-size:.86rem;line-height:1.48}
+.hero-home .hero-btns{display:flex;justify-content:center;align-items:center;gap:14px;margin:34px auto 0}
+.hero-home .hero-btns .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:58px;min-width:190px;padding:14px 24px;
+  border-radius:999px;font-size:1rem;font-weight:850;
+  box-shadow:0 9px 22px rgba(11,36,64,.075);
+}
+.hero-home .hero-cta-main{background:#2fbea0;color:#073c36;box-shadow:0 10px 24px rgba(47,190,160,.22)}
+.hero-home .hero-cta-main svg{width:19px;height:19px;flex:none}
+.hero-home .hero-cta-secondary{background:#fff;color:#102b43;border:1px solid #dce9e8;box-shadow:0 5px 15px rgba(11,36,64,.045)}
+.hero-home .hero-cta-icon{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;background:#eaf7f4;color:#147f74}
+.hero-home .hero-cta-icon svg{display:block;width:19px;height:19px}
+.hero-home .hero-benefits-more{display:inline-flex;align-items:center;gap:6px;margin-top:19px;color:#187f75;font-size:.9rem;font-weight:800}
+.hero-home .hero-benefits-more span{transition:transform .2s ease}
+.hero-home .hero-benefits-more:hover span{transform:translateX(3px)}
+.hero-home .hero-btns .btn:hover{transform:translateY(-2px)}
 @keyframes heroCharCycle{
-  0%,5%{opacity:0;transform:translate3d(-.42em,0,0)}
-  12%{opacity:1;transform:translate3d(0,0,0)}
-  54%{opacity:1;transform:translate3d(0,0,0)}
-  63%{opacity:0;transform:translate3d(.42em,0,0)}
-  100%{opacity:0;transform:translate3d(.42em,0,0)}
+  0%,2%{opacity:0;transform:translate3d(-.34em,0,0)}
+  13%{opacity:1;transform:translate3d(0,0,0)}
+  62%{opacity:1;transform:translate3d(0,0,0)}
+  73%{opacity:0;transform:translate3d(.34em,0,0)}
+  100%{opacity:0;transform:translate3d(.34em,0,0)}
 }
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
-  .hero-home .hero-title-motion:hover{text-shadow:0 8px 26px rgba(47,190,160,.16)}
+  .hero-home .hero-title-motion:hover{text-shadow:0 7px 22px rgba(47,190,160,.13)}
 }
 .float-wa{transition:transform .2s ease,box-shadow .2s ease}
 .float-wa svg{display:block;width:30px;height:30px;overflow:visible}
@@ -448,7 +500,47 @@ body.no-scroll{overflow:hidden}
 .float-wa .wa-handset{fill:currentColor}
 .float-wa:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 20px 40px rgba(20,110,65,.36)}
 .float-wa:focus-visible{outline:3px solid rgba(47,190,160,.55);outline-offset:4px}
+@media (max-width:900px){
+  .hero-home .hero-inner{padding:48px 0 42px}
+  .hero-home .hero-benefits{gap:22px 16px}
+}
+@media (max-width:580px){
+  .hero-home .hero-inner{padding:38px 0 36px}
+  .hero-home .hero-local-badge{padding:8px 12px;font-size:.78rem}
+  .hero-home .hero-title-motion{font-size:clamp(2.25rem,8.2vw,2.75rem);letter-spacing:-.045em;margin:21px auto 15px}
+  .hero-home .hero-title-line{line-height:1.08}
+  .hero-home .lead{font-size:1rem;line-height:1.65;max-width:500px}
+  .hero-home .hero-benefits{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 12px;max-width:450px;margin-top:29px}
+  .hero-home .hero-benefit{padding:0 3px}
+  .hero-home .hero-benefit-icon{width:50px;height:50px;border-radius:15px;margin-bottom:9px}
+  .hero-home .hero-benefit-icon svg{width:24px;height:24px}
+  .hero-home .hero-benefit h3{font-size:.92rem;margin-bottom:3px}
+  .hero-home .hero-benefit p{font-size:.78rem;line-height:1.45}
+  .hero-home .hero-btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:29px}
+  .hero-home .hero-btns .btn{min-width:0;width:100%;min-height:55px;gap:7px;padding:11px 10px;font-size:.9rem;line-height:1.25}
+  .hero-home .hero-cta-icon{width:27px;height:27px}
+  .hero-home .hero-cta-icon svg{width:17px;height:17px}
+  .hero-home .hero-cta-main svg{width:17px;height:17px}
+  .hero-home .hero-benefits-more{margin-top:16px;font-size:.82rem}
+}
+@media (max-width:350px){
+  .hero-home .hero-title-motion{font-size:2.1rem}
+  .hero-home .hero-btns .btn{font-size:.83rem;padding-inline:7px}
+  .hero-home .hero-cta-icon{display:none}
+}
+.dark-mode .hero-home{
+  color:#fff;background-color:#0f2a42;
+  background-image:radial-gradient(circle,rgba(47,190,160,.16) 1.25px,transparent 1.5px),linear-gradient(180deg,#0f2a42 0%,#102f45 100%);
+}
+.dark-mode .hero-home .hero-local-badge{color:#e4f4f0;background:rgba(15,42,66,.88);border-color:#34566a}
+.dark-mode .hero-home .hero-title-line-one{color:#fff}
+.dark-mode .hero-home .lead{color:#e1ecf0}
+.dark-mode .hero-home .hero-benefit h3{color:#fff}
+.dark-mode .hero-home .hero-benefit p{color:#cbdbe6}
+.dark-mode .hero-home .hero-cta-secondary{background:#17384e;color:#fff;border-color:#3a5b6d}
+.dark-mode .hero-home .hero-cta-icon{background:#244b5c;color:#b9f1e4}
+.dark-mode .hero-home .hero-benefits-more{color:#74d9c2}
 @media (prefers-reduced-motion:reduce){
-  .hero-home .hero-char{animation:none!important;opacity:1;transform:none}
-  .hero-home .hero-title-motion,.float-wa{transition:none}
+  .hero-home .hero-char{animation:none!important;opacity:1;transform:none;will-change:auto}
+  .hero-home .hero-title-motion,.hero-home .hero-benefits-more span,.float-wa{transition:none}
 }
