@@ -43,7 +43,7 @@ function injectHeader(){
   const el=document.querySelector('[data-site-header]');
   if(!el) return;
   el.innerHTML=`
-    <div class="topbar"><div class="container inner"><span>ANANTA.NET — WiFi Hemat, Koneksi Mantap.</span><span>Internet rumahan lokal untuk Kalibendo, Bades, Gondoruso & sekitarnya.</span></div></div>
+    <div class="topbar"><div class="container inner"><span>ANANTA.NET — WiFi Hemat Koneksi Mantap</span><span>Internet rumahan lokal untuk Kalibendo, Bades, Gondoruso & sekitarnya.</span></div></div>
     <header class="navbar">
       <div class="container nav-inner">
         <a class="brand" href="index.html" aria-label="ANANTA.NET"><img src="assets/logo-ananta.png" alt="Logo ANANTA.NET"><span>ANANTA.NET</span></a>
@@ -73,10 +73,10 @@ function injectHeader(){
 function injectFooter(){
   const el=document.querySelector('[data-site-footer]'); if(!el) return;
   el.innerHTML=`<footer><div class="container"><div class="footer-grid">
-    <div><div class="footer-brand"><img src="assets/logo-ananta.png" alt="ANANTA.NET"><div><h4>ANANTA.NET</h4><div>WiFi Hemat, Koneksi Mantap.</div><p style="margin:8px 0 0;color:#b7c9d5">Layanan internet rumahan dengan pelayanan yang ramah, responsif, dan dukungan teknis.</p></div></div></div>
+    <div><div class="footer-brand"><img src="assets/logo-ananta.png" alt="ANANTA.NET"><div><h4>ANANTA.NET</h4><div>WiFi Hemat Koneksi Mantap</div><p style="margin:8px 0 0;color:#b7c9d5">Layanan internet rumahan dengan pelayanan yang ramah, responsif, dan dukungan teknis.</p></div></div></div>
     <div><h4>Menu</h4><div class="footer-links"><a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket Internet</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a></div></div>
     <div><h4>Didukung oleh</h4><div class="powered"><img src="assets/logo-chayo.png" alt="Logo CHAYO"><div><strong style="color:#fff">PT Chayo Anugrah Teknologi</strong><div>Internet powered by PT Chayo Anugrah Teknologi</div></div></div></div>
-  </div><div class="footer-bottom"><span>© 2026 ANANTA.NET. Seluruh hak dilindungi.</span><span>WiFi Hemat, Koneksi Mantap.</span></div></div></footer>`;
+  </div><div class="footer-bottom"><span>© 2026 ANANTA.NET. Seluruh hak dilindungi.</span><span>WiFi Hemat Koneksi Mantap</span></div></div></footer>`;
 }
 function initWhatsApp(){
   document.querySelectorAll('[data-wa]').forEach(btn=>btn.addEventListener('click',()=>{const msg=btn.dataset.wa || 'Halo Admin ANANTA.NET, saya ingin bertanya tentang layanan WiFi.'; window.open(waLink(msg),'_blank','noopener');}));

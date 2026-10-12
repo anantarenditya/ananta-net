@@ -1,12 +1,11 @@
-# ANANTA.NET Website v30
+# ANANTA.NET Website v31
 
-Versi v30 merapikan Home agar lebih ringkas seperti referensi CHAYO, dengan warna dan identitas ANANTA.NET tetap dipertahankan.
+Revisi homepage:
+- Judul hero: “WiFi Hemat Koneksi Mantap” tanpa koma.
+- Deskripsi hero dikembalikan ke kalimat panjang aslinya.
+- Empat keunggulan utama disusun 2x2 mengikuti referensi CHAYO.
+- Panel “Dipercaya oleh 250+ pelanggan” dan “4 paket · 20–100 Mbps” diperbesar agar lebih terbaca.
+- Empat kartu informasi tambahan diperbesar kembali dan memakai animasi mengambang yang lebih terlihat.
+- Jarak antarbagiannya diseimbangkan untuk layar HP dan desktop.
 
-- Deskripsi hero dipersingkat menjadi: “WiFi rumahan untuk belajar, kerja, streaming, dan gaming.”
-- Empat keunggulan utama ditampilkan dalam grid ikon 2×2 pada layar HP, tanpa kartu tinggi yang memenuhi satu baris.
-- Tombol “Lihat Paket” dan “Hubungi Admin” ditempatkan tepat di bawah keunggulan; pada layar HP tombol tersusun vertikal seperti referensi.
-- Panel “Dipercaya oleh 250+ pelanggan” dan “4 paket · 20–100 Mbps” diringkas menjadi satu panel dua kolom.
-- Empat chip informasi tambahan tetap tersedia, dengan teks lebih pendek dan animasi mengambang halus.
-- Tidak menampilkan rating bintang atau jumlah ulasan yang belum diverifikasi.
-
-Buka `index.html` dengan Live Server untuk melihat website secara lokal.
+Website statis HTML/CSS/JS. Deploy via GitHub branch `main` ke Cloudflare Pages.
