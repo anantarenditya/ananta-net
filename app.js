@@ -46,7 +46,6 @@ function injectHeader(){
   if(!el) return;
   el.classList.add('site-header-shell');
   el.innerHTML=`
-    <div class="topbar"><div class="container inner"><span>ANANTA.NET — WiFi Hemat Koneksi Mantap</span><span>Internet rumahan lokal untuk Kalibendo, Bades, Gondoruso & sekitarnya.</span></div></div>
     <header class="navbar">
       <div class="container nav-inner">
         <a class="brand" href="index.html" aria-label="ANANTA.NET"><img src="assets/logo-ananta.png" alt="Logo ANANTA.NET"><span>ANANTA.NET</span></a>
@@ -79,7 +78,7 @@ function injectHeader(){
     mobileNav.classList.remove('open');
     menuToggle?.setAttribute('aria-expanded','false');
   }));
-  // Keep the brand/navigation visible while scrolling. Collapse the utility topbar after scroll.
+  // Keep the brand and navigation visible while scrolling.
   const updateStickyHeader=()=>el.classList.toggle('is-scrolled',window.scrollY>28);
   updateStickyHeader();
   window.addEventListener('scroll',updateStickyHeader,{passive:true});
