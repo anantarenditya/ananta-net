@@ -574,3 +574,79 @@ body.no-scroll{overflow:hidden}
   .hero-home .hero-benefit{animation:none!important;transform:none!important}
   .hero-home .hero-title-motion,.hero-home .hero-benefits-more span,.float-wa{transition:none}
 }
+
+
+/* ===== ADDITIONAL FLOATING BENEFIT CHIPS (v24) =====
+   These are additive: the original ANANTA.NET benefit cards above are untouched. */
+.hero-home .hero-floating-highlights{
+  width:min(920px,100%);
+  margin:46px auto 8px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(18px,5vw,64px);
+  row-gap:42px;
+  align-items:center;
+  text-align:left;
+}
+.hero-home .floating-highlight{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+  padding:11px 14px;
+  border:1px solid #e3ecef;
+  border-radius:19px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 12px 23px rgba(11,36,64,.095);
+  animation:floatingHighlightDrift 5.6s ease-in-out infinite;
+  transition:box-shadow .2s ease,border-color .2s ease;
+}
+.hero-home .floating-highlight-two{transform:translateY(14px);animation-delay:-1.4s}
+.hero-home .floating-highlight-three{transform:translateY(-2px);animation-delay:-2.8s}
+.hero-home .floating-highlight-four{transform:translateY(12px);animation-delay:-4.2s}
+.hero-home .floating-highlight-icon{
+  display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;
+  border-radius:13px;color:#fff;box-shadow:0 5px 12px rgba(11,36,64,.13);
+}
+.hero-home .floating-highlight-icon svg{display:block;width:22px;height:22px}
+.hero-home .floating-icon-speed{background:linear-gradient(145deg,#28c4a4,#138d82)}
+.hero-home .floating-icon-area{background:linear-gradient(145deg,#147eaa,#2056a3)}
+.hero-home .floating-icon-check{background:linear-gradient(145deg,#2fbea0,#168e83)}
+.hero-home .floating-icon-chat{background:linear-gradient(145deg,#169f91,#0b796e)}
+.hero-home .floating-highlight-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+.hero-home .floating-highlight-copy strong{font-size:.91rem;line-height:1.3;font-weight:850;color:#102b43}
+.hero-home .floating-highlight-copy small{font-size:.76rem;line-height:1.35;color:#5c7183}
+@keyframes floatingHighlightDrift{
+  0%,100%{translate:0 0}
+  50%{translate:0 -8px}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .hero-home .floating-highlight:hover{animation-play-state:paused;border-color:#b8e5dc;box-shadow:0 17px 32px rgba(11,36,64,.13)}
+}
+@media (max-width:900px){
+  .hero-home .hero-floating-highlights{max-width:760px;column-gap:22px;row-gap:34px;margin-top:39px}
+  .hero-home .floating-highlight{gap:10px;padding:10px 12px}
+}
+@media (max-width:580px){
+  .hero-home .hero-floating-highlights{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:10px;row-gap:26px;margin-top:35px}
+  .hero-home .floating-highlight{gap:8px;padding:9px 8px;border-radius:16px;min-height:67px}
+  .hero-home .floating-highlight-icon{flex-basis:34px;width:34px;height:34px;border-radius:11px}
+  .hero-home .floating-highlight-icon svg{width:19px;height:19px}
+  .hero-home .floating-highlight-copy strong{font-size:.75rem;line-height:1.25}
+  .hero-home .floating-highlight-copy small{font-size:.64rem;line-height:1.3}
+  .hero-home .floating-highlight-two{transform:translateY(9px)}
+  .hero-home .floating-highlight-three{transform:translateY(-1px)}
+  .hero-home .floating-highlight-four{transform:translateY(8px)}
+}
+@media (max-width:350px){
+  .hero-home .hero-floating-highlights{grid-template-columns:1fr;max-width:310px;row-gap:15px}
+  .hero-home .floating-highlight{min-height:62px;padding:10px 12px}
+  .hero-home .floating-highlight-copy strong{font-size:.82rem}
+  .hero-home .floating-highlight-copy small{font-size:.7rem}
+}
+.dark-mode .hero-home .floating-highlight{background:#12384e;border-color:#31576b;box-shadow:0 12px 23px rgba(0,0,0,.2)}
+.dark-mode .hero-home .floating-highlight-copy strong{color:#fff}
+.dark-mode .hero-home .floating-highlight-copy small{color:#cbdbe6}
+@media (prefers-reduced-motion:reduce){
+  .hero-home .floating-highlight{animation:none!important;translate:none!important;transform:none!important}
+}

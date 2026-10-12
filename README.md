@@ -1,5 +1,5 @@
-# ANANTA.NET Website v23
+# ANANTA.NET Website v24
 
-Pembaruan halaman Home berdasarkan referensi Chayo: empat keunggulan dipindah ke bawah tombol “Lihat Paket” dan “Hubungi Admin”, kemudian ditampilkan sebagai kartu kecil horizontal dengan animasi mengambang halus. Link “Lihat semua keunggulan” tetap tersedia setelah kartu. Warna, copywriting, paket, dan halaman lainnya dipertahankan. Animasi otomatis dinonaktifkan bila perangkat meminta reduced motion.
+Perubahan v24 bersifat tambahan: kartu keunggulan ANANTA.NET yang sudah ada dipertahankan, dan ditambahkan empat kartu informasi bergaya floating/animated yang terinspirasi dari referensi CHAYO. Isi lainnya tetap menggunakan versi sebelumnya.
 
-Jalankan lokal dengan membuka `index.html` atau menggunakan Live Server.
+Buka `index.html` dengan Live Server untuk melihat website secara lokal.
