@@ -705,3 +705,64 @@ body.no-scroll{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   .hero-home .floating-highlight{animation:none!important;translate:none!important;will-change:auto}
 }
+
+
+/* ===== HOMEPAGE TRUST STRIP (v27) =====
+   Real customer count supplied by the business; package range replaces unverified review ratings. */
+.hero-home .hero-trust-card{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:min(790px,100%);
+  margin:25px auto 0;
+  padding:17px 20px;
+  gap:12px;
+  border:1px solid #d5e6ff;
+  border-radius:22px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 12px 25px rgba(11,36,64,.075);
+  text-align:left;
+}
+.hero-home .hero-trust-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  min-width:0;
+  padding:5px 8px;
+}
+.hero-home .hero-trust-item:first-child{border-right:1px solid #d9e9e6}
+.hero-home .hero-trust-icon{
+  display:grid;
+  place-items:center;
+  flex:0 0 42px;
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  color:#fff;
+  background:linear-gradient(145deg,#2fbea0 0%,#168e83 100%);
+  box-shadow:0 6px 14px rgba(29,159,135,.18);
+}
+.hero-home .hero-trust-icon-alt{background:linear-gradient(145deg,#168f84 0%,#0b766d 100%)}
+.hero-home .hero-trust-icon svg{display:block;width:22px;height:22px}
+.hero-home .hero-trust-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.hero-home .hero-trust-copy small{font-size:.79rem;line-height:1.35;color:#5c7183}
+.hero-home .hero-trust-copy strong{font-size:1.02rem;line-height:1.3;font-weight:900;color:#102b43;overflow-wrap:anywhere}
+.dark-mode .hero-home .hero-trust-card{background:#12384e;border-color:#31576b;box-shadow:0 12px 24px rgba(0,0,0,.2)}
+.dark-mode .hero-home .hero-trust-copy small{color:#cbdbe6}
+.dark-mode .hero-home .hero-trust-copy strong{color:#fff}
+.dark-mode .hero-home .hero-trust-item:first-child{border-color:#31576b}
+@media(max-width:580px){
+  .hero-home .hero-trust-card{margin-top:22px;padding:14px 10px;gap:6px;border-radius:19px}
+  .hero-home .hero-trust-item{gap:8px;padding:6px 3px;justify-content:flex-start}
+  .hero-home .hero-trust-icon{flex-basis:34px;width:34px;height:34px;border-radius:11px}
+  .hero-home .hero-trust-icon svg{width:19px;height:19px}
+  .hero-home .hero-trust-copy small{font-size:.68rem}
+  .hero-home .hero-trust-copy strong{font-size:.78rem;line-height:1.35}
+}
+@media(max-width:370px){
+  .hero-home .hero-trust-card{grid-template-columns:1fr;max-width:340px;gap:4px}
+  .hero-home .hero-trust-item{justify-content:flex-start;padding:7px 10px}
+  .hero-home .hero-trust-item:first-child{border-right:0;border-bottom:1px solid #d9e9e6;padding-bottom:11px}
+  .dark-mode .hero-home .hero-trust-item:first-child{border-bottom-color:#31576b}
+  .hero-home .hero-trust-copy strong{font-size:.86rem}
+}
