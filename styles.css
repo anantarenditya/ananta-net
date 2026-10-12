@@ -1728,3 +1728,42 @@ body.no-scroll{overflow:hidden}
   .about-logo-message{font-size:.95rem;}
 }
 @media(prefers-reduced-motion:reduce){.about-logo-message{animation:none!important;}}
+
+
+/* Final About page refinements: stronger two-tone title, green underline, logo above profile copy on mobile. */
+.about-page-hero .about-title-motion{
+  font-size:clamp(2.4rem,5.8vw,4.45rem);
+  letter-spacing:-.025em;
+  white-space:nowrap;
+  line-height:1.05;
+}
+.about-page-hero .about-title-motion .hero-title-line{display:inline;white-space:nowrap;}
+.about-page-hero .about-title-motion .hero-title-line-two{margin-left:.2em;}
+.about-page-hero .about-title-motion .hero-title-line-one,
+.about-page-hero .about-title-motion .hero-title-line-one .hero-char{color:#102b43!important;}
+.about-page-hero .about-title-motion .hero-title-line-two,
+.about-page-hero .about-title-motion .hero-title-line-two .hero-char{color:#1d9f87!important;}
+.about-profile-card h2.about-profile-heading span{
+  color:#102b43!important;
+  background:none!important;
+  -webkit-background-clip:initial!important;background-clip:initial!important;
+  -webkit-text-fill-color:#102b43!important;
+}
+.about-profile-card h2.about-profile-heading::after{
+  width:82px;height:5px;
+  background:linear-gradient(90deg,#2fbea0 0%,#1d9f87 100%)!important;
+}
+.about-logo-message{display:none!important;}
+.about-logo-stage{padding:28px 0 34px;min-height:340px;}
+@media(max-width:760px){
+  .about-page-hero .about-title-motion{font-size:clamp(2rem,7.5vw,2.9rem);letter-spacing:-.025em;}
+  .about-profile .about-logo-card{order:-1;}
+  .about-profile .about-profile-card{order:2;}
+  .about-logo-stage{padding:24px 0 30px;min-height:310px;}
+  .about-logo-stage .about-logo-image-wrap{width:min(220px,64%);padding:18px;border-radius:25px;}
+}
+@media(max-width:380px){
+  .about-page-hero .about-title-motion{font-size:1.75rem;letter-spacing:-.035em;}
+  .about-page-hero .about-title-motion .hero-title-line-two{margin-left:.16em;}
+  .about-logo-stage{min-height:290px;padding:22px 0 28px;}
+}
