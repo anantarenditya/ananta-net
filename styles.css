@@ -1909,6 +1909,7 @@ body.no-scroll{overflow:hidden}
 .ananta-map-pin{position:relative;display:grid;place-items:center;width:28px;height:28px;border:3px solid #fff;border-radius:50% 50% 50% 0;background:linear-gradient(145deg,#2fbea0,#168f84);box-shadow:0 7px 14px rgba(11,36,64,.25);transform:rotate(-45deg);transition:width .2s ease,height .2s ease,box-shadow .2s ease}
 .ananta-map-pin span{display:block;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.16)}
 .ananta-map-pin.is-selected{width:32px;height:32px;background:linear-gradient(145deg,#20c9a7,#0c7e77);box-shadow:0 0 0 6px rgba(47,190,160,.19),0 8px 17px rgba(11,36,64,.28)}
+.ananta-map-pin.is-dimmed{opacity:.38;filter:saturate(.65);transform:rotate(-45deg) scale(.92);}
 .ananta-map-popup{display:grid;gap:6px;min-width:135px}
 .ananta-map-popup strong{font-size:13px;color:#102b43}
 .ananta-map-popup a{color:#167f78;font-size:12px;font-weight:800;text-decoration:none}
@@ -1943,7 +1944,7 @@ body.no-scroll{overflow:hidden}
 .map-area-label.is-dimmed:hover,.map-area-label.is-dimmed:focus-visible{opacity:.86;filter:none;transform:translateY(-4px) scale(1);}
 .map-area-chip{appearance:none;-webkit-appearance:none;cursor:pointer;font-family:inherit;font-size:.72rem;font-weight:800;line-height:1.2;pointer-events:auto;transition:transform .2s ease,background-color .2s ease,box-shadow .2s ease;border-color:rgba(22,143,128,.14)!important;}
 .map-area-chip:hover,.map-area-chip:focus-visible{transform:translateY(-2px);background:#fff;box-shadow:0 10px 24px rgba(11,36,64,.16);outline:2px solid rgba(22,143,128,.2);outline-offset:2px;}
-.map-area-chip-dot{border-color:#e34f58!important;}
+.map-area-chip-dot{width:8px!important;height:8px!important;flex:0 0 8px!important;border:0!important;border-radius:50%!important;background:#2fbea0!important;box-shadow:0 0 0 3px rgba(47,190,160,.14)!important;}
 @media(max-width:580px){
   .map-area-label{font-size:11px;padding:7px 9px;gap:5px;}
   .map-area-label-dot{width:6px;height:6px;flex-basis:6px;}

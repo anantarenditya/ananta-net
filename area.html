@@ -150,52 +150,47 @@
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
     }).addTo(serviceMap);
 
-    // Batas ilustratif per wilayah, mengikuti referensi pengguna: setiap desa memiliki
-    // kontur merah putus-putus sendiri. Ini bukan batas administrasi resmi.
-    const areaBoundaryCoords = {
-      Kalibendo: [
-        [-8.2168,113.0885],[-8.2149,113.0935],[-8.2167,113.0982],[-8.2156,113.1021],
-        [-8.2192,113.1062],[-8.2238,113.1076],[-8.2271,113.1052],[-8.2304,113.1057],
-        [-8.2342,113.1010],[-8.2338,113.0964],[-8.2298,113.0918],[-8.2263,113.0894],
-        [-8.2215,113.0868],[-8.2188,113.0874],[-8.2168,113.0885]
-      ],
-      Bades: [
-        [-8.2230,113.1097],[-8.2210,113.1150],[-8.2248,113.1202],[-8.2274,113.1262],
-        [-8.2311,113.1282],[-8.2350,113.1264],[-8.2398,113.1284],[-8.2445,113.1235],
-        [-8.2484,113.1204],[-8.2471,113.1144],[-8.2437,113.1102],[-8.2390,113.1090],
-        [-8.2348,113.1091],[-8.2292,113.1089],[-8.2258,113.1092],[-8.2230,113.1097]
-      ],
-      Gondoruso: [
-        [-8.2320,113.0556],[-8.2288,113.0615],[-8.2317,113.0675],[-8.2297,113.0730],
-        [-8.2330,113.0780],[-8.2370,113.0835],[-8.2432,113.0848],[-8.2485,113.0803],
-        [-8.2527,113.0750],[-8.2503,113.0675],[-8.2487,113.0608],[-8.2444,113.0560],
-        [-8.2388,113.0542],[-8.2346,113.0548],[-8.2320,113.0556]
-      ]
-    };
-    const areaBoundaries = {};
-    const boundaryStyle = {color:'#e34f58', weight:3, opacity:.96, dashArray:'1 6', lineCap:'round', lineJoin:'round', fillColor:'#e34f58', fillOpacity:.045, bubblingMouseEvents:false, className:'area-service-boundary'};
-    Object.keys(areaBoundaryCoords).forEach(function(name){
-      const layer = L.polygon(areaBoundaryCoords[name], Object.assign({}, boundaryStyle)).addTo(serviceMap);
-      layer.bindTooltip(name + ' · ilustrasi area layanan', {sticky:true, direction:'top', className:'area-boundary-tooltip', opacity:.98});
-      layer.on('click', function(){ updateArea(selectedArea === name ? null : name, false); });
-      areaBoundaries[name] = layer;
-    });
-    const allAreaBounds = L.featureGroup(Object.values(areaBoundaries)).getBounds();
-
-    // Label nama desa menggantikan pin. Klik nama untuk memilih area.
-    const labelPositions = {
-      Kalibendo: [-8.2268,113.0995],
-      Bades: [-8.2370,113.1140],
-      Gondoruso: [-8.2410,113.0710]
-    };
+    // Kembali ke penanda titik per lokasi; tidak ada polygon atau garis batas buatan.
     function areaIcon(name){
       const selected = selectedArea === name;
       const dimmed = !!selectedArea && !selected;
-      const cls = 'map-area-label' + (selected ? ' is-selected' : '') + (dimmed ? ' is-dimmed' : '');
-      const html = '<button type="button" class="' + cls + '" aria-pressed="' + selected + '" aria-label="Pilih area ' + name + '"><span class="map-area-label-dot"></span><span>' + name + '</span></button>';
-      return L.divIcon({className:'area-name-marker', html:html, iconSize:[148,42], iconAnchor:[74,21]});
+      const pinClasses = 'ananta-map-pin' + (selected ? ' is-selected' : '') + (dimmed ? ' is-dimmed' : '');
+      const size = selected ? [38,46] : [34,42];
+      const anchor = selected ? [19,43] : [17,39];
+      return L.divIcon({
+        className:'ananta-map-pin-wrap',
+        html:'<span class="' + pinClasses + '"><span></span></span>',
+        iconSize:size,
+        iconAnchor:anchor,
+        popupAnchor:[0, selected ? -41 : -37]
+      });
     }
-    function renderLabels(){
+
+    function popupContent(name){
+      const url = mapsUrlFor(name);
+      return '<div class="ananta-map-popup"><strong>' + areas[name].label + '</strong><a href="' + url + '" target="_blank" rel="noopener">Buka di Google Maps ↗</a></div>';
+    }
+
+    Object.keys(areas).forEach(function(name){
+      const area = areas[name];
+      const marker = L.marker([area.lat, area.lng], {
+        icon:areaIcon(name), keyboard:true, title:'Pilih ' + area.label, alt:area.label, riseOnHover:true
+      }).addTo(serviceMap);
+      marker.bindPopup(popupContent(name));
+      marker.on('click', function(){
+        const nextArea = selectedArea === name ? null : name;
+        updateArea(nextArea, nextArea === null);
+        if (nextArea) marker.openPopup();
+        else serviceMap.closePopup();
+      });
+      nameMarkers[name] = marker;
+    });
+
+    const allAreaBounds = L.latLngBounds(Object.keys(areas).map(function(name){
+      return [areas[name].lat, areas[name].lng];
+    }));
+
+    function renderMarkers(){
       Object.keys(areas).forEach(function(name){
         if (!nameMarkers[name]) return;
         nameMarkers[name].setIcon(areaIcon(name));
@@ -204,13 +199,14 @@
       if (chipLabel) chipLabel.textContent = selectedArea ? 'Tampilkan semua area' : 'Area layanan utama';
       if (resetButton) resetButton.setAttribute('aria-label', selectedArea ? 'Reset dan tampilkan seluruh area layanan' : 'Area layanan utama');
     }
+
     function updateArea(name, fitAll){
       selectedArea = areas[name] ? name : null;
       const url = mapsUrlFor(selectedArea);
       select.value = selectedArea || 'semua';
       if (result) result.textContent = selectedArea
         ? areas[selectedArea].label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.'
-        : 'Menampilkan seluruh cakupan utama. Pilih nama desa pada peta untuk melihat area yang diinginkan.';
+        : 'Menampilkan tiga penanda lokasi. Pilih titik pada peta atau gunakan pemilih wilayah di bawahnya.';
       if (openMapsBtn) {
         openMapsBtn.textContent = selectedArea ? 'Buka ' + selectedArea + ' di Google Maps ↗' : 'Buka seluruh area di Google Maps ↗';
         openMapsBtn.onclick = function(){ window.open(url, '_blank', 'noopener'); };
@@ -220,32 +216,12 @@
         mapGoogleLink.textContent = selectedArea ? 'Buka ' + selectedArea + ' ↗' : 'Buka seluruh area ↗';
         mapGoogleLink.setAttribute('aria-label', selectedArea ? 'Buka ' + selectedArea + ' di Google Maps' : 'Buka seluruh area layanan di Google Maps');
       }
-      renderLabels();
-      Object.keys(areaBoundaries).forEach(function(areaName){
-        const isSelected = selectedArea === areaName;
-        const isDimmed = !!selectedArea && !isSelected;
-        areaBoundaries[areaName].setStyle({
-          color: '#e34f58',
-          weight: isSelected ? 4 : 3,
-          opacity: isDimmed ? .22 : .96,
-          fillColor: '#e34f58',
-          fillOpacity: isSelected ? .13 : (isDimmed ? .008 : .045)
-        });
-        if (isSelected) areaBoundaries[areaName].bringToFront();
-      });
-      if (fitAll) serviceMap.fitBounds(allAreaBounds, {padding:[18,18], maxZoom:12, animate:true, duration:.45});
+      renderMarkers();
+      if (fitAll) serviceMap.fitBounds(allAreaBounds, {padding:[42,42], maxZoom:12, animate:true, duration:.45});
+      else if (selectedArea) serviceMap.panTo([areas[selectedArea].lat, areas[selectedArea].lng], {animate:true, duration:.35});
     }
 
-    Object.keys(areas).forEach(function(name){
-      const marker = L.marker(labelPositions[name], {icon:areaIcon(name), keyboard:true, title:'Pilih area ' + name, riseOnHover:true, bubblingMouseEvents:false}).addTo(serviceMap);
-      marker.on('click', function(event){
-        if (event && event.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
-        updateArea(selectedArea === name ? null : name, false);
-      });
-      nameMarkers[name] = marker;
-    });
-
-    serviceMap.fitBounds(allAreaBounds, {padding:[18,18], maxZoom:12});
+    serviceMap.fitBounds(allAreaBounds, {padding:[42,42], maxZoom:12});
     select.addEventListener('change', function(){ updateArea(select.value === 'semua' ? null : select.value, select.value === 'semua'); });
     if (resetButton) resetButton.addEventListener('click', function(){ updateArea(null, true); });
     updateArea(null, false);
