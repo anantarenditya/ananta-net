@@ -84,19 +84,33 @@ function injectHeader(){
     if (/ananta\.net/.test(text) && /home/.test(text)) return 'index.html';
     return '';
   };
-  // Prefer the actual filename; use canonical URL and page labels as fallbacks
-  // for Cloudflare aliases, trailing slashes, and browser-cached route variants.
+  // Resolve the active item using the strongest signal first. Breadcrumbs
+  // describe the content actually rendered and must win over a generic title
+  // such as "Home — ANANTA.NET" that can be cached/reused by a hosting alias.
   const validTargets = new Set(Array.from(el.querySelectorAll('[data-nav]')).map(a => a.getAttribute('data-nav')));
-  const textRoute = routeFromText(titleText) || routeFromText(breadcrumbText);
-  // Root/alias URLs may still render a non-home static page on hosting platforms;
-  // prefer canonical URL or visible page labels over a false default to Home.
-  let activePath = validTargets.has(pathnameFile) ? pathnameFile : '';
-  if ((!activePath || (activePath === 'index.html' && textRoute && textRoute !== 'index.html')) && validTargets.has(canonicalFile)) {
+  const breadcrumbRoute = routeFromText(breadcrumbText);
+  const titleRoute = routeFromText(titleText);
+  let activePath = '';
+
+  // 1) Explicit, non-root pathname is the most reliable signal.
+  if (pathnameFile !== 'index.html' && validTargets.has(pathnameFile)) {
+    activePath = pathnameFile;
+  }
+  // 2) If the browser is using / or index.html for an alias, trust the
+  // current page breadcrumb (e.g. "Home / Paket Internet") over Home defaults.
+  if ((!activePath || activePath === 'index.html') && breadcrumbRoute && breadcrumbRoute !== 'index.html') {
+    activePath = breadcrumbRoute;
+  }
+  // 3) Use a specific canonical path only if it points to a non-home page.
+  if ((!activePath || activePath === 'index.html') && canonicalFile && canonicalFile !== 'index.html' && validTargets.has(canonicalFile)) {
     activePath = canonicalFile;
   }
-  if (!activePath || (activePath === 'index.html' && textRoute && textRoute !== 'index.html')) {
-    activePath = textRoute || activePath || 'index.html';
+  // 4) Use specific title text as the final content-based fallback.
+  if ((!activePath || activePath === 'index.html') && titleRoute && titleRoute !== 'index.html') {
+    activePath = titleRoute;
   }
+  // Home is only the final default when no other signal identifies a page.
+  if (!activePath) activePath = breadcrumbRoute || titleRoute || 'index.html';
   if (activePath === 'detail-paket.html') activePath = 'paket.html';
   el.querySelectorAll('[data-nav]').forEach(a=>{
     const target = fileName(a.getAttribute('data-nav'));
