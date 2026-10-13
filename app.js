@@ -1,4 +1,4 @@
-const WA_NUMBER = '6285803004649';
+const WA_NUMBER = '6287868933969';
 const WA_BASE = `https://wa.me/${WA_NUMBER}`;
 
 const packages = [
