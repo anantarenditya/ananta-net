@@ -1,16 +1,15 @@
-ANANTA.NET — Pembaruan FAQ dan Syarat & Ketentuan
+ANANTA.NET — Pembaruan Halaman Kontak
 
 Perubahan:
-- Halaman FAQ dan Syarat & Ketentuan diselaraskan dengan gaya halaman Home, Paket Internet, dan Area Layanan.
-- Heading menggunakan animasi per huruf dengan warna navy dan teal.
-- Latar berpola titik lembut, badge, kartu, ikon, jarak, dan responsivitas mengikuti identitas ANANTA.NET.
-- FAQ tetap memuat 8 pertanyaan utama; tautan terkait mengarah ke halaman Paket, Cara Berlangganan, dan Area Layanan.
-- Syarat & Ketentuan tetap memuat 9 bagian dalam accordion.
-- Accordion mendukung aria-expanded, aria-hidden, inert, klik/tap, dan tinggi panel yang menyesuaikan isi.
-- Logo asli, header, footer, tautan WhatsApp, gambar, dan halaman lainnya tetap disertakan.
+- Halaman Kontak diselaraskan dengan identitas visual halaman Home, Paket Internet, Area Layanan, FAQ, dan S&K.
+- Menggunakan hero dengan warna navy-teal, latar berpola lembut, breadcrumb, dan animasi judul per huruf.
+- Kontak WhatsApp Admin dan Area Layanan ditampilkan dalam kartu yang responsif dengan ikon telepon/pin yang konsisten.
+- Menghapus logo CHAYO dan teks "Internet powered by PT Chayo Anugrah Teknologi" dari isi halaman Kontak. Bagian "Didukung oleh" di footer utama tetap dipertahankan.
+- Pintasan ke Paket Internet, Cara Berlangganan, dan FAQ ditambahkan.
+- Logo asli ANANTA.NET, navigasi, tombol kontak melayang, halaman lain, dan aset situs dipertahankan.
 
 Pemasangan:
 1. Extract ZIP.
 2. Salin seluruh isi ke repository ananta-net. Pertahankan folder .git.
-3. Jalankan git add ., git commit -m "Refresh FAQ and terms pages", lalu git push origin main.
-4. Tunggu Cloudflare Pages selesai deployment.
+3. Jalankan git add ., git commit -m "Refresh contact page design", lalu git push origin main.
+4. Tunggu deployment Cloudflare Pages selesai.
