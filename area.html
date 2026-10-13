@@ -56,7 +56,7 @@
             <div class="area-map-wrap compact-map">
               <div class="area-leaflet-shell">
                 <div id="serviceMap" class="area-leaflet-map" role="application" aria-label="Peta interaktif wilayah layanan ANANTA.NET"></div>
-                <div class="map-area-chip" aria-hidden="true"><span class="map-area-chip-dot"></span>Area layanan utama</div>
+                <button id="resetAreaSelection" class="map-area-chip" type="button" aria-label="Tampilkan seluruh area layanan"><span class="map-area-chip-dot"></span><span data-map-area-chip-label>Area layanan utama</span></button>
               </div>
             </div>
             <div class="area-map-bottom">
@@ -82,6 +82,7 @@
             <div class="form-row area-select-row">
               <label for="areaSelect">Pilih wilayah untuk melihat peta</label>
               <select id="areaSelect">
+                <option value="semua" selected>Semua area layanan</option>
                 <option value="Kalibendo">Kalibendo</option>
                 <option value="Bades">Bades</option>
                 <option value="Gondoruso">Gondoruso</option>
@@ -123,6 +124,8 @@
     const result = document.querySelector('[data-area-result]');
     const openMapsBtn = document.getElementById('openMapsBtn');
     const mapGoogleLink = document.getElementById('mapGoogleLink');
+    const resetButton = document.getElementById('resetAreaSelection');
+    const chipLabel = document.querySelector('[data-map-area-chip-label]');
     if (!mapElement || !select || !window.L) return;
 
     const areas = {
@@ -130,79 +133,96 @@
       Bades: {lat:-8.2342, lng:113.1095, label:'Desa Bades'},
       Gondoruso: {lat:-8.2423, lng:113.0714, label:'Desa Gondoruso'}
     };
+    const allAreaUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Kalibendo, Bades, Gondoruso, Lumajang, Jawa Timur');
+    const nameMarkers = {};
+    let selectedArea = null;
 
     function mapsUrlFor(name){
+      if (!name || !areas[name]) return allAreaUrl;
       const area = areas[name];
       return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(area.lat + ',' + area.lng);
     }
 
-    const serviceMap = L.map(mapElement, {
-      zoomControl: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: true,
-      keyboard: true,
-      tap: true
-    });
+    const serviceMap = L.map(mapElement, {zoomControl:false, scrollWheelZoom:false, doubleClickZoom:true, keyboard:true, tap:true});
     L.control.zoom({position:'bottomright'}).addTo(serviceMap);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
+      maxZoom:19,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
     }).addTo(serviceMap);
 
-    // Satu batas ilustratif yang mengelilingi cakupan utama Kalibendo, Bades, dan Gondoruso.
-    // Ini bukan batas administrasi resmi; ketersediaan pemasangan tetap dikonfirmasi per alamat.
-    const serviceBoundaryCoordinates = [
-      [-8.2215, 113.0945],
-      [-8.2220, 113.1040],
-      [-8.2250, 113.1120],
-      [-8.2315, 113.1170],
-      [-8.2380, 113.1145],
-      [-8.2455, 113.1050],
-      [-8.2490, 113.0930],
-      [-8.2505, 113.0795],
-      [-8.2480, 113.0705],
-      [-8.2445, 113.0655],
-      [-8.2365, 113.0640],
-      [-8.2290, 113.0730],
-      [-8.2240, 113.0830],
-      [-8.2215, 113.0900]
+    // Satu batas ilustratif mencakup ketiga desa; bukan batas administrasi resmi.
+    const boundaryCoords = [
+      [-8.2215,113.0945],[-8.2220,113.1040],[-8.2250,113.1120],[-8.2315,113.1170],
+      [-8.2380,113.1145],[-8.2455,113.1050],[-8.2490,113.0930],[-8.2505,113.0795],
+      [-8.2480,113.0705],[-8.2445,113.0655],[-8.2365,113.0640],[-8.2290,113.0730],
+      [-8.2240,113.0830],[-8.2215,113.0900]
     ];
-
-    const serviceBoundary = L.polygon(serviceBoundaryCoordinates, {
-      color: '#168f80',
-      weight: 3,
-      opacity: 0.95,
-      dashArray: '9 8',
-      lineCap: 'round',
-      lineJoin: 'round',
-      fillColor: '#31bda1',
-      fillOpacity: 0.13,
-      interactive: false,
-      className: 'area-service-boundary'
+    const serviceBoundary = L.polygon(boundaryCoords, {
+      color:'#e34f58', weight:3, opacity:.98, dashArray:'8 7', lineCap:'round', lineJoin:'round',
+      fillColor:'#e34f58', fillOpacity:.055, bubblingMouseEvents:false, className:'area-service-boundary'
     }).addTo(serviceMap);
+    serviceBoundary.bindTooltip('Area layanan utama: Kalibendo · Bades · Gondoruso', {sticky:true, direction:'top', className:'area-boundary-tooltip', opacity:.98});
 
-    // Tampilkan seluruh area pada awalnya sehingga garis putus-putus tidak terpotong.
-    serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[18,18], maxZoom:13});
-
-    function updateArea(name){
-      const area = areas[name];
-      if(!area) return;
-      const mapsUrl = mapsUrlFor(name);
-      if (result) result.textContent = area.label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.';
-      if (openMapsBtn) openMapsBtn.onclick = function(){ window.open(mapsUrl, '_blank', 'noopener'); };
-      if (mapGoogleLink) {
-        mapGoogleLink.href = mapsUrl;
-        mapGoogleLink.textContent = 'Buka ' + name + ' ↗';
-        mapGoogleLink.setAttribute('aria-label', 'Buka ' + name + ' di Google Maps');
+    // Label nama desa menggantikan pin. Klik nama untuk memilih area.
+    const labelPositions = {
+      Kalibendo: [-8.2268,113.0995],
+      Bades: [-8.2370,113.1140],
+      Gondoruso: [-8.2410,113.0710]
+    };
+    function areaIcon(name){
+      const selected = selectedArea === name;
+      const dimmed = !!selectedArea && !selected;
+      const cls = 'map-area-label' + (selected ? ' is-selected' : '') + (dimmed ? ' is-dimmed' : '');
+      const html = '<button type="button" class="' + cls + '" aria-pressed="' + selected + '" aria-label="Pilih area ' + name + '"><span class="map-area-label-dot"></span><span>' + name + '</span></button>';
+      return L.divIcon({className:'area-name-marker', html:html, iconSize:[148,42], iconAnchor:[74,21]});
+    }
+    function renderLabels(){
+      Object.keys(areas).forEach(function(name){
+        if (!nameMarkers[name]) return;
+        nameMarkers[name].setIcon(areaIcon(name));
+        nameMarkers[name].setZIndexOffset(selectedArea === name ? 1000 : 0);
+      });
+      if (chipLabel) chipLabel.textContent = selectedArea ? 'Tampilkan semua area' : 'Area layanan utama';
+      if (resetButton) resetButton.setAttribute('aria-label', selectedArea ? 'Reset dan tampilkan seluruh area layanan' : 'Area layanan utama');
+    }
+    function updateArea(name, fitAll){
+      selectedArea = areas[name] ? name : null;
+      const url = mapsUrlFor(selectedArea);
+      select.value = selectedArea || 'semua';
+      if (result) result.textContent = selectedArea
+        ? areas[selectedArea].label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.'
+        : 'Menampilkan seluruh cakupan utama. Pilih nama desa pada peta untuk melihat area yang diinginkan.';
+      if (openMapsBtn) {
+        openMapsBtn.textContent = selectedArea ? 'Buka ' + selectedArea + ' di Google Maps ↗' : 'Buka seluruh area di Google Maps ↗';
+        openMapsBtn.onclick = function(){ window.open(url, '_blank', 'noopener'); };
       }
+      if (mapGoogleLink) {
+        mapGoogleLink.href = url;
+        mapGoogleLink.textContent = selectedArea ? 'Buka ' + selectedArea + ' ↗' : 'Buka seluruh area ↗';
+        mapGoogleLink.setAttribute('aria-label', selectedArea ? 'Buka ' + selectedArea + ' di Google Maps' : 'Buka seluruh area layanan di Google Maps');
+      }
+      renderLabels();
+      if (fitAll) serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[22,22], maxZoom:13, animate:true, duration:.4});
     }
 
-    updateArea(select.value);
-    select.addEventListener('change', function(){ updateArea(select.value); });
+    Object.keys(areas).forEach(function(name){
+      const marker = L.marker(labelPositions[name], {icon:areaIcon(name), keyboard:true, title:'Pilih area ' + name, riseOnHover:true, bubblingMouseEvents:false}).addTo(serviceMap);
+      marker.on('click', function(event){
+        if (event && event.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
+        updateArea(selectedArea === name ? null : name, false);
+      });
+      nameMarkers[name] = marker;
+    });
+
+    serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[22,22], maxZoom:13});
+    serviceBoundary.on('click', function(){ if (selectedArea) updateArea(null, true); });
+    select.addEventListener('change', function(){ updateArea(select.value === 'semua' ? null : select.value, select.value === 'semua'); });
+    if (resetButton) resetButton.addEventListener('click', function(){ updateArea(null, true); });
+    updateArea(null, false);
     window.setTimeout(function(){ serviceMap.invalidateSize(); }, 150);
     window.addEventListener('resize', function(){ serviceMap.invalidateSize(); }, {passive:true});
   });
   </script>
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

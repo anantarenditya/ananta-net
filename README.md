@@ -1,12 +1,10 @@
-# ANANTA.NET — Area Layanan
+ANANTA.NET — Area Layanan
 
-Pembaruan halaman Area Layanan:
-- Mempertahankan peta Leaflet interaktif dengan tile OpenStreetMap.
-- Mengganti tiga pin lokasi dengan satu poligon area layanan bergaris putus-putus yang melingkupi Kalibendo, Bades, dan Gondoruso.
-- Menggunakan isian teal transparan untuk membedakan cakupan area dari peta dasar.
-- Menampilkan legenda garis putus-putus yang ringkas serta atribusi © OpenStreetMap contributors.
-- Pemilih wilayah dan tautan Google Maps di bawah peta tetap berfungsi.
+Perubahan:
+- Garis putus-putus merah mengelilingi cakupan utama Kalibendo, Bades, dan Gondoruso sebagai ilustrasi area layanan.
+- Nama desa tampil sebagai label yang dapat diklik, bukan pin titik.
+- Label yang dipilih naik sedikit dan disorot, sedangkan label lain dibuat lebih redup/blur.
+- Klik nama yang sedang aktif atau tombol “Tampilkan semua area” untuk mengembalikan tampilan awal.
+- Pemilih wilayah dan tautan Google Maps ikut menyesuaikan wilayah yang dipilih.
 
-Batas pada peta bersifat ilustratif untuk menunjukkan cakupan utama, bukan batas administrasi resmi. Ketersediaan pemasangan tetap perlu dikonfirmasi berdasarkan alamat.
-
-Untuk menerapkan, salin isi arsip ke repository ANANTA.NET tanpa menghapus folder `.git`, lalu commit dan push. Peta membutuhkan koneksi internet karena tile berasal dari OpenStreetMap.
+Catatan: garis area merupakan ilustrasi cakupan, bukan batas administrasi resmi. Ketersediaan pemasangan tetap perlu dikonfirmasi berdasarkan alamat rumah.
