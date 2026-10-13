@@ -2463,13 +2463,15 @@ main{
 }
 
 
-/* ===== HOME SCROLL + FOOTER VISIBILITY FIX (MOBILE) ===== */
+/* ===== HOME SCROLL + FOOTER VISIBILITY + STICKY HEADER FIX (MOBILE) ===== */
 html{
   height:auto !important;
   min-height:100% !important;
   max-height:none !important;
-  overflow-x:hidden !important;
-  overflow-y:auto !important;
+  /* clip hides horizontal overflow without creating the extra scroll container
+     that can prevent position:sticky headers from sticking on the Home page. */
+  overflow-x:clip !important;
+  overflow-y:visible !important;
   scroll-padding-bottom:32px;
 }
 body.home-page{
@@ -2477,9 +2479,15 @@ body.home-page{
   min-height:100vh !important;
   min-height:100dvh !important;
   max-height:none !important;
-  overflow-x:hidden !important;
+  overflow-x:clip !important;
   overflow-y:visible !important;
   position:relative !important;
+}
+body.home-page .site-header-shell{
+  position:sticky !important;
+  top:0 !important;
+  z-index:1000 !important;
+  align-self:start;
 }
 body.home-page.no-scroll{overflow-y:visible !important}
 body.home-page main{
