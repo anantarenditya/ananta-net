@@ -208,8 +208,44 @@ function renderDetail(){
     <section class="other-plans"><div class="other-plans-heading"><div><span class="eyebrow">BANDINGKAN</span><h3>Paket lainnya</h3></div><a href="paket.html">Lihat semua paket →</a></div><div class="other-plan-links">${nextPlans.map(x=>`<a class="other-plan-link" href="detail-paket.html?plan=${x.id}"><span><strong>${x.name}</strong><small>${x.speed} Mbps</small></span><b>${money(x.price)}<small>/bulan</small></b><span class="other-plan-arrow">→</span></a>`).join('')}</div></section>`;
   initWhatsApp();
 }
-function initFAQ(){document.querySelectorAll('[data-faq-item]').forEach(item=>item.querySelector('.faq-q')?.addEventListener('click',()=>item.classList.toggle('open')))}
-function initTerms(){document.querySelectorAll('[data-term-item]').forEach(item=>item.querySelector('.term-head')?.addEventListener('click',()=>item.classList.toggle('open')))}
+function initFAQ(){
+  document.querySelectorAll('[data-faq-item]').forEach(item=>{
+    const trigger=item.querySelector('.faq-q');
+    const panel=item.querySelector('.faq-a');
+    if(!trigger||!panel||trigger.dataset.accordionReady==='true') return;
+    trigger.dataset.accordionReady='true';
+    panel.style.maxHeight='0px';
+    panel.setAttribute('aria-hidden','true');
+    panel.inert=true;
+    trigger.setAttribute('aria-expanded','false');
+    trigger.addEventListener('click',()=>{
+      const isOpen=item.classList.toggle('open');
+      trigger.setAttribute('aria-expanded',String(isOpen));
+      panel.setAttribute('aria-hidden',String(!isOpen));
+      panel.inert=!isOpen;
+      panel.style.maxHeight=isOpen?`${panel.scrollHeight+28}px`:'0px';
+    });
+  });
+}
+function initTerms(){
+  document.querySelectorAll('[data-term-item]').forEach(item=>{
+    const trigger=item.querySelector('.term-head');
+    const panel=item.querySelector('.term-body');
+    if(!trigger||!panel||trigger.dataset.accordionReady==='true') return;
+    trigger.dataset.accordionReady='true';
+    panel.style.maxHeight='0px';
+    panel.setAttribute('aria-hidden','true');
+    panel.inert=true;
+    trigger.setAttribute('aria-expanded','false');
+    trigger.addEventListener('click',()=>{
+      const isOpen=item.classList.toggle('open');
+      trigger.setAttribute('aria-expanded',String(isOpen));
+      panel.setAttribute('aria-hidden',String(!isOpen));
+      panel.inert=!isOpen;
+      panel.style.maxHeight=isOpen?`${panel.scrollHeight+32}px`:'0px';
+    });
+  });
+}
 function initGallery(){
   const buttons=document.querySelectorAll('[data-filter]');
   const items=document.querySelectorAll('[data-gallery-item]');
