@@ -150,18 +150,29 @@
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
     }).addTo(serviceMap);
 
-    // Satu batas ilustratif mencakup ketiga desa; bukan batas administrasi resmi.
+    // Satu kontur gabungan untuk area layanan Kalibendo, Bades, dan Gondoruso.
+    // Bentuk dibuat mengikuti cakupan gabungan secara visual; bukan batas administrasi legal.
+    // Hanya satu polygon dipakai, sehingga garis batas internal antardesa tidak digambar.
     const boundaryCoords = [
-      [-8.2215,113.0945],[-8.2220,113.1040],[-8.2250,113.1120],[-8.2315,113.1170],
-      [-8.2380,113.1145],[-8.2455,113.1050],[-8.2490,113.0930],[-8.2505,113.0795],
-      [-8.2480,113.0705],[-8.2445,113.0655],[-8.2365,113.0640],[-8.2290,113.0730],
-      [-8.2240,113.0830],[-8.2215,113.0900]
+      [-8.2120,113.0880],[-8.2092,113.0904],[-8.2072,113.0960],[-8.2104,113.1001],
+      [-8.2086,113.1042],[-8.2123,113.1071],[-8.2112,113.1110],[-8.2151,113.1140],
+      [-8.2135,113.1186],[-8.2181,113.1213],[-8.2201,113.1252],[-8.2258,113.1270],
+      [-8.2283,113.1320],[-8.2342,113.1348],[-8.2390,113.1336],[-8.2431,113.1367],
+      [-8.2475,113.1338],[-8.2518,113.1321],[-8.2587,113.1318],[-8.2640,113.1294],
+      [-8.2692,113.1305],[-8.2746,113.1265],[-8.2805,113.1260],[-8.2872,113.1225],
+      [-8.2946,113.1210],[-8.2993,113.1168],[-8.3033,113.1090],[-8.3010,113.1040],
+      [-8.3030,113.0980],[-8.3000,113.0920],[-8.3025,113.0863],[-8.2993,113.0810],
+      [-8.2967,113.0737],[-8.2931,113.0681],[-8.2940,113.0614],[-8.2888,113.0562],
+      [-8.2821,113.0526],[-8.2760,113.0488],[-8.2700,113.0512],[-8.2650,113.0530],
+      [-8.2610,113.0515],[-8.2562,113.0558],[-8.2511,113.0540],[-8.2472,113.0582],
+      [-8.2410,113.0585],[-8.2368,113.0627],[-8.2310,113.0632],[-8.2260,113.0673],
+      [-8.2203,113.0710],[-8.2171,113.0763],[-8.2151,113.0822],[-8.2120,113.0880]
     ];
     const serviceBoundary = L.polygon(boundaryCoords, {
-      color:'#e34f58', weight:3, opacity:.98, dashArray:'8 7', lineCap:'round', lineJoin:'round',
+      color:'#e34f58', weight:3, opacity:.98, dashArray:'1.5 6', lineCap:'round', lineJoin:'round',
       fillColor:'#e34f58', fillOpacity:.055, bubblingMouseEvents:false, className:'area-service-boundary'
     }).addTo(serviceMap);
-    serviceBoundary.bindTooltip('Area layanan utama: Kalibendo · Bades · Gondoruso', {sticky:true, direction:'top', className:'area-boundary-tooltip', opacity:.98});
+    serviceBoundary.bindTooltip('Cakupan gabungan: Kalibendo · Bades · Gondoruso', {sticky:true, direction:'top', className:'area-boundary-tooltip', opacity:.98});
 
     // Label nama desa menggantikan pin. Klik nama untuk memilih area.
     const labelPositions = {
@@ -202,7 +213,7 @@
         mapGoogleLink.setAttribute('aria-label', selectedArea ? 'Buka ' + selectedArea + ' di Google Maps' : 'Buka seluruh area layanan di Google Maps');
       }
       renderLabels();
-      if (fitAll) serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[22,22], maxZoom:13, animate:true, duration:.4});
+      if (fitAll) serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[18,18], maxZoom:12, animate:true, duration:.45});
     }
 
     Object.keys(areas).forEach(function(name){
@@ -214,7 +225,7 @@
       nameMarkers[name] = marker;
     });
 
-    serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[22,22], maxZoom:13});
+    serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[18,18], maxZoom:12});
     serviceBoundary.on('click', function(){ if (selectedArea) updateArea(null, true); });
     select.addEventListener('change', function(){ updateArea(select.value === 'semua' ? null : select.value, select.value === 'semua'); });
     if (resetButton) resetButton.addEventListener('click', function(){ updateArea(null, true); });
