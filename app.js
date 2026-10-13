@@ -66,59 +66,74 @@ function injectHeader(){
         <a href="index.html" data-nav="index.html">Home</a><a href="tentang.html" data-nav="tentang.html">Tentang Kami</a><a href="paket.html" data-nav="paket.html">Paket Langganan</a><a href="area.html" data-nav="area.html">Area Layanan</a><a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a><a href="galeri.html" data-nav="galeri.html">Galeri</a><a href="faq.html" data-nav="faq.html">FAQ</a><a href="syarat-ketentuan.html" data-nav="syarat-ketentuan.html">S&K</a><a href="kontak.html" data-nav="kontak.html">Kontak</a>
       </div>
     </header>`;
-  const fileName = value => (String(value || '').split('/').pop() || 'index.html').split('?')[0].split('#')[0].toLowerCase();
-  const pathnameFile = fileName(window.location.pathname);
+  const fileName = value => {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    try {
+      const path = new URL(raw, window.location.href).pathname;
+      const leaf = path.split('/').filter(Boolean).pop() || 'index.html';
+      return decodeURIComponent(leaf).toLowerCase();
+    } catch (_) {
+      const leaf = raw.split(/[?#]/)[0].split('/').filter(Boolean).pop() || 'index.html';
+      return leaf.toLowerCase();
+    }
+  };
+  const targetFiles = new Set([
+    'index.html','tentang.html','paket.html','area.html','berlangganan.html',
+    'galeri.html','faq.html','syarat-ketentuan.html','kontak.html'
+  ]);
+  const pageToNav = {
+    home:'index.html', index:'index.html', 'index.html':'index.html',
+    tentang:'tentang.html', 'tentang-kami':'tentang.html', 'tentang.html':'tentang.html',
+    paket:'paket.html', langganan:'paket.html', 'paket-langganan':'paket.html', 'paket.html':'paket.html',
+    'detail-paket':'paket.html', 'detail-paket.html':'paket.html',
+    area:'area.html', 'area-layanan':'area.html', 'area.html':'area.html',
+    berlangganan:'berlangganan.html', 'cara-berlangganan':'berlangganan.html', 'berlangganan.html':'berlangganan.html',
+    galeri:'galeri.html', 'galeri.html':'galeri.html',
+    faq:'faq.html', bantuan:'faq.html', 'faq.html':'faq.html',
+    'syarat-ketentuan':'syarat-ketentuan.html', 's&k':'syarat-ketentuan.html', 'syarat-ketentuan.html':'syarat-ketentuan.html',
+    kontak:'kontak.html', 'kontak.html':'kontak.html',
+    keunggulan:'tentang.html', 'keunggulan.html':'tentang.html'
+  };
+  const explicitPage = String(document.body?.dataset?.page || '').trim().toLowerCase();
+  const pathnameFile = fileName(window.location.pathname) || 'index.html';
   const canonicalHref = document.querySelector('link[rel="canonical"]')?.href || '';
-  const canonicalFile = canonicalHref ? fileName(new URL(canonicalHref, window.location.href).pathname) : '';
-  const titleText = (document.title || '').toLowerCase();
-  const breadcrumbText = (document.querySelector('.breadcrumb')?.textContent || '').toLowerCase();
+  const canonicalFile = canonicalHref ? fileName(canonicalHref) : '';
   const routeFromText = text => {
-    if (/detail[- ]paket|paket internet|paket langganan/.test(text)) return 'paket.html';
-    if (/tentang kami/.test(text)) return 'tentang.html';
-    if (/area layanan/.test(text)) return 'area.html';
-    if (/cara berlangganan|berlangganan/.test(text)) return 'berlangganan.html';
-    if (/galeri/.test(text)) return 'galeri.html';
-    if (/(?:^|\W)faq(?:$|\W)|pusat bantuan/.test(text)) return 'faq.html';
-    if (/syarat|ketentuan|s&k/.test(text)) return 'syarat-ketentuan.html';
-    if (/kontak|hubungi kami/.test(text)) return 'kontak.html';
-    if (/ananta\.net/.test(text) && /home/.test(text)) return 'index.html';
+    const normalized = String(text || '').toLowerCase().replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+    if (/detail[- ]paket|paket internet|paket langganan/.test(normalized)) return 'paket.html';
+    if (/tentang kami/.test(normalized)) return 'tentang.html';
+    if (/area layanan/.test(normalized)) return 'area.html';
+    if (/cara berlangganan|berlangganan/.test(normalized)) return 'berlangganan.html';
+    if (/galeri/.test(normalized)) return 'galeri.html';
+    if (/(?:^|\W)faq(?:$|\W)|pusat bantuan/.test(normalized)) return 'faq.html';
+    if (/syarat|ketentuan|s&k/.test(normalized)) return 'syarat-ketentuan.html';
+    if (/kontak|hubungi kami/.test(normalized)) return 'kontak.html';
+    if (/keunggulan layanan/.test(normalized)) return 'tentang.html';
     return '';
   };
-  // Resolve the active item using the strongest signal first. Breadcrumbs
-  // describe the content actually rendered and must win over a generic title
-  // such as "Home — ANANTA.NET" that can be cached/reused by a hosting alias.
-  const validTargets = new Set(Array.from(el.querySelectorAll('[data-nav]')).map(a => a.getAttribute('data-nav')));
+  const breadcrumbText = document.querySelector('.breadcrumb')?.textContent || '';
+  const titleText = document.title || '';
   const breadcrumbRoute = routeFromText(breadcrumbText);
   const titleRoute = routeFromText(titleText);
-  let activePath = '';
-
-  // 1) Explicit, non-root pathname is the most reliable signal.
-  if (pathnameFile !== 'index.html' && validTargets.has(pathnameFile)) {
-    activePath = pathnameFile;
+  // The page's explicit data-page is authoritative. This avoids a generic title
+  // or a root/alias URL accidentally leaving Home highlighted on every page.
+  let activePath = pageToNav[explicitPage] || '';
+  if (!activePath) {
+    const normalizedPath = pageToNav[pathnameFile] || (targetFiles.has(pathnameFile) ? pathnameFile : '');
+    if (normalizedPath) activePath = normalizedPath;
   }
-  // 2) If the browser is using / or index.html for an alias, trust the
-  // current page breadcrumb (e.g. "Home / Paket Internet") over Home defaults.
-  if ((!activePath || activePath === 'index.html') && breadcrumbRoute && breadcrumbRoute !== 'index.html') {
-    activePath = breadcrumbRoute;
-  }
-  // 3) Use a specific canonical path only if it points to a non-home page.
-  if ((!activePath || activePath === 'index.html') && canonicalFile && canonicalFile !== 'index.html' && validTargets.has(canonicalFile)) {
-    activePath = canonicalFile;
-  }
-  // 4) Use specific title text as the final content-based fallback.
-  if ((!activePath || activePath === 'index.html') && titleRoute && titleRoute !== 'index.html') {
-    activePath = titleRoute;
-  }
-  // Home is only the final default when no other signal identifies a page.
-  if (!activePath) activePath = breadcrumbRoute || titleRoute || 'index.html';
-  if (activePath === 'detail-paket.html') activePath = 'paket.html';
-  el.querySelectorAll('[data-nav]').forEach(a=>{
+  if (!activePath && canonicalFile) activePath = pageToNav[canonicalFile] || (targetFiles.has(canonicalFile) ? canonicalFile : '');
+  if (!activePath && breadcrumbRoute) activePath = breadcrumbRoute;
+  if (!activePath && titleRoute) activePath = titleRoute;
+  if (!activePath) activePath = 'index.html';
+  el.querySelectorAll('[data-nav]').forEach(a => {
     const target = fileName(a.getAttribute('data-nav'));
-    const isActive = target === activePath || (activePath === 'paket.html' && target === 'paket.html');
+    const isActive = target === activePath;
     a.classList.toggle('active', isActive);
-    if(isActive) {
-      a.setAttribute('aria-current','page');
-      a.setAttribute('data-current-page','true');
+    if (isActive) {
+      a.setAttribute('aria-current', 'page');
+      a.setAttribute('data-current-page', 'true');
     } else {
       a.removeAttribute('aria-current');
       a.removeAttribute('data-current-page');

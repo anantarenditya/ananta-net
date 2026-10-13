@@ -38,8 +38,10 @@ button,input,select{font:inherit}
 .nav-mobile{display:none}
 
 /* Active page indicator: visible and unambiguous on the mobile navigation. */
-.nav-mobile a.active{background:linear-gradient(90deg,#d9f3ec 0%,#f0faf7 100%);color:#0b2440;border-left:5px solid #2fbea0;border-radius:0 14px 14px 0;padding-left:11px;font-weight:900;box-shadow:0 5px 14px rgba(11,36,64,.07)}
-.nav-mobile a.active::after{content:"Halaman ini";flex-shrink:0;padding:5px 9px;border:1px solid #a9ded2;border-radius:999px;background:#fff;color:#167e72;font-size:.7rem;line-height:1.2;font-weight:900;letter-spacing:.01em}
+.nav-mobile a.active,.nav-mobile a[aria-current="page"]{background:linear-gradient(100deg,#d9f3ec 0%,#effaf7 100%)!important;color:#0b2440!important;border-left:5px solid #2fbea0!important;border-top-color:transparent!important;border-radius:0 14px 14px 0!important;padding-left:11px!important;font-weight:900!important;box-shadow:0 5px 14px rgba(11,36,64,.07)}
+.nav-mobile a.active::after,.nav-mobile a[aria-current="page"]::after{content:"Halaman ini";flex-shrink:0;padding:5px 9px;border:1px solid #a9ded2;border-radius:999px;background:#fff;color:#167e72;font-size:.7rem;line-height:1.2;font-weight:900;letter-spacing:.01em}
+.nav-links a[aria-current="page"]{color:#0b2440;font-weight:900}
+.nav-links a[aria-current="page"]::after{height:4px;background:#2fbea0}
 .nav-links a.active{color:#0b2440;font-weight:900}
 .nav-links a.active::after{height:4px;background:#2fbea0}
 .actions{display:flex;align-items:center;gap:9px}
