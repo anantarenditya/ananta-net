@@ -373,3 +373,32 @@ window.addEventListener('pageshow', restoreDocumentScroll);
 window.addEventListener('pagehide', ()=>{
   document.body.classList.remove('no-scroll');
 });
+
+
+// Home scroll safeguard: avoid a stale modal/overflow lock trapping the page
+// and keep the injected footer in the normal document flow on mobile browsers.
+function ensureHomeDocumentScroll(){
+  if(!document.body.classList.contains('home-page')) return;
+  if(!document.querySelector('.gallery-lightbox.open')) document.body.classList.remove('no-scroll');
+  document.documentElement.style.setProperty('height','auto','important');
+  document.documentElement.style.setProperty('overflow-y','auto','important');
+  document.body.style.setProperty('height','auto','important');
+  document.body.style.setProperty('max-height','none','important');
+  document.body.style.setProperty('overflow-y','visible','important');
+  const main=document.querySelector('main');
+  if(main){
+    main.style.setProperty('height','auto','important');
+    main.style.setProperty('max-height','none','important');
+    main.style.setProperty('overflow','visible','important');
+  }
+  const footerHost=document.querySelector('[data-site-footer]');
+  if(footerHost){
+    footerHost.style.setProperty('height','auto','important');
+    footerHost.style.setProperty('max-height','none','important');
+    footerHost.style.setProperty('overflow','visible','important');
+  }
+}
+ensureHomeDocumentScroll();
+window.addEventListener('pageshow',ensureHomeDocumentScroll);
+window.addEventListener('load',ensureHomeDocumentScroll,{once:true});
+window.addEventListener('orientationchange',()=>window.setTimeout(ensureHomeDocumentScroll,120));

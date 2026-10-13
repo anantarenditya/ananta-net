@@ -2449,3 +2449,59 @@ main{
     bottom:calc(18px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+
+/* ===== HOME SCROLL + FOOTER VISIBILITY FIX (MOBILE) ===== */
+html{
+  height:auto !important;
+  min-height:100% !important;
+  max-height:none !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  scroll-padding-bottom:32px;
+}
+body.home-page{
+  height:auto !important;
+  min-height:100vh !important;
+  min-height:100dvh !important;
+  max-height:none !important;
+  overflow-x:hidden !important;
+  overflow-y:visible !important;
+  position:relative !important;
+}
+body.home-page.no-scroll{overflow-y:visible !important}
+body.home-page main{
+  display:block !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  contain:none !important;
+}
+body.home-page [data-site-footer],
+body.home-page footer{
+  display:block !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  contain:none !important;
+}
+body.home-page .footer-grid,
+body.home-page .footer-links{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  align-content:start;
+}
+@media(max-width:580px){
+  body.home-page footer{padding-bottom:calc(52px + env(safe-area-inset-bottom, 0px)) !important}
+  body.home-page [data-site-footer]{padding-bottom:18px}
+  /* On phones, show the supporter information before the longer menu list. */
+  body.home-page .footer-grid{display:flex !important;flex-direction:column !important;gap:18px !important}
+  body.home-page .footer-grid > div:nth-child(1){order:1}
+  body.home-page .footer-grid > div:nth-child(3){order:2}
+  body.home-page .footer-grid > div:nth-child(2){order:3}
+  body.home-page .footer-bottom{padding-bottom:12px}
+}
