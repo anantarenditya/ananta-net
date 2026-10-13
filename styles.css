@@ -36,6 +36,12 @@ button,input,select{font:inherit}
 .nav-links a.active{color:var(--navy);font-weight:850}
 .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;border-radius:99px;background:var(--primary)}
 .nav-mobile{display:none}
+
+/* Active page indicator: visible and unambiguous on the mobile navigation. */
+.nav-mobile a.active{background:linear-gradient(90deg,#d9f3ec 0%,#f0faf7 100%);color:#0b2440;border-left:5px solid #2fbea0;border-radius:0 14px 14px 0;padding-left:11px;font-weight:900;box-shadow:0 5px 14px rgba(11,36,64,.07)}
+.nav-mobile a.active::after{content:"Halaman ini";flex-shrink:0;padding:5px 9px;border:1px solid #a9ded2;border-radius:999px;background:#fff;color:#167e72;font-size:.7rem;line-height:1.2;font-weight:900;letter-spacing:.01em}
+.nav-links a.active{color:#0b2440;font-weight:900}
+.nav-links a.active::after{height:4px;background:#2fbea0}
 .actions{display:flex;align-items:center;gap:9px}
 .icon-btn,.menu-btn{border:1px solid var(--border);background:var(--surface);width:42px;height:42px;border-radius:12px;cursor:pointer;color:var(--text)}
 .menu-btn{display:none}
@@ -163,8 +169,6 @@ footer a{color:#dbe6ee;opacity:.9}
   .nav-mobile{display:none;padding:4px 0 16px;gap:3px}
   .nav-mobile a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;border-top:1px solid var(--border);border-radius:0;font-weight:750;color:var(--text);transition:background .18s ease,color .18s ease,border-color .18s ease}
   .nav-mobile a:hover{background:#f3faf8;color:var(--primary-dark)}
-  .nav-mobile a.active{background:linear-gradient(90deg,#e0f5ef 0%,#f2fbf8 100%);color:var(--navy);border-left:4px solid var(--primary);border-radius:0 13px 13px 0;padding-left:11px;font-weight:900;box-shadow:0 4px 12px rgba(11,36,64,.05)}
-  .nav-mobile a.active::after{content:"Sedang dibuka";flex-shrink:0;padding:4px 8px;border:1px solid #bce6dc;border-radius:999px;background:#fff;color:var(--primary-dark);font-size:.68rem;line-height:1.2;font-weight:850;letter-spacing:.01em}
 }
 @media (max-width:820px){
   .hero-inner,.two-col,.area-layout,.calculator,.contact-grid,.footer-grid{grid-template-columns:1fr}

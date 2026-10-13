@@ -1,13 +1,7 @@
-ANANTA.NET — Active Navigation Highlight
+ANANTA.NET website package.
 
-Pembaruan:
-- Menandai halaman yang sedang aktif di navigasi desktop dan menu hamburger mobile.
-- Item aktif mendapat latar teal pucat, teks navy yang lebih tegas, garis aksen teal di kiri, dan label "Sedang dibuka".
-- Item aktif diberi aria-current="page" untuk aksesibilitas.
-- Halaman detail-paket.html menyorot menu Paket Langganan.
-- Semua konten, logo, peta, nomor WhatsApp, SEO, dan aset lainnya dipertahankan.
+Navigation active-state refinement:
+- Highlights the current page in the mobile menu with a light teal background, visible teal left stripe, and “Halaman ini” label.
+- Resolves the active route using pathname first, then canonical URL and page title/breadcrumb as fallbacks. Detail Paket maps to Paket Langganan.
 
-Pasang:
-1. Extract ZIP.
-2. Salin isi folder ke repository ananta-net. Jangan menghapus .git.
-3. Jalankan git add ., git commit -m "Highlight active navigation item", git push origin main.
+Keep all files together when copying to the `ananta-net` repository. Do not replace or delete the repository's `.git` folder.

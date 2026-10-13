@@ -66,14 +66,49 @@ function injectHeader(){
         <a href="index.html" data-nav="index.html">Home</a><a href="tentang.html" data-nav="tentang.html">Tentang Kami</a><a href="paket.html" data-nav="paket.html">Paket Langganan</a><a href="area.html" data-nav="area.html">Area Layanan</a><a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a><a href="galeri.html" data-nav="galeri.html">Galeri</a><a href="faq.html" data-nav="faq.html">FAQ</a><a href="syarat-ketentuan.html" data-nav="syarat-ketentuan.html">S&K</a><a href="kontak.html" data-nav="kontak.html">Kontak</a>
       </div>
     </header>`;
-  const path=location.pathname.split('/').pop()||'index.html';
-  // Detail paket belongs to the Paket Langganan section in the main navigation.
-  const activePath = path === 'detail-paket.html' ? 'paket.html' : path;
+  const fileName = value => (String(value || '').split('/').pop() || 'index.html').split('?')[0].split('#')[0].toLowerCase();
+  const pathnameFile = fileName(window.location.pathname);
+  const canonicalHref = document.querySelector('link[rel="canonical"]')?.href || '';
+  const canonicalFile = canonicalHref ? fileName(new URL(canonicalHref, window.location.href).pathname) : '';
+  const titleText = (document.title || '').toLowerCase();
+  const breadcrumbText = (document.querySelector('.breadcrumb')?.textContent || '').toLowerCase();
+  const routeFromText = text => {
+    if (/detail[- ]paket|paket internet|paket langganan/.test(text)) return 'paket.html';
+    if (/tentang kami/.test(text)) return 'tentang.html';
+    if (/area layanan/.test(text)) return 'area.html';
+    if (/cara berlangganan|berlangganan/.test(text)) return 'berlangganan.html';
+    if (/galeri/.test(text)) return 'galeri.html';
+    if (/(?:^|\W)faq(?:$|\W)|pusat bantuan/.test(text)) return 'faq.html';
+    if (/syarat|ketentuan|s&k/.test(text)) return 'syarat-ketentuan.html';
+    if (/kontak|hubungi kami/.test(text)) return 'kontak.html';
+    if (/ananta\.net/.test(text) && /home/.test(text)) return 'index.html';
+    return '';
+  };
+  // Prefer the actual filename; use canonical URL and page labels as fallbacks
+  // for Cloudflare aliases, trailing slashes, and browser-cached route variants.
+  const validTargets = new Set(Array.from(el.querySelectorAll('[data-nav]')).map(a => a.getAttribute('data-nav')));
+  const textRoute = routeFromText(titleText) || routeFromText(breadcrumbText);
+  // Root/alias URLs may still render a non-home static page on hosting platforms;
+  // prefer canonical URL or visible page labels over a false default to Home.
+  let activePath = validTargets.has(pathnameFile) ? pathnameFile : '';
+  if ((!activePath || (activePath === 'index.html' && textRoute && textRoute !== 'index.html')) && validTargets.has(canonicalFile)) {
+    activePath = canonicalFile;
+  }
+  if (!activePath || (activePath === 'index.html' && textRoute && textRoute !== 'index.html')) {
+    activePath = textRoute || activePath || 'index.html';
+  }
+  if (activePath === 'detail-paket.html') activePath = 'paket.html';
   el.querySelectorAll('[data-nav]').forEach(a=>{
-    const isActive = a.getAttribute('data-nav') === activePath;
+    const target = fileName(a.getAttribute('data-nav'));
+    const isActive = target === activePath || (activePath === 'paket.html' && target === 'paket.html');
     a.classList.toggle('active', isActive);
-    if(isActive) a.setAttribute('aria-current','page');
-    else a.removeAttribute('aria-current');
+    if(isActive) {
+      a.setAttribute('aria-current','page');
+      a.setAttribute('data-current-page','true');
+    } else {
+      a.removeAttribute('aria-current');
+      a.removeAttribute('data-current-page');
+    }
   });
   const menuToggle=document.getElementById('menuToggle');
   const mobileNav=document.getElementById('mobileNav');
