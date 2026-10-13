@@ -56,7 +56,7 @@
             <div class="area-map-wrap compact-map">
               <div class="area-leaflet-shell">
                 <div id="serviceMap" class="area-leaflet-map" role="application" aria-label="Peta interaktif wilayah layanan ANANTA.NET"></div>
-                <div class="map-area-chip" aria-hidden="true"><span class="map-area-chip-dot"></span>Kalibendo · Bades · Gondoruso</div>
+                <div class="map-area-chip" aria-hidden="true"><span class="map-area-chip-dot"></span>Area layanan utama</div>
               </div>
             </div>
             <div class="area-map-bottom">
@@ -149,37 +149,45 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
     }).addTo(serviceMap);
 
-    const normalPin = L.divIcon({
-      className: 'ananta-map-pin-wrap',
-      html: '<span class="ananta-map-pin"><span></span></span>',
-      iconSize: [34, 42],
-      iconAnchor: [17, 39],
-      popupAnchor: [0, -37]
-    });
-    const selectedPin = L.divIcon({
-      className: 'ananta-map-pin-wrap',
-      html: '<span class="ananta-map-pin is-selected"><span></span></span>',
-      iconSize: [38, 46],
-      iconAnchor: [19, 43],
-      popupAnchor: [0, -41]
-    });
+    // Satu batas ilustratif yang mengelilingi cakupan utama Kalibendo, Bades, dan Gondoruso.
+    // Ini bukan batas administrasi resmi; ketersediaan pemasangan tetap dikonfirmasi per alamat.
+    const serviceBoundaryCoordinates = [
+      [-8.2215, 113.0945],
+      [-8.2220, 113.1040],
+      [-8.2250, 113.1120],
+      [-8.2315, 113.1170],
+      [-8.2380, 113.1145],
+      [-8.2455, 113.1050],
+      [-8.2490, 113.0930],
+      [-8.2505, 113.0795],
+      [-8.2480, 113.0705],
+      [-8.2445, 113.0655],
+      [-8.2365, 113.0640],
+      [-8.2290, 113.0730],
+      [-8.2240, 113.0830],
+      [-8.2215, 113.0900]
+    ];
 
-    const markers = {};
-    Object.entries(areas).forEach(([name, area]) => {
-      const marker = L.marker([area.lat, area.lng], {icon: normalPin, title: area.label, alt: area.label, keyboard: true}).addTo(serviceMap);
-      marker.bindPopup('<div class="ananta-map-popup"><strong>' + area.label + '</strong><a href="' + mapsUrlFor(name) + '" target="_blank" rel="noopener">Buka di Google Maps ↗</a></div>');
-      marker.on('click', function(){ if (select.value !== name) { select.value = name; updateArea(name, false); } });
-      markers[name] = marker;
-    });
+    const serviceBoundary = L.polygon(serviceBoundaryCoordinates, {
+      color: '#168f80',
+      weight: 3,
+      opacity: 0.95,
+      dashArray: '9 8',
+      lineCap: 'round',
+      lineJoin: 'round',
+      fillColor: '#31bda1',
+      fillOpacity: 0.13,
+      interactive: false,
+      className: 'area-service-boundary'
+    }).addTo(serviceMap);
 
-    const allPoints = L.latLngBounds(Object.values(areas).map(area => [area.lat, area.lng]));
-    serviceMap.fitBounds(allPoints, {padding:[48,48], maxZoom:13});
+    // Tampilkan seluruh area pada awalnya sehingga garis putus-putus tidak terpotong.
+    serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[18,18], maxZoom:13});
 
-    function updateArea(name, panToArea){
+    function updateArea(name){
       const area = areas[name];
       if(!area) return;
       const mapsUrl = mapsUrlFor(name);
-      Object.entries(markers).forEach(([markerName, marker]) => marker.setIcon(markerName === name ? selectedPin : normalPin));
       if (result) result.textContent = area.label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.';
       if (openMapsBtn) openMapsBtn.onclick = function(){ window.open(mapsUrl, '_blank', 'noopener'); };
       if (mapGoogleLink) {
@@ -187,11 +195,10 @@
         mapGoogleLink.textContent = 'Buka ' + name + ' ↗';
         mapGoogleLink.setAttribute('aria-label', 'Buka ' + name + ' di Google Maps');
       }
-      if(panToArea) serviceMap.panTo([area.lat, area.lng], {animate:true, duration:.45});
     }
 
-    updateArea(select.value, false);
-    select.addEventListener('change', function(){ updateArea(select.value, true); });
+    updateArea(select.value);
+    select.addEventListener('change', function(){ updateArea(select.value); });
     window.setTimeout(function(){ serviceMap.invalidateSize(); }, 150);
     window.addEventListener('resize', function(){ serviceMap.invalidateSize(); }, {passive:true});
   });

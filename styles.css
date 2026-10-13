@@ -1902,7 +1902,8 @@ body.no-scroll{overflow:hidden}
 .area-leaflet-map .leaflet-control-zoom a+a{border-top:1px solid #e3eeeb!important}
 .area-leaflet-map .leaflet-control-zoom a:hover{background:#eaf7f4!important;color:#167f78!important}
 .map-area-chip{position:absolute;left:12px;bottom:12px;z-index:500;display:inline-flex;align-items:center;gap:7px;max-width:calc(100% - 80px);padding:9px 12px;border:1px solid rgba(255,255,255,.85);border-radius:999px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);box-shadow:0 7px 20px rgba(11,36,64,.1);color:#24445f;font-size:.72rem;font-weight:800;line-height:1.2;pointer-events:none}
-.map-area-chip-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#2fbea0;box-shadow:0 0 0 4px rgba(47,190,160,.14)}
+.map-area-chip-dot{width:18px;height:0;flex:0 0 18px;border-top:3px dashed #168f80;border-radius:0;background:transparent;box-shadow:none}
+.area-service-boundary{filter:drop-shadow(0 1px 1px rgba(22,143,128,.18))}
 .area-map-wrap .map-overlay-btn{top:12px;right:12px;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.97);border:1px solid rgba(29,159,135,.12);color:#167f78;font-size:.75rem;box-shadow:0 8px 22px rgba(11,36,64,.13)}
 .ananta-map-pin-wrap{background:transparent;border:0}
 .ananta-map-pin{position:relative;display:grid;place-items:center;width:28px;height:28px;border:3px solid #fff;border-radius:50% 50% 50% 0;background:linear-gradient(145deg,#2fbea0,#168f84);box-shadow:0 7px 14px rgba(11,36,64,.25);transform:rotate(-45deg);transition:width .2s ease,height .2s ease,box-shadow .2s ease}
