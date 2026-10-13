@@ -12,3 +12,5 @@ Static website for ANANTA.NET, ready for Cloudflare Pages.
 
 ## Deploy
 Copy these files to the `ananta-net` repository and push to `main`. Cloudflare Pages should use the repository root as its build output directory and no build command for this static site.
+
+Mobile scroll fix: restore normal scrolling when the browser returns from a gallery preview, ensure the main/footer regions remain content-height, and add safe-area padding at the bottom of the footer on mobile. Footer credit for PT Chayo Anugrah Teknologi is retained.

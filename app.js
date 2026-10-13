@@ -356,3 +356,20 @@ function initAreaChecker(){
 }
 
 initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp();
+
+// Recover normal page scrolling if the browser restores this page from its
+// back/forward cache after a gallery preview was opened. The page itself must
+// remain scrollable unless the lightbox is currently open.
+function restoreDocumentScroll(){
+  const lightbox=document.querySelector('.gallery-lightbox');
+  if(lightbox){
+    lightbox.classList.remove('open');
+    const preview=lightbox.querySelector('img');
+    if(preview) preview.removeAttribute('src');
+  }
+  document.body.classList.remove('no-scroll');
+}
+window.addEventListener('pageshow', restoreDocumentScroll);
+window.addEventListener('pagehide', ()=>{
+  document.body.classList.remove('no-scroll');
+});

@@ -2413,3 +2413,39 @@ body.no-scroll{overflow:hidden}
 
 /* Prefer reduced motion and avoid expensive movement for visitors who request it. */
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+/* ===== MOBILE PAGE SCROLL + FOOTER REACHABILITY FIX ===== */
+html{
+  min-height:100%;
+  height:auto;
+  scroll-padding-bottom:24px;
+}
+body{
+  min-height:100vh;
+  min-height:100dvh;
+  height:auto !important;
+  overscroll-behavior-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+main{
+  display:block;
+  height:auto !important;
+  min-height:0;
+  overflow:visible;
+}
+[data-site-footer], footer{
+  display:block;
+  position:relative;
+  height:auto !important;
+  min-height:0;
+  overflow:visible;
+}
+@media(max-width:580px){
+  footer{
+    padding-bottom:calc(36px + env(safe-area-inset-bottom, 0px));
+  }
+  .float-wa{
+    bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+}
