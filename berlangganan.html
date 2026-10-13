@@ -3,7 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Panduan berlangganan WiFi rumahan ANANTA.NET: pilih paket, hubungi admin, cek lokasi, pemasangan, hingga internet aktif.">
+  <meta name="description" content="Ikuti proses berlangganan WiFi ANANTA.NET: pilih paket, hubungi admin, cek lokasi, jadwalkan pemasangan, dan aktifkan internet.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#0b2440">
+  <link rel="canonical" href="https://ananta-net.pages.dev/berlangganan.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ANANTA.NET">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:title" content="Cara Berlangganan — ANANTA.NET">
+  <meta property="og:description" content="Ikuti proses berlangganan WiFi ANANTA.NET: pilih paket, hubungi admin, cek lokasi, jadwalkan pemasangan, dan aktifkan internet.">
+  <meta property="og:url" content="https://ananta-net.pages.dev/berlangganan.html">
+  <meta property="og:image" content="https://ananta-net.pages.dev/assets/og-ananta.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cara Berlangganan — ANANTA.NET">
+  <meta name="twitter:description" content="Ikuti proses berlangganan WiFi ANANTA.NET: pilih paket, hubungi admin, cek lokasi, jadwalkan pemasangan, dan aktifkan internet.">
+  <meta name="twitter:image" content="https://ananta-net.pages.dev/assets/og-ananta.jpg">
   <title>Cara Berlangganan — ANANTA.NET</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -89,6 +105,28 @@
           </div>
         </div>
 
+
+        <section class="registration-section" id="formulir-pendaftaran" aria-labelledby="registrationTitle">
+          <div class="registration-heading">
+            <span class="eyebrow">PENDAFTARAN PELANGGAN</span>
+            <h2 id="registrationTitle">Isi data untuk mulai berlangganan.</h2>
+            <p>Lengkapi informasi berikut. Detailnya akan disiapkan dalam WhatsApp agar admin bisa membantu mengecek paket dan lokasi pemasangan.</p>
+          </div>
+          <form id="registrationForm" class="registration-form card">
+            <div class="registration-fields">
+              <div class="form-row"><label for="customerName">Nama lengkap <span aria-hidden="true">*</span></label><input id="customerName" name="customerName" type="text" autocomplete="name" maxlength="80" placeholder="Nama Anda" required></div>
+              <div class="form-row"><label for="customerPhone">Nomor WhatsApp Anda <span aria-hidden="true">*</span></label><input id="customerPhone" name="customerPhone" type="tel" inputmode="tel" autocomplete="tel" pattern="[0-9+() -]{8,20}" maxlength="20" placeholder="Contoh: 08xxxxxxxxxx" required><small>Nomor ini untuk memudahkan admin menghubungi Anda.</small></div>
+              <div class="form-row"><label for="registrationPackage">Pilih paket <span aria-hidden="true">*</span></label><select id="registrationPackage" name="registrationPackage" required><option value="" selected disabled>Pilih paket yang diinginkan</option></select></div>
+              <div class="form-row"><label for="customerArea">Wilayah pemasangan <span aria-hidden="true">*</span></label><select id="customerArea" name="customerArea" required><option value="" selected disabled>Pilih wilayah</option><option>Kalibendo</option><option>Bades</option><option>Gondoruso</option><option>Area sekitar / lainnya</option></select></div>
+              <div class="form-row registration-field-full"><label for="customerAddress">Alamat lengkap atau titik lokasi <span aria-hidden="true">*</span></label><textarea id="customerAddress" name="customerAddress" rows="3" maxlength="350" placeholder="Nama dusun/jalan, RT/RW, patokan rumah, atau keterangan lokasi" required></textarea></div>
+              <div class="form-row registration-field-full"><label for="customerNotes">Catatan tambahan (opsional)</label><textarea id="customerNotes" name="customerNotes" rows="2" maxlength="250" placeholder="Contoh: kebutuhan belajar, kerja, streaming, atau jumlah perangkat"></textarea></div>
+            </div>
+            <button class="btn btn-primary registration-submit" type="submit">Lanjutkan ke WhatsApp Admin <span aria-hidden="true">→</span></button>
+            <p class="registration-privacy">Data ini tidak dikirim atau disimpan ke server website. WhatsApp akan terbuka dengan pesan yang sudah diisi; periksa lalu tekan <strong>Kirim</strong> untuk menghubungi admin.</p>
+            <p class="registration-status" data-registration-status role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
         <div class="subscribe-cta">
           <div><span class="eyebrow eyebrow-dark">SIAP MEMULAI?</span><h3>Masih bingung memilih paket?</h3><p>Admin ANANTA.NET siap membantu mencocokkan kebutuhan dan mengecek lokasi pemasangan.</p></div>
           <div class="subscribe-cta-actions"><a class="btn btn-secondary" href="paket.html">Lihat Paket</a><button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya ingin konsultasi paket WiFi dan mengecek ketersediaan pemasangan.">Hubungi WhatsApp</button></div>
@@ -99,6 +137,6 @@
 
   <button class="float-wa" data-float-wa aria-label="Hubungi admin ANANTA.NET melalui WhatsApp"></button>
   <div data-site-footer></div>
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>

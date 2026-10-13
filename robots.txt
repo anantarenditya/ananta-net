@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ananta-net.pages.dev/sitemap.xml

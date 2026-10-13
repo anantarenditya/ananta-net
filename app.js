@@ -48,7 +48,7 @@ function injectHeader(){
   el.innerHTML=`
     <header class="navbar">
       <div class="container nav-inner">
-        <a class="brand" href="index.html" aria-label="ANANTA.NET"><img src="assets/logo-ananta.png" alt="Logo ANANTA.NET"><span>ANANTA.NET</span></a>
+        <a class="brand" href="index.html" aria-label="ANANTA.NET"><img src="assets/logo-ananta.png" alt="Logo ANANTA.NET" width="640" height="640" decoding="async"><span>ANANTA.NET</span></a>
         <nav class="nav-links" aria-label="Navigasi utama">
           <a href="index.html" data-nav="index.html">Home</a>
           <a href="tentang.html" data-nav="tentang.html">Tentang Kami</a>
@@ -86,9 +86,9 @@ function injectHeader(){
 function injectFooter(){
   const el=document.querySelector('[data-site-footer]'); if(!el) return;
   el.innerHTML=`<footer><div class="container"><div class="footer-grid">
-    <div><div class="footer-brand"><img src="assets/logo-ananta.png" alt="ANANTA.NET"><div><h4>ANANTA.NET</h4><div>WiFi Hemat Koneksi Mantap</div><p style="margin:8px 0 0;color:#b7c9d5">Layanan internet rumahan dengan pelayanan yang ramah, responsif, dan dukungan teknis.</p></div></div></div>
+    <div><div class="footer-brand"><img src="assets/logo-ananta.png" alt="ANANTA.NET" width="640" height="640" decoding="async" loading="lazy"><div><h4>ANANTA.NET</h4><div>WiFi Hemat Koneksi Mantap</div><p style="margin:8px 0 0;color:#b7c9d5">Layanan internet rumahan dengan pelayanan yang ramah, responsif, dan dukungan teknis.</p></div></div></div>
     <div><h4>Menu</h4><div class="footer-links"><a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket Internet</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a></div></div>
-    <div><h4>Didukung oleh</h4><div class="powered"><img src="assets/logo-chayo.png" alt="Logo CHAYO"><div><strong style="color:#fff">PT Chayo Anugrah Teknologi</strong><div>Internet powered by PT Chayo Anugrah Teknologi</div></div></div></div>
+    <div><h4>Didukung oleh</h4><div class="powered"><img src="assets/logo-chayo.png" alt="Logo CHAYO" width="240" height="96" decoding="async" loading="lazy"><div><strong style="color:#fff">PT Chayo Anugrah Teknologi</strong><div>Internet powered by PT Chayo Anugrah Teknologi</div></div></div></div>
   </div><div class="footer-bottom"><span>© 2026 ANANTA.NET. Seluruh hak dilindungi.</span><span>WiFi Hemat Koneksi Mantap</span></div></div></footer>`;
 }
 function initWhatsApp(){
@@ -307,9 +307,52 @@ function initCalculator(){
   }
   count.addEventListener('input',calc); use.addEventListener('change',calc); calc();
 }
+
+function initRegistrationForm(){
+  const form=document.querySelector('#registrationForm');
+  if(!form || form.dataset.ready==='true') return;
+  form.dataset.ready='true';
+  const packageSelect=form.querySelector('#registrationPackage');
+  if(packageSelect){
+    packageSelect.innerHTML='<option value="" selected disabled>Pilih paket yang diinginkan</option>'+packages.map(function(item){
+      return `<option value="${item.id}">Paket ${item.name} · ${item.speed} Mbps · ${money(item.price)}/bulan</option>`;
+    }).join('');
+  }
+  form.addEventListener('submit',function(event){
+    event.preventDefault();
+    if(!form.reportValidity()) return;
+    const data=new FormData(form);
+    const packageId=String(data.get('registrationPackage')||'hemat');
+    const plan=packages.find(item=>item.id===packageId)||packages[0];
+    const customerName=String(data.get('customerName')||'').trim();
+    const customerPhone=String(data.get('customerPhone')||'').trim();
+    const customerArea=String(data.get('customerArea')||'').trim();
+    const customerAddress=String(data.get('customerAddress')||'').trim();
+    const customerNotes=String(data.get('customerNotes')||'').trim();
+    const message=[
+      'Halo Admin ANANTA.NET, saya ingin mendaftar layanan WiFi.',
+      '',
+      `Nama: ${customerName}`,
+      `Nomor WhatsApp calon pelanggan: ${customerPhone}`,
+      `Paket pilihan: Paket ${plan.name} (${plan.speed} Mbps)`,
+      `Harga bulanan: ${money(plan.price)}/bulan`,
+      `Wilayah: ${customerArea}`,
+      `Alamat/titik pemasangan: ${customerAddress}`,
+      customerNotes ? `Catatan tambahan: ${customerNotes}` : '',
+      '',
+      'Mohon bantu cek ketersediaan jaringan, biaya, dan jadwal pemasangan. Terima kasih.'
+    ].filter(Boolean).join('\n');
+    const link=document.createElement('a');
+    link.href=waLink(message); link.target='_blank'; link.rel='noopener noreferrer';
+    link.style.display='none'; document.body.appendChild(link); link.click(); link.remove();
+    const status=form.querySelector('[data-registration-status]');
+    if(status) status.textContent='WhatsApp dibuka dengan detail pendaftaran. Periksa pesannya lalu tekan Kirim untuk mengirim ke admin.';
+  });
+}
+
 function initAreaChecker(){
   const select=document.querySelector('#areaSelect'); const result=document.querySelector('[data-area-result]'); if(!select||!result) return;
   select.addEventListener('change',()=>{const v=select.value; result.textContent=v==='Lainnya'?'Silakan hubungi admin untuk pengecekan titik pemasangan di area Anda.':`Area ${v} tercantum dalam wilayah layanan ANANTA.NET. Ketersediaan pemasangan tetap perlu dikonfirmasi melalui WhatsApp.`;});
 }
 
-initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initWhatsApp();
+initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp();

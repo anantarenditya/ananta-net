@@ -4,7 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Area Layanan — ANANTA.NET</title>
-  <meta name="description" content="Cek area layanan WiFi ANANTA.NET di Kalibendo, Bades, Gondoruso, dan sekitarnya.">
+  <meta name="description" content="Cek area layanan WiFi ANANTA.NET di Kalibendo, Bades, Gondoruso, Lumajang, dan sekitarnya. Konfirmasikan ketersediaan pemasangan berdasarkan lokasi.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#0b2440">
+  <link rel="canonical" href="https://ananta-net.pages.dev/area.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ANANTA.NET">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:title" content="Area Layanan — ANANTA.NET">
+  <meta property="og:description" content="Cek area layanan WiFi ANANTA.NET di Kalibendo, Bades, Gondoruso, Lumajang, dan sekitarnya. Konfirmasikan ketersediaan pemasangan berdasarkan lokasi.">
+  <meta property="og:url" content="https://ananta-net.pages.dev/area.html">
+  <meta property="og:image" content="https://ananta-net.pages.dev/assets/og-ananta.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Area Layanan — ANANTA.NET">
+  <meta name="twitter:description" content="Cek area layanan WiFi ANANTA.NET di Kalibendo, Bades, Gondoruso, Lumajang, dan sekitarnya. Konfirmasikan ketersediaan pemasangan berdasarkan lokasi.">
+  <meta name="twitter:image" content="https://ananta-net.pages.dev/assets/og-ananta.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 </head>
@@ -116,17 +132,20 @@
   <button class="float-wa" data-float-wa aria-label="Hubungi admin ANANTA.NET melalui WhatsApp"></button>
   <div data-site-footer></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
   <script>
   document.addEventListener('DOMContentLoaded', function(){
     const mapElement = document.getElementById('serviceMap');
+    if (!mapElement) return;
+
+    function initServiceMap(){
     const select = document.getElementById('areaSelect');
     const result = document.querySelector('[data-area-result]');
     const openMapsBtn = document.getElementById('openMapsBtn');
     const mapGoogleLink = document.getElementById('mapGoogleLink');
     const resetButton = document.getElementById('resetAreaSelection');
     const chipLabel = document.querySelector('[data-map-area-chip-label]');
-    if (!mapElement || !select || !window.L) return;
+    if (!select || !window.L) return;
 
     const areas = {
       Kalibendo: {lat:-8.2288, lng:113.1021, label:'Desa Kalibendo'},
@@ -227,8 +246,21 @@
     updateArea(null, false);
     window.setTimeout(function(){ serviceMap.invalidateSize(); }, 150);
     window.addEventListener('resize', function(){ serviceMap.invalidateSize(); }, {passive:true});
+    }
+
+    if ('IntersectionObserver' in window) {
+      const mapObserver = new IntersectionObserver(function(entries){
+        if (entries.some(function(entry){ return entry.isIntersecting; })) {
+          mapObserver.disconnect();
+          initServiceMap();
+        }
+      }, {rootMargin:'280px 0px'});
+      mapObserver.observe(mapElement);
+    } else {
+      initServiceMap();
+    }
   });
   </script>
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
