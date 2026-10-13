@@ -1,5 +1,10 @@
-ANANTA.NET website
+ANANTA.NET — Revisi halaman Cara Berlangganan
 
-Revisi area layanan: mengembalikan peta ke tiga penanda titik interaktif (Kalibendo, Bades, Gondoruso) dan menghapus semua garis/poligon batas. Klik titik atau pilih desa pada dropdown untuk menyorot lokasi dan membuka tautan Google Maps dari bagian bawah peta.
+Perubahan:
+- Tampilan halaman Cara Berlangganan diselaraskan dengan Home, Paket Internet, dan Area Layanan.
+- Judul menggunakan animasi huruf yang sama, dengan warna navy dan teal.
+- Alur 5 langkah ditampilkan dalam kartu responsif, dengan akses ke halaman Paket, Area Layanan, dan WhatsApp Admin.
+- Catatan biaya pemasangan dan konfirmasi lokasi dibuat jelas.
+- Header, footer, logo asli, tautan WhatsApp, peta Area Layanan, dan halaman lain tetap disertakan.
 
-Untuk memperbarui: salin isi arsip ke repository ananta-net (jangan hapus .git), lalu commit dan push ke branch main agar Cloudflare Pages melakukan deployment.
+Untuk memasang, extract ZIP lalu salin isinya ke repository website. Pertahankan folder .git.
