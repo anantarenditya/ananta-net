@@ -1,13 +1,13 @@
-ANANTA.NET — Perbaikan ikon Area Layanan
+ANANTA.NET — Active Navigation Highlight
 
-Perubahan:
-- Ikon di sebelah tulisan “AREA LAYANAN” pada hero halaman area.html diubah dari ikon Wi-Fi menjadi ikon pin lokasi seperti penanda peta.
-- Peta, pin Kalibendo/Bades/Gondoruso, label interaktif, tautan Google Maps, identitas visual, dan halaman lain tetap dipertahankan.
-- Perbaikan scroll Home/footer dari paket dasar tetap disertakan.
+Pembaruan:
+- Menandai halaman yang sedang aktif di navigasi desktop dan menu hamburger mobile.
+- Item aktif mendapat latar teal pucat, teks navy yang lebih tegas, garis aksen teal di kiri, dan label "Sedang dibuka".
+- Item aktif diberi aria-current="page" untuk aksesibilitas.
+- Halaman detail-paket.html menyorot menu Paket Langganan.
+- Semua konten, logo, peta, nomor WhatsApp, SEO, dan aset lainnya dipertahankan.
 
-Cara memperbarui:
-1. Extract ZIP dan salin seluruh isinya ke repository ananta-net tanpa menghapus folder .git.
-2. Jalankan: git add .
-3. Jalankan: git commit -m "Use map pin icon for service area label"
-4. Jalankan: git push origin main
-5. Tunggu deployment Cloudflare Pages berstatus Success.
+Pasang:
+1. Extract ZIP.
+2. Salin isi folder ke repository ananta-net. Jangan menghapus .git.
+3. Jalankan git add ., git commit -m "Highlight active navigation item", git push origin main.

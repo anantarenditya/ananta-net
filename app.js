@@ -52,7 +52,7 @@ function injectHeader(){
         <nav class="nav-links" aria-label="Navigasi utama">
           <a href="index.html" data-nav="index.html">Home</a>
           <a href="tentang.html" data-nav="tentang.html">Tentang Kami</a>
-          <a href="paket.html" data-nav="paket.html">Paket</a>
+          <a href="paket.html" data-nav="paket.html">Paket Langganan</a>
           <a href="area.html" data-nav="area.html">Area Layanan</a>
           <a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a>
           <a href="galeri.html" data-nav="galeri.html">Galeri</a>
@@ -63,11 +63,18 @@ function injectHeader(){
         <div class="actions"><button class="menu-btn" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button></div>
       </div>
       <div class="container nav-mobile" id="mobileNav">
-        <a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket Langganan</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a>
+        <a href="index.html" data-nav="index.html">Home</a><a href="tentang.html" data-nav="tentang.html">Tentang Kami</a><a href="paket.html" data-nav="paket.html">Paket Langganan</a><a href="area.html" data-nav="area.html">Area Layanan</a><a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a><a href="galeri.html" data-nav="galeri.html">Galeri</a><a href="faq.html" data-nav="faq.html">FAQ</a><a href="syarat-ketentuan.html" data-nav="syarat-ketentuan.html">S&K</a><a href="kontak.html" data-nav="kontak.html">Kontak</a>
       </div>
     </header>`;
   const path=location.pathname.split('/').pop()||'index.html';
-  el.querySelectorAll('[data-nav]').forEach(a=>{ if(a.getAttribute('data-nav')===path) a.classList.add('active'); });
+  // Detail paket belongs to the Paket Langganan section in the main navigation.
+  const activePath = path === 'detail-paket.html' ? 'paket.html' : path;
+  el.querySelectorAll('[data-nav]').forEach(a=>{
+    const isActive = a.getAttribute('data-nav') === activePath;
+    a.classList.toggle('active', isActive);
+    if(isActive) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
   const menuToggle=document.getElementById('menuToggle');
   const mobileNav=document.getElementById('mobileNav');
   menuToggle?.addEventListener('click',()=>{
