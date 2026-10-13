@@ -150,29 +150,37 @@
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
     }).addTo(serviceMap);
 
-    // Satu kontur gabungan untuk area layanan Kalibendo, Bades, dan Gondoruso.
-    // Bentuk dibuat mengikuti cakupan gabungan secara visual; bukan batas administrasi legal.
-    // Hanya satu polygon dipakai, sehingga garis batas internal antardesa tidak digambar.
-    const boundaryCoords = [
-      [-8.2120,113.0880],[-8.2092,113.0904],[-8.2072,113.0960],[-8.2104,113.1001],
-      [-8.2086,113.1042],[-8.2123,113.1071],[-8.2112,113.1110],[-8.2151,113.1140],
-      [-8.2135,113.1186],[-8.2181,113.1213],[-8.2201,113.1252],[-8.2258,113.1270],
-      [-8.2283,113.1320],[-8.2342,113.1348],[-8.2390,113.1336],[-8.2431,113.1367],
-      [-8.2475,113.1338],[-8.2518,113.1321],[-8.2587,113.1318],[-8.2640,113.1294],
-      [-8.2692,113.1305],[-8.2746,113.1265],[-8.2805,113.1260],[-8.2872,113.1225],
-      [-8.2946,113.1210],[-8.2993,113.1168],[-8.3033,113.1090],[-8.3010,113.1040],
-      [-8.3030,113.0980],[-8.3000,113.0920],[-8.3025,113.0863],[-8.2993,113.0810],
-      [-8.2967,113.0737],[-8.2931,113.0681],[-8.2940,113.0614],[-8.2888,113.0562],
-      [-8.2821,113.0526],[-8.2760,113.0488],[-8.2700,113.0512],[-8.2650,113.0530],
-      [-8.2610,113.0515],[-8.2562,113.0558],[-8.2511,113.0540],[-8.2472,113.0582],
-      [-8.2410,113.0585],[-8.2368,113.0627],[-8.2310,113.0632],[-8.2260,113.0673],
-      [-8.2203,113.0710],[-8.2171,113.0763],[-8.2151,113.0822],[-8.2120,113.0880]
-    ];
-    const serviceBoundary = L.polygon(boundaryCoords, {
-      color:'#e34f58', weight:3, opacity:.98, dashArray:'1.5 6', lineCap:'round', lineJoin:'round',
-      fillColor:'#e34f58', fillOpacity:.055, bubblingMouseEvents:false, className:'area-service-boundary'
-    }).addTo(serviceMap);
-    serviceBoundary.bindTooltip('Cakupan gabungan: Kalibendo · Bades · Gondoruso', {sticky:true, direction:'top', className:'area-boundary-tooltip', opacity:.98});
+    // Batas ilustratif per wilayah, mengikuti referensi pengguna: setiap desa memiliki
+    // kontur merah putus-putus sendiri. Ini bukan batas administrasi resmi.
+    const areaBoundaryCoords = {
+      Kalibendo: [
+        [-8.2168,113.0885],[-8.2149,113.0935],[-8.2167,113.0982],[-8.2156,113.1021],
+        [-8.2192,113.1062],[-8.2238,113.1076],[-8.2271,113.1052],[-8.2304,113.1057],
+        [-8.2342,113.1010],[-8.2338,113.0964],[-8.2298,113.0918],[-8.2263,113.0894],
+        [-8.2215,113.0868],[-8.2188,113.0874],[-8.2168,113.0885]
+      ],
+      Bades: [
+        [-8.2230,113.1097],[-8.2210,113.1150],[-8.2248,113.1202],[-8.2274,113.1262],
+        [-8.2311,113.1282],[-8.2350,113.1264],[-8.2398,113.1284],[-8.2445,113.1235],
+        [-8.2484,113.1204],[-8.2471,113.1144],[-8.2437,113.1102],[-8.2390,113.1090],
+        [-8.2348,113.1091],[-8.2292,113.1089],[-8.2258,113.1092],[-8.2230,113.1097]
+      ],
+      Gondoruso: [
+        [-8.2320,113.0556],[-8.2288,113.0615],[-8.2317,113.0675],[-8.2297,113.0730],
+        [-8.2330,113.0780],[-8.2370,113.0835],[-8.2432,113.0848],[-8.2485,113.0803],
+        [-8.2527,113.0750],[-8.2503,113.0675],[-8.2487,113.0608],[-8.2444,113.0560],
+        [-8.2388,113.0542],[-8.2346,113.0548],[-8.2320,113.0556]
+      ]
+    };
+    const areaBoundaries = {};
+    const boundaryStyle = {color:'#e34f58', weight:3, opacity:.96, dashArray:'1 6', lineCap:'round', lineJoin:'round', fillColor:'#e34f58', fillOpacity:.045, bubblingMouseEvents:false, className:'area-service-boundary'};
+    Object.keys(areaBoundaryCoords).forEach(function(name){
+      const layer = L.polygon(areaBoundaryCoords[name], Object.assign({}, boundaryStyle)).addTo(serviceMap);
+      layer.bindTooltip(name + ' · ilustrasi area layanan', {sticky:true, direction:'top', className:'area-boundary-tooltip', opacity:.98});
+      layer.on('click', function(){ updateArea(selectedArea === name ? null : name, false); });
+      areaBoundaries[name] = layer;
+    });
+    const allAreaBounds = L.featureGroup(Object.values(areaBoundaries)).getBounds();
 
     // Label nama desa menggantikan pin. Klik nama untuk memilih area.
     const labelPositions = {
@@ -213,7 +221,19 @@
         mapGoogleLink.setAttribute('aria-label', selectedArea ? 'Buka ' + selectedArea + ' di Google Maps' : 'Buka seluruh area layanan di Google Maps');
       }
       renderLabels();
-      if (fitAll) serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[18,18], maxZoom:12, animate:true, duration:.45});
+      Object.keys(areaBoundaries).forEach(function(areaName){
+        const isSelected = selectedArea === areaName;
+        const isDimmed = !!selectedArea && !isSelected;
+        areaBoundaries[areaName].setStyle({
+          color: '#e34f58',
+          weight: isSelected ? 4 : 3,
+          opacity: isDimmed ? .22 : .96,
+          fillColor: '#e34f58',
+          fillOpacity: isSelected ? .13 : (isDimmed ? .008 : .045)
+        });
+        if (isSelected) areaBoundaries[areaName].bringToFront();
+      });
+      if (fitAll) serviceMap.fitBounds(allAreaBounds, {padding:[18,18], maxZoom:12, animate:true, duration:.45});
     }
 
     Object.keys(areas).forEach(function(name){
@@ -225,8 +245,7 @@
       nameMarkers[name] = marker;
     });
 
-    serviceMap.fitBounds(serviceBoundary.getBounds(), {padding:[18,18], maxZoom:12});
-    serviceBoundary.on('click', function(){ if (selectedArea) updateArea(null, true); });
+    serviceMap.fitBounds(allAreaBounds, {padding:[18,18], maxZoom:12});
     select.addEventListener('change', function(){ updateArea(select.value === 'semua' ? null : select.value, select.value === 'semua'); });
     if (resetButton) resetButton.addEventListener('click', function(){ updateArea(null, true); });
     updateArea(null, false);

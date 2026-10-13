@@ -1,9 +1,9 @@
-ANANTA.NET — Revisi Area Layanan
+ANANTA.NET — Revisi Peta Area Layanan
 
 Perubahan:
-- Kontur putus-putus merah berbentuk satu polygon gabungan untuk cakupan Kalibendo, Bades, dan Gondoruso. Garis batas internal antarwilayah tidak ditampilkan.
-- Kontur dibuat lebih berlekuk dan mengikuti area gabungan secara visual, bukan berbentuk oval sederhana.
-- Nama wilayah tetap menjadi label interaktif. Ketika salah satu dipilih, label itu lebih menonjol dan label lain menjadi lebih redup; klik ulang atau tombol “Tampilkan semua area” untuk mengembalikan tampilan.
-- Pilihan wilayah, keterangan, serta tautan Google Maps tetap berfungsi.
+- Garis batas merah putus-putus dibuat terpisah untuk Kalibendo, Bades, dan Gondoruso sesuai referensi Google Maps pengguna.
+- Tiap nama desa dapat dipilih langsung pada peta maupun melalui dropdown. Wilayah terpilih lebih menonjol; garis dan label area lain dibuat lebih redup.
+- Klik nama wilayah yang sedang aktif atau tombol area utama untuk mengembalikan seluruh tampilan.
+- Tautan Google Maps, kontrol zoom, atribusi OpenStreetMap, serta tata letak halaman tetap dipertahankan.
 
-Catatan penting: geometri kontur pada versi ini merupakan ilustrasi visual gabungan, bukan hasil penggabungan data batas administrasi resmi. Konfirmasi ketersediaan pemasangan berdasarkan alamat/titik rumah pelanggan.
+Catatan: kontur adalah ilustrasi visual perkiraan, bukan batas administrasi resmi. Untuk batas yang benar-benar akurat diperlukan data geospasial resmi tiap desa.
