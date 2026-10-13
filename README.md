@@ -1,15 +1,14 @@
-ANANTA.NET — Pembaruan Halaman Kontak
+ANANTA.NET — Penyegaran Bagian Bawah Home
 
 Perubahan:
-- Halaman Kontak diselaraskan dengan identitas visual halaman Home, Paket Internet, Area Layanan, FAQ, dan S&K.
-- Menggunakan hero dengan warna navy-teal, latar berpola lembut, breadcrumb, dan animasi judul per huruf.
-- Kontak WhatsApp Admin dan Area Layanan ditampilkan dalam kartu yang responsif dengan ikon telepon/pin yang konsisten.
-- Menghapus logo CHAYO dan teks "Internet powered by PT Chayo Anugrah Teknologi" dari isi halaman Kontak. Bagian "Didukung oleh" di footer utama tetap dipertahankan.
-- Pintasan ke Paket Internet, Cara Berlangganan, dan FAQ ditambahkan.
-- Logo asli ANANTA.NET, navigasi, tombol kontak melayang, halaman lain, dan aset situs dipertahankan.
+- Merapikan bagian Area Layanan dengan kartu dan chip wilayah yang lebih konsisten.
+- Menata Cara Berlangganan menjadi kartu langkah responsif.
+- Menyegarkan galeri Home dengan kartu gambar dan caption yang konsisten.
+- Merapikan accordion FAQ Home dan jarak antarbagian di layar ponsel.
+- Menghapus kartu logo/tulisan CHAYO dari CTA Home. Informasi “Didukung oleh PT Chayo Anugrah Teknologi” tetap berada di footer utama.
+- Mempertahankan link, isi paket, logo ANANTA.NET, nomor admin WhatsApp, dan halaman lain.
 
 Pemasangan:
-1. Extract ZIP.
-2. Salin seluruh isi ke repository ananta-net. Pertahankan folder .git.
-3. Jalankan git add ., git commit -m "Refresh contact page design", lalu git push origin main.
-4. Tunggu deployment Cloudflare Pages selesai.
+1. Extract ZIP dan salin isi ke repository `ananta-net`; jangan hapus folder `.git`.
+2. Jalankan `git add .`, `git commit -m "Polish lower homepage sections"`, lalu `git push origin main`.
+3. Tunggu Cloudflare Pages selesai deployment.
