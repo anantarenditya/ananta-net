@@ -3,90 +3,105 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Lihat dokumentasi instalasi, perangkat jaringan, kabel, dan perangkat pelanggan ANANTA.NET.">
   <title>Galeri — ANANTA.NET</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div data-site-header></div>
 
-  <section class="page-hero">
-    <div class="container page-hero-inner">
+  <section class="page-hero package-page-hero gallery-page-hero">
+    <div class="container package-page-intro gallery-page-intro">
       <div class="breadcrumb">Home / Galeri</div>
-      <h1>Galeri</h1>
-      <p style="margin:0;color:var(--muted)">Dokumentasi perangkat dan jaringan yang digunakan.</p>
+      <span class="package-eyebrow gallery-eyebrow">
+        <span class="eyebrow-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg>
+        </span>
+        GALERI ANANTA.NET
+      </span>
+      <h1 class="hero-title-motion gallery-title-motion" aria-label="Dokumentasi ANANTA.NET di lapangan">
+        <span class="hero-title-line hero-title-line-one" aria-hidden="true"><span class="hero-word">Dokumentasi</span></span>
+        <span class="hero-title-line hero-title-line-two" aria-hidden="true"><span class="hero-word">ANANTA.NET</span></span>
+      </h1>
+      <p>Lihat proses instalasi, perangkat jaringan, dan perlengkapan yang digunakan untuk layanan WiFi rumahan.</p>
+      <div class="gallery-hero-highlights" aria-label="Kategori dokumentasi">
+        <span><strong>Instalasi</strong><small>Proses di lapangan</small></span>
+        <span><strong>Perangkat</strong><small>Jaringan dan router</small></span>
+        <span><strong>Pelanggan</strong><small>Perangkat di rumah</small></span>
+      </div>
     </div>
   </section>
 
   <main>
-    <section class="section">
+    <section class="section gallery-main-section">
       <div class="container">
-        <div class="section-head gallery-section-head">
+        <div class="section-head section-head-mobile-stack gallery-section-head">
           <div>
-            <div class="eyebrow">Dokumentasi ANANTA.NET</div>
-            <h2 style="margin:0">Instalasi & perangkat di lapangan</h2>
+            <span class="eyebrow">DOKUMENTASI LAPANGAN</span>
+            <h2>Melihat lebih dekat layanan kami</h2>
+            <p>Telusuri foto berdasarkan kategori, lalu ketuk gambar untuk melihat ukuran yang lebih besar.</p>
           </div>
-          <p style="margin:0;color:var(--muted);max-width:560px">Klik foto untuk melihat ukuran penuh.</p>
         </div>
 
-        <div class="filters" aria-label="Filter galeri">
-          <button class="filter-btn active" data-filter="all">Semua</button>
-          <button class="filter-btn" data-filter="installation">Instalasi</button>
-          <button class="filter-btn" data-filter="network">Perangkat Jaringan</button>
-          <button class="filter-btn" data-filter="cable">Kabel</button>
-          <button class="filter-btn" data-filter="customer">Perangkat Pelanggan</button>
+        <div class="filters gallery-filters" aria-label="Filter galeri">
+          <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">Semua foto</button>
+          <button class="filter-btn" type="button" data-filter="installation" aria-pressed="false">Instalasi</button>
+          <button class="filter-btn" type="button" data-filter="network" aria-pressed="false">Perangkat jaringan</button>
+          <button class="filter-btn" type="button" data-filter="cable" aria-pressed="false">Kabel</button>
+          <button class="filter-btn" type="button" data-filter="customer" aria-pressed="false">Perangkat pelanggan</button>
         </div>
 
         <div class="gallery-grid gallery-grid-refined">
-          <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="installation" tabindex="0" role="button" aria-label="Buka foto instalasi 1">
+          <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="installation" tabindex="0" role="button" aria-label="Buka foto instalasi jaringan 1">
             <img src="assets/gallery/instalasi-kabel-1.jpeg" alt="Teknisi melakukan instalasi jaringan di tiang" data-gallery-src="assets/gallery/instalasi-kabel-1.jpeg" data-gallery-title="Instalasi Jaringan">
             <figcaption class="gallery-caption">Instalasi Jaringan</figcaption>
           </figure>
-
-          <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="installation" tabindex="0" role="button" aria-label="Buka foto instalasi 2">
+          <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="installation" tabindex="0" role="button" aria-label="Buka foto instalasi jaringan 2">
             <img src="assets/gallery/instalasi-kabel-2.jpeg" alt="Teknisi melakukan instalasi jaringan di lapangan" data-gallery-src="assets/gallery/instalasi-kabel-2.jpeg" data-gallery-title="Instalasi Jaringan">
             <figcaption class="gallery-caption">Instalasi Jaringan</figcaption>
           </figure>
-
-          <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="installation" tabindex="0" role="button" aria-label="Buka foto instalasi 3">
-            <img src="assets/gallery/instalasi-kabel-3.jpeg" alt="Teknisi melakukan pemasangan jaringan di rumah pelanggan" data-gallery-src="assets/gallery/instalasi-kabel-3.jpeg" data-gallery-title="Instalasi Jaringan">
-            <figcaption class="gallery-caption">Instalasi Jaringan</figcaption>
+          <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="installation" tabindex="0" role="button" aria-label="Buka foto instalasi jaringan 3">
+            <img src="assets/gallery/instalasi-kabel-3.jpeg" alt="Teknisi memasang jaringan di rumah pelanggan" data-gallery-src="assets/gallery/instalasi-kabel-3.jpeg" data-gallery-title="Pemasangan Jaringan">
+            <figcaption class="gallery-caption">Pemasangan Jaringan</figcaption>
           </figure>
-
           <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="network" tabindex="0" role="button" aria-label="Buka foto perangkat jaringan 1">
             <img src="assets/gallery/doc_image_2.jpeg" alt="Perangkat jaringan ANANTA.NET" data-gallery-src="assets/gallery/doc_image_2.jpeg" data-gallery-title="Perangkat Jaringan">
             <figcaption class="gallery-caption">Perangkat Jaringan</figcaption>
           </figure>
-
           <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="network" tabindex="0" role="button" aria-label="Buka foto perangkat jaringan 2">
-            <img src="assets/gallery/doc_image_3.jpeg" alt="Perangkat jaringan ANANTA.NET" data-gallery-src="assets/gallery/doc_image_3.jpeg" data-gallery-title="Perangkat Jaringan">
+            <img src="assets/gallery/doc_image_3.jpeg" alt="Perangkat jaringan dan kabel" data-gallery-src="assets/gallery/doc_image_3.jpeg" data-gallery-title="Perangkat Jaringan">
             <figcaption class="gallery-caption">Perangkat Jaringan</figcaption>
           </figure>
-
           <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="network" tabindex="0" role="button" aria-label="Buka foto ONT dan router">
-            <img src="assets/gallery/doc_image_4.png" alt="ONT dan router" data-gallery-src="assets/gallery/doc_image_4.png" data-gallery-title="ONT dan Router">
+            <img src="assets/gallery/doc_image_4.png" alt="ONT dan router pelanggan" data-gallery-src="assets/gallery/doc_image_4.png" data-gallery-title="ONT dan Router">
             <figcaption class="gallery-caption">ONT &amp; Router</figcaption>
           </figure>
-
           <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="cable" tabindex="0" role="button" aria-label="Buka foto kabel jaringan">
-            <img src="assets/gallery/doc_image_5.png" alt="Kabel jaringan" data-gallery-src="assets/gallery/doc_image_5.png" data-gallery-title="Kabel Jaringan">
+            <img src="assets/gallery/doc_image_5.png" alt="Kabel jaringan untuk instalasi" data-gallery-src="assets/gallery/doc_image_5.png" data-gallery-title="Kabel Jaringan">
             <figcaption class="gallery-caption">Kabel Jaringan</figcaption>
           </figure>
-
           <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="customer" tabindex="0" role="button" aria-label="Buka foto perangkat pelanggan 1">
-            <img src="assets/gallery/doc_image_6.jpeg" alt="Perangkat pelanggan" data-gallery-src="assets/gallery/doc_image_6.jpeg" data-gallery-title="Perangkat Pelanggan">
+            <img src="assets/gallery/doc_image_6.jpeg" alt="Perangkat WiFi pelanggan" data-gallery-src="assets/gallery/doc_image_6.jpeg" data-gallery-title="Perangkat Pelanggan">
             <figcaption class="gallery-caption">Perangkat Pelanggan</figcaption>
           </figure>
-
           <figure class="gallery-item gallery-item-refined" data-gallery-item data-cat="customer" tabindex="0" role="button" aria-label="Buka foto perangkat pelanggan 2">
-            <img src="assets/gallery/doc_image_7.jpeg" alt="Perangkat pelanggan" data-gallery-src="assets/gallery/doc_image_7.jpeg" data-gallery-title="Perangkat Pelanggan">
-            <figcaption class="gallery-caption">Perangkat Pelanggan</figcaption>
+            <img src="assets/gallery/doc_image_7.jpeg" alt="Perangkat router pelanggan" data-gallery-src="assets/gallery/doc_image_7.jpeg" data-gallery-title="Router Pelanggan">
+            <figcaption class="gallery-caption">Router Pelanggan</figcaption>
           </figure>
+        </div>
+
+        <div class="gallery-bottom-note card">
+          <span class="gallery-bottom-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z"/><circle cx="8" cy="10" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg>
+          </span>
+          <div><strong>Ingin WiFi terpasang di rumah Anda?</strong><p>Pilih paket yang sesuai atau hubungi admin untuk mengecek area pemasangan.</p></div>
+          <div class="gallery-bottom-actions"><a class="btn btn-secondary" href="paket.html">Lihat Paket</a><button class="btn btn-primary" type="button" data-wa="Halo Admin ANANTA.NET, saya melihat galeri dan ingin bertanya tentang pemasangan WiFi.">Hubungi Admin</button></div>
         </div>
       </div>
     </section>
   </main>
 
-  <button class="float-wa" data-float-wa aria-label="WhatsApp"></button>
+  <button class="float-wa" data-float-wa aria-label="Hubungi admin ANANTA.NET melalui WhatsApp"></button>
   <div data-site-footer></div>
   <script src="app.js"></script>
 </body>
