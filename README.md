@@ -1,25 +1,23 @@
-ANANTA.NET website package.
+# ANANTA.NET — Premium Dark Home
 
-Navigation active-state refinement:
-- Highlights the current page in the mobile menu with a light teal background, visible teal left stripe, and “Halaman ini” label.
-- Resolves the active route using pathname first, then canonical URL and page title/breadcrumb as fallbacks. Detail Paket maps to Paket Langganan.
+Pembaruan ini menerapkan konsep visual **Premium Dark** pada halaman Home saja.
 
-Keep all files together when copying to the `ananta-net` repository. Do not replace or delete the repository's `.git` folder.
+## Perubahan
+- Palet Home menjadi charcoal, midnight navy, electric blue, dan ice blue.
+- Header Home memakai efek dark glass dan tetap sticky.
+- Hero, foto dokumentasi, tombol, panel 250+ pelanggan, kartu keunggulan, paket, area layanan, cara berlangganan, galeri, FAQ, CTA, dan footer Home disesuaikan dengan tema baru.
+- Logo asli ANANTA.NET, foto dokumentasi yang sudah ada, nomor admin, harga paket, tautan, peta, dan fungsi interaktif dipertahankan.
+- Halaman selain Home tidak menggunakan tema Premium Dark.
 
+## Pemasangan
+Salin seluruh isi folder `phone-update-work` ke root repository `ananta-net` di VS Code. Pilih Replace jika diminta, tetapi jangan hapus folder `.git`.
 
-Active navigation fix: every HTML page now declares an explicit `data-page` identity. The shared navigation uses this identity first, then URL/canonical/breadcrumb fallback. The active menu uses a mint background, teal left accent, and “Halaman ini” pill on mobile; detail-paket maps to Paket Langganan. Cache-busting query parameters are applied to shared CSS and JS references so the latest nav logic is fetched after deployment.
+Lalu jalankan:
 
+```bash
+git add .
+git commit -m "Apply Premium Dark theme to Home"
+git push origin main
+```
 
-Admin WhatsApp number update (2026-11-18):
-- Display number: 0815 1377 1177.
-- WhatsApp destination configured centrally as 6281513771177.
-- Structured Organization and ContactPoint telephone metadata updated.
-- Shared CSS/JS cache-busting references refreshed.
-
-
-## Perbaikan header Home (18 November 2026)
-
-- Mengubah `overflow-x` pada `body.home-page` dari `hidden` menjadi `clip`.
-- `overflow-x: hidden` pada body membuat pasangan overflow vertikal yang `visible` dihitung menjadi `auto`, sehingga body menjadi scroll container terdekat dan `position: sticky` pada header tidak menempel ke viewport pada Home.
-- `overflow-x: clip` tetap memotong limpahan horizontal tanpa membentuk scroll container, sehingga header Home mengikuti perilaku sticky halaman lain.
-- Cache stylesheet diperbarui ke `home-sticky-20261118`.
+Tunggu Cloudflare Pages berstatus Success, kemudian muat ulang website. Bila browser masih menampilkan CSS lama, lakukan hard refresh.
