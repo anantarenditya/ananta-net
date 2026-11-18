@@ -1,10 +1,25 @@
-# ANANTA.NET — Premium Dark Home (layout refinement)
+ANANTA.NET website package.
 
-- Premium Dark Home layout is rebuilt to follow the approved reference composition.
-- Desktop: hero copy left, actual ANANTA.NET installation photo right, four benefit cards, trust strip, and service-area label.
-- Mobile: copy and stacked CTAs, installation photo, 2x2 benefits, trust strip, and service area.
-- Original ANANTA.NET logo and real installation photo are preserved.
-- Only the Home page styling/layout is changed; other pages keep their existing styles and content.
-- Admin WhatsApp number remains 0815 1377 1177.
+Navigation active-state refinement:
+- Highlights the current page in the mobile menu with a light teal background, visible teal left stripe, and “Halaman ini” label.
+- Resolves the active route using pathname first, then canonical URL and page title/breadcrumb as fallbacks. Detail Paket maps to Paket Langganan.
 
-Note: the approved reference mockup contains a stylized technician image with branded clothing. The website uses the real existing installation photo from the project rather than fabricating a new branded photograph.
+Keep all files together when copying to the `ananta-net` repository. Do not replace or delete the repository's `.git` folder.
+
+
+Active navigation fix: every HTML page now declares an explicit `data-page` identity. The shared navigation uses this identity first, then URL/canonical/breadcrumb fallback. The active menu uses a mint background, teal left accent, and “Halaman ini” pill on mobile; detail-paket maps to Paket Langganan. Cache-busting query parameters are applied to shared CSS and JS references so the latest nav logic is fetched after deployment.
+
+
+Admin WhatsApp number update (2026-11-18):
+- Display number: 0815 1377 1177.
+- WhatsApp destination configured centrally as 6281513771177.
+- Structured Organization and ContactPoint telephone metadata updated.
+- Shared CSS/JS cache-busting references refreshed.
+
+
+## Perbaikan header Home (18 November 2026)
+
+- Mengubah `overflow-x` pada `body.home-page` dari `hidden` menjadi `clip`.
+- `overflow-x: hidden` pada body membuat pasangan overflow vertikal yang `visible` dihitung menjadi `auto`, sehingga body menjadi scroll container terdekat dan `position: sticky` pada header tidak menempel ke viewport pada Home.
+- `overflow-x: clip` tetap memotong limpahan horizontal tanpa membentuk scroll container, sehingga header Home mengikuti perilaku sticky halaman lain.
+- Cache stylesheet diperbarui ke `home-sticky-20261118`.
