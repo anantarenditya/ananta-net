@@ -1,34 +1,25 @@
-ANANTA.NET — Modern Home Refresh
+ANANTA.NET website package.
 
-Isi paket ini adalah website ANANTA.NET lengkap, dengan penyegaran visual pada halaman Home.
+Navigation active-state refinement:
+- Highlights the current page in the mobile menu with a light teal background, visible teal left stripe, and “Halaman ini” label.
+- Resolves the active route using pathname first, then canonical URL and page title/breadcrumb as fallbacks. Detail Paket maps to Paket Langganan.
 
-Yang berubah pada Home:
-- Hero section menjadi layout dua kolom di desktop dan susunan vertikal di HP.
-- Menggunakan foto dokumentasi teknisi ANANTA.NET yang sudah ada di assets/hero-instalasi.jpg.
-- Tombol Lihat Paket dan Hubungi Admin lebih jelas.
-- Ringkasan 250+ pelanggan, empat pilihan paket, dan wilayah layanan ditata ulang.
-- Empat kartu keunggulan dirapikan menjadi satu baris pada desktop dan dua kolom pada HP.
+Keep all files together when copying to the `ananta-net` repository. Do not replace or delete the repository's `.git` folder.
 
-Yang dipertahankan:
-- Logo ANANTA.NET asli.
-- Warna utama navy dan teal.
-- Animasi judul per huruf.
-- Header sticky Home dan menu aktif.
-- Nomor admin WhatsApp 0815 1377 1177.
-- Harga dan rincian empat paket.
-- Peta Leaflet, halaman Area Layanan, dan halaman lain.
-- Informasi dukungan PT Chayo Anugrah Teknologi di footer.
 
-Cara memasang:
-1. Ekstrak ZIP.
-2. Buka folder ananta-net-website di dalam hasil ekstrak.
-3. Salin seluruh isi folder tersebut ke folder repository ananta-net di komputer Anda.
-4. Pilih Replace bila diminta. Jangan hapus folder .git milik repository.
-5. Jalankan:
-   git add .
-   git commit -m "Refresh ANANTA.NET home design"
-   git push origin main
-6. Tunggu deployment Cloudflare Pages berstatus Success.
-7. Buka https://ananta-net.pages.dev/ lalu lakukan hard refresh.
+Active navigation fix: every HTML page now declares an explicit `data-page` identity. The shared navigation uses this identity first, then URL/canonical/breadcrumb fallback. The active menu uses a mint background, teal left accent, and “Halaman ini” pill on mobile; detail-paket maps to Paket Langganan. Cache-busting query parameters are applied to shared CSS and JS references so the latest nav logic is fetched after deployment.
 
-Catatan: perubahan tampilan Home baru akan terlihat di website publik setelah file di-push ke GitHub dan deployment Cloudflare berhasil.
+
+Admin WhatsApp number update (2026-11-18):
+- Display number: 0815 1377 1177.
+- WhatsApp destination configured centrally as 6281513771177.
+- Structured Organization and ContactPoint telephone metadata updated.
+- Shared CSS/JS cache-busting references refreshed.
+
+
+## Perbaikan header Home (18 November 2026)
+
+- Mengubah `overflow-x` pada `body.home-page` dari `hidden` menjadi `clip`.
+- `overflow-x: hidden` pada body membuat pasangan overflow vertikal yang `visible` dihitung menjadi `auto`, sehingga body menjadi scroll container terdekat dan `position: sticky` pada header tidak menempel ke viewport pada Home.
+- `overflow-x: clip` tetap memotong limpahan horizontal tanpa membentuk scroll container, sehingga header Home mengikuti perilaku sticky halaman lain.
+- Cache stylesheet diperbarui ke `home-sticky-20261118`.
