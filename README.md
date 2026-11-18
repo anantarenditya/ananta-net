@@ -15,3 +15,11 @@ Admin WhatsApp number update (2026-11-18):
 - WhatsApp destination configured centrally as 6281513771177.
 - Structured Organization and ContactPoint telephone metadata updated.
 - Shared CSS/JS cache-busting references refreshed.
+
+
+## Perbaikan header Home (18 November 2026)
+
+- Mengubah `overflow-x` pada `body.home-page` dari `hidden` menjadi `clip`.
+- `overflow-x: hidden` pada body membuat pasangan overflow vertikal yang `visible` dihitung menjadi `auto`, sehingga body menjadi scroll container terdekat dan `position: sticky` pada header tidak menempel ke viewport pada Home.
+- `overflow-x: clip` tetap memotong limpahan horizontal tanpa membentuk scroll container, sehingga header Home mengikuti perilaku sticky halaman lain.
+- Cache stylesheet diperbarui ke `home-sticky-20261118`.

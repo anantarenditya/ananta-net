@@ -2477,7 +2477,10 @@ body.home-page{
   min-height:100vh !important;
   min-height:100dvh !important;
   max-height:none !important;
-  overflow-x:hidden !important;
+  /* `hidden` creates a scrolling ancestor and prevents the sticky header
+     from sticking to the viewport on Home. `clip` clips sideways overflow
+     without creating a scroll container, matching the other pages. */
+  overflow-x:clip !important;
   overflow-y:visible !important;
   position:relative !important;
 }
