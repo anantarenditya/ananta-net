@@ -186,7 +186,61 @@
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
     }).addTo(serviceMap);
 
-    // Kembali ke penanda titik per lokasi; tidak ada polygon atau garis batas buatan.
+    // Ambil poligon batas administrasi desa dari layanan geospasial BIG.
+    // Data dusun tetap ditampilkan dari daftar ANANTA.NET; BIG hanya menjadi sumber batas desa.
+    const villageBoundaryNames = new Set(Object.keys(areas).map(name => name.toLocaleLowerCase('id-ID')));
+    let villageBoundaryLayer = null;
+    try {
+      const boundaryUrl = new URL('https://geoservices.big.go.id/rbi/rest/services/BATASWILAYAH/BATAS_DESAKEL_AR/MapServer/0/query');
+      boundaryUrl.search = new URLSearchParams({
+        where: "WADMKK='Lumajang' AND WADMKC='Pasirian'",
+        outFields: 'WADMKK,WADMKC,WADMKD,NAMOBJ',
+        returnGeometry: 'true',
+        outSR: '4326',
+        f: 'geojson'
+      }).toString();
+      const boundaryResponse = await fetch(boundaryUrl.toString(), {mode:'cors'});
+      if (!boundaryResponse.ok) throw new Error('Layanan batas BIG tidak merespons.');
+      const boundaryData = await boundaryResponse.json();
+      const selectedFeatures = (boundaryData.features || []).filter(feature => {
+        const props = feature.properties || {};
+        const villageName = String(props.WADMKD || props.NAMOBJ || '').trim().toLocaleLowerCase('id-ID');
+        const district = String(props.WADMKC || '').trim().toLocaleLowerCase('id-ID');
+        const regency = String(props.WADMKK || '').trim().toLocaleLowerCase('id-ID');
+        return villageBoundaryNames.has(villageName) &&
+          (!district || district === 'pasirian') &&
+          (!regency || regency === 'lumajang');
+      });
+      if (selectedFeatures.length) {
+        villageBoundaryLayer = L.geoJSON({type:'FeatureCollection',features:selectedFeatures}, {
+          style: feature => {
+            const props = feature.properties || {};
+            const villageName = String(props.WADMKD || props.NAMOBJ || '').trim();
+            const isSelected = selectedArea && villageName.toLocaleLowerCase('id-ID') === selectedArea.toLocaleLowerCase('id-ID');
+            return {
+              color: isSelected ? '#0759c7' : '#1685e8',
+              weight: isSelected ? 3 : 2,
+              opacity: .95,
+              fillColor: '#1685e8',
+              fillOpacity: isSelected ? .24 : .10,
+              dashArray: '7 5'
+            };
+          },
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties || {};
+            const villageName = String(props.WADMKD || props.NAMOBJ || '').trim();
+            if (areas[villageName]) {
+              layer.bindTooltip('Desa ' + villageName, {sticky:true});
+              layer.on('click', () => updateArea(villageName, false));
+            }
+          }
+        }).addTo(serviceMap);
+      }
+    } catch (error) {
+      console.warn('Batas desa BIG tidak dapat dimuat; peta tetap menggunakan penanda lokasi.', error);
+    }
+
+    // Penanda lokasi desa tetap tersedia sebagai alternatif bila layanan batas gagal dimuat.
     function areaIcon(name){
       const selected = selectedArea === name;
       const dimmed = !!selectedArea && !selected;
@@ -232,6 +286,12 @@
         nameMarkers[name].setIcon(areaIcon(name));
         nameMarkers[name].setZIndexOffset(selectedArea === name ? 1000 : 0);
       });
+      if (villageBoundaryLayer) villageBoundaryLayer.setStyle(feature => {
+        const props = feature.properties || {};
+        const villageName = String(props.WADMKD || props.NAMOBJ || '').trim();
+        const selected = selectedArea && villageName.toLocaleLowerCase('id-ID') === selectedArea.toLocaleLowerCase('id-ID');
+        return {color:selected ? '#0759c7' : '#1685e8', weight:selected ? 3 : 2, opacity:.95, fillColor:'#1685e8', fillOpacity:selected ? .24 : .10, dashArray:'7 5'};
+      });
       if (chipLabel) chipLabel.textContent = selectedArea ? 'Tampilkan semua area' : 'Area layanan utama';
       if (resetButton) resetButton.setAttribute('aria-label', selectedArea ? 'Reset dan tampilkan seluruh area layanan' : 'Area layanan utama');
     }
@@ -263,7 +323,11 @@
       else if (selectedArea) serviceMap.panTo([areas[selectedArea].lat, areas[selectedArea].lng], {animate:true, duration:.35});
     }
 
-    serviceMap.fitBounds(allAreaBounds, {padding:[42,42], maxZoom:12});
+    if (villageBoundaryLayer && villageBoundaryLayer.getBounds().isValid()) {
+      serviceMap.fitBounds(villageBoundaryLayer.getBounds(), {padding:[42,42], maxZoom:13});
+    } else {
+      serviceMap.fitBounds(allAreaBounds, {padding:[42,42], maxZoom:12});
+    }
     select.addEventListener('change', function(){ updateArea(select.value === 'semua' ? null : select.value, select.value === 'semua'); });
     if (resetButton) resetButton.addEventListener('click', function(){ updateArea(null, true); });
     updateArea(null, false);

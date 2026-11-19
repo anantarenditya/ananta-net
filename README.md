@@ -150,3 +150,11 @@ Menu Konten Website menggunakan editor JSON untuk mengelola daftar. Gunakan tomb
 ### Struktur wilayah ANANTA.NET (V3)
 
 Data area mendukung daftar `dusuns` di setiap desa. Data awal: Kalibendo (Sumberkadi, Kalibendo Selatan, Kalibendo Utara, Loji, Tabon, Karang Anyar), Bades (Siluman, Basean, Sudimoro), dan Gondoruso (Liwek, Ringin Putih, Danurojo). Ketiganya berstatus `covered` berdasarkan konfirmasi pemilik usaha. Pusat server dicatat sebagai alamat: Q4C4+HR6, Jl. Gondoruso, RT.01/RW.01, Sumber Kadi, Kalibendo, Kecamatan Pasirian, Kabupaten Lumajang, Jawa Timur 67372. Titik server belum dipetakan sebagai koordinat presisi; jangan menganggap titik tengah desa sebagai titik server. Batas polygon desa/dusun belum tersedia sehingga peta tetap memakai marker desa, bukan garis batas buatan.
+
+
+## Peta batas administrasi desa (Area page)
+
+Halaman `area.html` mencoba memuat poligon batas administrasi desa Kalibendo, Bades, dan Gondoruso dari layanan ArcGIS REST BIG:
+`https://geoservices.big.go.id/rbi/rest/services/BATASWILAYAH/BATAS_DESAKEL_AR/MapServer/0/query`
+
+Permintaan dibatasi pada Kabupaten Lumajang dan Kecamatan Pasirian. Jika layanan BIG atau koneksi lintas-origin tidak tersedia, peta otomatis tetap menampilkan penanda lokasi desa yang sudah ada. Poligon yang dimuat adalah batas desa administratif, bukan batas dusun atau jangkauan kabel/ODP. Daftar 12 dusun dan status jangkauan berasal dari data konten ANANTA.NET di Cloudflare KV.
