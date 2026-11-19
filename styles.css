@@ -2825,3 +2825,13 @@ body.home-page .footer-links{
 
 /* Area coverage: dusun list */
 .area-dusun-chip{display:inline-block;margin:3px 4px 3px 0;padding:5px 9px;border-radius:999px;background:rgba(13,148,136,.10);color:#087f75;font-size:.78rem;font-weight:650}
+
+
+/* V5: daftar dusun yang terbaca jelas di desktop dan mobile */
+.area-dusun-content{min-width:0;flex:1}
+.area-dusun-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.area-dusun-chip{display:flex;align-items:center;gap:7px;min-width:0;margin:0;padding:9px 11px;border:1px solid rgba(13,148,136,.16);border-radius:12px;background:rgba(13,148,136,.07);color:#087f75;font-size:.82rem;font-weight:700;line-height:1.35;white-space:normal}
+.area-dusun-chip>span{font-size:1rem;flex:0 0 auto}
+.area-dusun-chip small{margin-left:auto;flex:0 0 auto;color:#16856f;font-size:.65rem;font-weight:650}
+.area-dusun-empty{margin:8px 0 0;color:#64748b}
+@media(max-width:560px){.area-dusun-grid{grid-template-columns:1fr}.area-dusun-chip{padding:10px 12px}}
