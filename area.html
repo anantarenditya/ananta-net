@@ -79,7 +79,7 @@
               <span class="area-map-bottom-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
               </span>
-              <span class="area-map-bottom-copy"><strong>Jelajahi lokasi</strong><small>Gunakan peta untuk melihat area sekitar.</small></span>
+              <span class="area-map-bottom-copy"><strong>Jelajahi lokasi</strong><small>Pusat server: Sumber Kadi, Kalibendo.</small></span>
               <a id="mapGoogleLink" class="map-google-link" href="#" target="_blank" rel="noopener">Buka peta ↗</a>
             </div>
           </article>
@@ -87,7 +87,7 @@
           <article class="card area-copy area-info-card">
             <span class="eyebrow">JANGKAUAN LAYANAN</span>
             <h2>Cek ketersediaan WiFi</h2>
-            <p class="area-intro">Pilih wilayah terdekat dengan lokasi Anda. Admin akan membantu memeriksa ketersediaan pemasangan.</p>
+            <p class="area-intro">Seluruh 12 dusun di Kalibendo, Bades, dan Gondoruso tercatat telah terjangkau jaringan ANANTA.NET. Pilih desa untuk melihat dusun layanan.</p>
 
             <div class="area-location-list" aria-label="Wilayah yang dilayani">
               <div class="area-location-item"><span class="area-location-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><strong>Kalibendo</strong><small>Wilayah layanan utama</small></span></div>
@@ -108,6 +108,7 @@
               <button id="openMapsBtn" class="btn btn-secondary" type="button">Buka Google Maps ↗</button>
               <button class="btn btn-primary" data-wa="Halo Admin ANANTA.NET, saya ingin mengecek ketersediaan pemasangan WiFi di wilayah saya.">Hubungi Admin</button>
             </div>
+            <div id="areaDusunList" class="availability-card area-availability-card"><span class="availability-status-dot" aria-hidden="true"></span><div><strong>Daftar dusun</strong><p>Pilih desa untuk melihat daftar dusun yang terjangkau.</p></div></div>
             <div class="availability-card area-availability-card">
               <span class="availability-status-dot" aria-hidden="true"></span>
               <div><strong>Informasi lokasi</strong><p data-area-result>Memuat informasi wilayah...</p></div>
@@ -159,7 +160,7 @@
         if(Array.isArray(content.areas) && content.areas.length){
           areas = Object.fromEntries(content.areas.map(area=>[area.name,{
             lat:Number(area.lat),lng:Number(area.lng),label:area.label || `Desa ${area.name}`,
-            status:area.status,note:area.note || ''
+            status:area.status,note:area.note || '',dusuns:Array.isArray(area.dusuns)?area.dusuns:[]
           }]));
         }
       }
@@ -240,8 +241,14 @@
       const url = mapsUrlFor(selectedArea);
       select.value = selectedArea || 'semua';
       if (result) result.textContent = selectedArea
-        ? areas[selectedArea].label + ' dipilih. Hubungi admin untuk memastikan ketersediaan pemasangan di titik Anda.'
-        : 'Menampilkan tiga penanda lokasi. Pilih titik pada peta atau gunakan pemilih wilayah di bawahnya.';
+        ? areas[selectedArea].label + ' dipilih. Wilayah dusun tercatat terjangkau; konfirmasi titik rumah tetap dilakukan admin.'
+        : 'Menampilkan tiga desa layanan. Pilih titik pada peta atau gunakan pemilih wilayah di bawahnya.';
+      const dusunBox = document.getElementById('areaDusunList');
+      if (dusunBox) {
+        const names = selectedArea && areas[selectedArea].dusuns.length ? areas[selectedArea].dusuns : [];
+        const escapeText = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        dusunBox.innerHTML = '<span class="availability-status-dot" aria-hidden="true"></span><div><strong>' + (selectedArea ? 'Dusun di ' + selectedArea : '12 dusun terjangkau') + '</strong><p>' + (names.length ? names.map(name => '<span class="area-dusun-chip">' + escapeText(name) + '</span>').join(' ') : 'Pilih salah satu desa untuk melihat daftar dusun.') + '</p></div>';
+      }
       if (openMapsBtn) {
         openMapsBtn.textContent = selectedArea ? 'Buka ' + selectedArea + ' di Google Maps ↗' : 'Buka seluruh area di Google Maps ↗';
         openMapsBtn.onclick = function(){ window.open(url, '_blank', 'noopener'); };

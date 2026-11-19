@@ -8,10 +8,52 @@ const DEFAULT_CONTENT = {
     {id:'pro',name:'Promax',speed:100,price:335000,devices:'12–20 perangkat terhubung',activeDevices:'sekitar 6–10 aktif bersamaan',description:'Cocok untuk usaha rumahan, WFH, dan online shop.',popular:false,active:true}
   ],
   areas: [
-    {id:'kalibendo',name:'Kalibendo',label:'Desa Kalibendo',lat:-8.2288,lng:113.1021,status:'covered',note:'Hubungi admin untuk memastikan ketersediaan di titik rumah.'},
-    {id:'bades',name:'Bades',label:'Desa Bades',lat:-8.2342,lng:113.1095,status:'covered',note:'Hubungi admin untuk memastikan ketersediaan di titik rumah.'},
-    {id:'gondoruso',name:'Gondoruso',label:'Desa Gondoruso',lat:-8.2423,lng:113.0714,status:'covered',note:'Hubungi admin untuk memastikan ketersediaan di titik rumah.'}
-  ],
+    {
+        "id": "kalibendo",
+        "name": "Kalibendo",
+        "label": "Desa Kalibendo",
+        "lat": -8.2288,
+        "lng": 113.1021,
+        "status": "covered",
+        "note": "Seluruh dusun tercatat terjangkau jaringan ANANTA.NET.",
+        "dusuns": [
+            "Sumberkadi",
+            "Kalibendo Selatan",
+            "Kalibendo Utara",
+            "Loji",
+            "Tabon",
+            "Karang Anyar"
+        ]
+    },
+    {
+        "id": "bades",
+        "name": "Bades",
+        "label": "Desa Bades",
+        "lat": -8.2342,
+        "lng": 113.1095,
+        "status": "covered",
+        "note": "Seluruh dusun tercatat terjangkau jaringan ANANTA.NET.",
+        "dusuns": [
+            "Siluman",
+            "Basean",
+            "Sudimoro"
+        ]
+    },
+    {
+        "id": "gondoruso",
+        "name": "Gondoruso",
+        "label": "Desa Gondoruso",
+        "lat": -8.2423,
+        "lng": 113.0714,
+        "status": "covered",
+        "note": "Seluruh dusun tercatat terjangkau jaringan ANANTA.NET.",
+        "dusuns": [
+            "Liwek",
+            "Ringin Putih",
+            "Danurojo"
+        ]
+    }
+],
   faqs: [
     {id:'faq-los',category:'Gangguan',question:'Apa yang harus dilakukan jika lampu LOS menyala merah?',answer:'Periksa kabel fiber optik yang terlihat di dalam rumah dan pastikan tidak tertekuk atau terlepas. Jangan melihat langsung ke ujung konektor fiber. Hubungi admin ANANTA.NET agar teknisi dapat melakukan pemeriksaan.'},
     {id:'faq-slow',category:'Koneksi',question:'Kenapa internet terasa lambat?',answer:'Coba dekatkan perangkat ke router, putuskan perangkat yang tidak digunakan, lalu mulai ulang router. Jika masih lambat, hubungi admin dan sertakan waktu kejadian serta indikator lampu modem.'},
@@ -23,7 +65,12 @@ const DEFAULT_CONTENT = {
 const validId = value => /^[a-z0-9][a-z0-9_-]{1,59}$/i.test(value);
 export async function onRequestGet(context) {
   const denied = await requireAdmin(context); if (denied) return denied;
-  try { return apiJson(await safeJsonFromKv(context.env, 'public:content', DEFAULT_CONTENT)); }
+  try {
+    const data = await safeJsonFromKv(context.env, 'public:content', DEFAULT_CONTENT);
+    const savedAreas = Array.isArray(data.areas) ? data.areas : DEFAULT_CONTENT.areas;
+    const mergedAreas = DEFAULT_CONTENT.areas.map(seed => ({...seed, ...(savedAreas.find(item => item.id === seed.id) || {})}));
+    return apiJson({...DEFAULT_CONTENT, ...data, areas: mergedAreas});
+  }
   catch { return apiJson({error:'Gagal membaca data konten.'},500); }
 }
 export async function onRequestPut(context) {
@@ -40,7 +87,7 @@ export async function onRequestPut(context) {
   }
   ids.clear();
   for (const a of body.areas) {
-    if (!validId(String(a?.id||'')) || ids.has(a.id) || !String(a.name||'').trim() || String(a.name).length>80 || !Number.isFinite(Number(a.lat)) || Math.abs(Number(a.lat))>90 || !Number.isFinite(Number(a.lng)) || Math.abs(Number(a.lng))>180 || !['covered','planned','unavailable'].includes(a.status)) return apiJson({error:'Data wilayah tidak valid. Periksa ID, nama, koordinat, dan status.'},400);
+    if (!validId(String(a?.id||'')) || ids.has(a.id) || !String(a.name||'').trim() || String(a.name).length>80 || !Number.isFinite(Number(a.lat)) || Math.abs(Number(a.lat))>90 || !Number.isFinite(Number(a.lng)) || Math.abs(Number(a.lng))>180 || !['covered','planned','unavailable'].includes(a.status) || (a.dusuns !== undefined && (!Array.isArray(a.dusuns) || a.dusuns.length>100 || a.dusuns.some(d=>typeof d!=='string' || !d.trim() || d.length>80)))) return apiJson({error:'Data wilayah tidak valid. Periksa ID, nama, koordinat, status, dan daftar dusun.'},400);
     ids.add(a.id);
   }
   ids.clear();
@@ -50,7 +97,7 @@ export async function onRequestPut(context) {
   }
   const saved = {
     packages: body.packages.map(p=>({id:String(p.id),name:String(p.name).trim(),speed:Number(p.speed),price:Number(p.price),devices:String(p.devices||''),activeDevices:String(p.activeDevices||''),description:String(p.description).trim(),popular:Boolean(p.popular),active:p.active!==false})),
-    areas: body.areas.map(a=>({id:String(a.id),name:String(a.name).trim(),label:String(a.label||`Desa ${a.name}`).trim(),lat:Number(a.lat),lng:Number(a.lng),status:a.status,note:String(a.note||'').slice(0,500)})),
+    areas: body.areas.map(a=>({id:String(a.id),name:String(a.name).trim(),label:String(a.label||`Desa ${a.name}`).trim(),lat:Number(a.lat),lng:Number(a.lng),status:a.status,note:String(a.note||'').slice(0,500),dusuns:(a.dusuns||[]).map(d=>String(d).trim())})),
     faqs: body.faqs.map(f=>({id:String(f.id),category:String(f.category).trim(),question:String(f.question).trim(),answer:String(f.answer).trim(),active:f.active!==false})),
     updatedAt:new Date().toISOString()
   };

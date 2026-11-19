@@ -8,10 +8,52 @@ const DEFAULT_CONTENT = {
     {id:'pro',name:'Promax',speed:100,price:335000,devices:'12–20 perangkat terhubung',activeDevices:'sekitar 6–10 aktif bersamaan',description:'Cocok untuk usaha rumahan, WFH, dan online shop.',popular:false,active:true}
   ],
   areas: [
-    {id:'kalibendo',name:'Kalibendo',label:'Desa Kalibendo',lat:-8.2288,lng:113.1021,status:'covered',note:'Hubungi admin untuk memastikan ketersediaan di titik rumah.'},
-    {id:'bades',name:'Bades',label:'Desa Bades',lat:-8.2342,lng:113.1095,status:'covered',note:'Hubungi admin untuk memastikan ketersediaan di titik rumah.'},
-    {id:'gondoruso',name:'Gondoruso',label:'Desa Gondoruso',lat:-8.2423,lng:113.0714,status:'covered',note:'Hubungi admin untuk memastikan ketersediaan di titik rumah.'}
-  ],
+    {
+        "id": "kalibendo",
+        "name": "Kalibendo",
+        "label": "Desa Kalibendo",
+        "lat": -8.2288,
+        "lng": 113.1021,
+        "status": "covered",
+        "note": "Seluruh dusun tercatat terjangkau jaringan ANANTA.NET.",
+        "dusuns": [
+            "Sumberkadi",
+            "Kalibendo Selatan",
+            "Kalibendo Utara",
+            "Loji",
+            "Tabon",
+            "Karang Anyar"
+        ]
+    },
+    {
+        "id": "bades",
+        "name": "Bades",
+        "label": "Desa Bades",
+        "lat": -8.2342,
+        "lng": 113.1095,
+        "status": "covered",
+        "note": "Seluruh dusun tercatat terjangkau jaringan ANANTA.NET.",
+        "dusuns": [
+            "Siluman",
+            "Basean",
+            "Sudimoro"
+        ]
+    },
+    {
+        "id": "gondoruso",
+        "name": "Gondoruso",
+        "label": "Desa Gondoruso",
+        "lat": -8.2423,
+        "lng": 113.0714,
+        "status": "covered",
+        "note": "Seluruh dusun tercatat terjangkau jaringan ANANTA.NET.",
+        "dusuns": [
+            "Liwek",
+            "Ringin Putih",
+            "Danurojo"
+        ]
+    }
+],
   faqs: [
     {id:'faq-los',category:'Gangguan',question:'Apa yang harus dilakukan jika lampu LOS menyala merah?',answer:'Periksa kabel fiber optik yang terlihat di dalam rumah dan pastikan tidak tertekuk atau terlepas. Jangan melihat langsung ke ujung konektor fiber. Hubungi admin ANANTA.NET agar teknisi dapat melakukan pemeriksaan.'},
     {id:'faq-slow',category:'Koneksi',question:'Kenapa internet terasa lambat?',answer:'Coba dekatkan perangkat ke router, putuskan perangkat yang tidak digunakan, lalu mulai ulang router. Jika masih lambat, hubungi admin dan sertakan waktu kejadian serta indikator lampu modem.'},
@@ -25,7 +67,9 @@ export async function onRequestGet({env}) {
   if (!env.ANANTA_DATA) return apiJson(DEFAULT_CONTENT, 200, {'X-ANANTA-Data-Source':'fallback'});
   try {
     const data = await safeJsonFromKv(env, 'public:content', DEFAULT_CONTENT);
-    return apiJson({...DEFAULT_CONTENT, ...data});
+    const savedAreas = Array.isArray(data.areas) ? data.areas : DEFAULT_CONTENT.areas;
+    const mergedAreas = DEFAULT_CONTENT.areas.map(seed => ({...seed, ...(savedAreas.find(item => item.id === seed.id) || {})}));
+    return apiJson({...DEFAULT_CONTENT, ...data, areas: mergedAreas});
   } catch (error) {
     return apiJson(DEFAULT_CONTENT, 200, {'X-ANANTA-Data-Source':'fallback'});
   }

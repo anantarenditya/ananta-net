@@ -145,3 +145,8 @@ Data disimpan pada key Cloudflare KV `public:content` melalui endpoint `/api/adm
 Nilai awal paket mengikuti katalog website saat ini (Home 20 Mbps Rp115.000, Family 35 Mbps Rp165.000, Pro 50 Mbps Rp225.000, Promax 100 Mbps Rp335.000). Titik awal Kalibendo, Bades, dan Gondoruso mengikuti koordinat yang sudah tertanam pada peta area website. Koordinat ini dipertahankan, bukan hasil survei batas cakupan. Status cakupan harus dikonfirmasi admin dan pengecekan titik rumah tetap perlu konfirmasi admin/teknisi.
 
 Menu Konten Website menggunakan editor JSON untuk mengelola daftar. Gunakan tombol Muat Ulang untuk membatalkan perubahan lokal dan mengambil data terbaru dari KV. Tombol Simpan Konten memvalidasi semua koleksi sebelum menyimpan. Pastikan JSON valid; jangan memasukkan HTML atau script ke kolom teks.
+
+
+### Struktur wilayah ANANTA.NET (V3)
+
+Data area mendukung daftar `dusuns` di setiap desa. Data awal: Kalibendo (Sumberkadi, Kalibendo Selatan, Kalibendo Utara, Loji, Tabon, Karang Anyar), Bades (Siluman, Basean, Sudimoro), dan Gondoruso (Liwek, Ringin Putih, Danurojo). Ketiganya berstatus `covered` berdasarkan konfirmasi pemilik usaha. Pusat server dicatat sebagai alamat: Q4C4+HR6, Jl. Gondoruso, RT.01/RW.01, Sumber Kadi, Kalibendo, Kecamatan Pasirian, Kabupaten Lumajang, Jawa Timur 67372. Titik server belum dipetakan sebagai koordinat presisi; jangan menganggap titik tengah desa sebagai titik server. Batas polygon desa/dusun belum tersedia sehingga peta tetap memakai marker desa, bukan garis batas buatan.
