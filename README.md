@@ -82,3 +82,12 @@ Kategori yang didukung: `gangguan`, `pemeliharaan`, `informasi`, `promo`. Hapus 
 Setelah mengubah JSON, jalankan `git add .`, `git commit -m "Update network status and customer announcements"`, lalu `git push origin main`. Tunggu Cloudflare Pages berstatus Success. Berkas `/data/*` diberi header `Cache-Control: no-store` supaya pembaruan tidak tertahan cache browser/CDN.
 
 Nomor admin WhatsApp tetap menggunakan `0815 1377 1177` (tujuan WhatsApp `6281513771177`).
+
+
+## Penyegaran halaman Status Jaringan dan Pengumuman (19 November 2026)
+
+- Hero kedua halaman kini memakai pola judul, animasi per huruf, breadcrumb, pill ikon, font, dan latar titik yang sama dengan halaman Paket, Area, dan FAQ.
+- Area konten menggunakan latar lembut berpola, kartu dengan radius/border/shadow yang konsisten, tipografi Inter dari stylesheet utama, dan jarak responsif untuk HP.
+- Ringkasan status dan CTA memakai panel navy-teal, sementara kartu area dan pengumuman tetap terang agar informasi mudah dibaca.
+- Navigasi desktop disetel agar 11 tautan satu baris dan tidak terpotong menjadi dua baris pada lebar desktop. Pada layar lebih kecil, navigasi tetap menggunakan hamburger.
+- Sumber data tetap `data/status-jaringan.json` dan `data/pengumuman.json`; cara memperbaruinya tidak berubah.
