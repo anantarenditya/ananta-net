@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#0b2440">
+  <title>Admin Dashboard — ANANTA.NET</title>
+  <link rel="icon" href="../assets/logo-ananta.png">
+  <link rel="stylesheet" href="admin.css?rev=20261119-admin1">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-topbar">
+      <a class="brand" href="../index.html"><img src="../assets/logo-ananta.png" alt="Logo ANANTA.NET"><span><strong>ANANTA.NET</strong><small>ADMIN CENTER</small></span></a>
+      <div class="top-actions"><span class="secure-label"><i></i> Area Admin</span><a class="public-link" href="../index.html" target="_blank" rel="noopener">Lihat website ↗</a></div>
+    </header>
+
+    <section class="login-panel" id="loginPanel" hidden>
+      <div class="login-art"><span class="eyebrow">PUSAT KENDALI ANANTA.NET</span><h1>Kelola informasi pelanggan dengan lebih mudah.</h1><p>Perbarui kondisi jaringan dan pengumuman langsung dari HP atau laptop, tanpa mengedit file website setiap kali ada informasi baru.</p><div class="login-points"><span>✓ Status per wilayah</span><span>✓ Pengumuman pelanggan</span><span>✓ Tersimpan di Cloudflare</span></div></div>
+      <form class="login-form" id="loginForm">
+        <div class="form-icon">⌁</div><span class="eyebrow">ADMIN LOGIN</span><h2>Masuk ke dashboard</h2><p>Gunakan kata sandi admin yang sudah disetel di Cloudflare.</p>
+        <label for="adminPassword">Kata sandi admin</label><input id="adminPassword" name="password" type="password" autocomplete="current-password" required maxlength="200" placeholder="Masukkan kata sandi">
+        <button class="btn btn-primary" type="submit">Masuk ke Dashboard <span>→</span></button>
+        <p class="form-feedback" id="loginFeedback" role="status"></p>
+        <small class="security-note">Koneksi aman · Sesi admin berakhir otomatis setelah 8 jam.</small>
+      </form>
+    </section>
+
+    <section class="dashboard" id="dashboard" hidden>
+      <div class="welcome-row"><div><span class="eyebrow">PANEL PENGELOLAAN</span><h1>Selamat datang, Admin.</h1><p>Kelola informasi yang akan dilihat pelanggan ANANTA.NET.</p></div><button class="btn btn-quiet" id="logoutButton" type="button">Keluar ↗</button></div>
+      <div class="dashboard-stats">
+        <article class="stat-card"><span class="stat-icon teal">⌁</span><div><small>Wilayah dikelola</small><strong>3 area layanan</strong><span>Kalibendo · Bades · Gondoruso</span></div></article>
+        <article class="stat-card"><span class="stat-icon blue">▤</span><div><small>Publikasi</small><strong id="announcementCount">0 pengumuman</strong><span>Informasi pelanggan aktif</span></div></article>
+        <article class="stat-card"><span class="stat-icon mint">◷</span><div><small>Terakhir diperbarui</small><strong id="lastUpdated">Belum tersedia</strong><span>Waktu pembaruan tersimpan</span></div></article>
+      </div>
+
+      <nav class="admin-tabs" aria-label="Bagian dashboard">
+        <button type="button" class="tab-button active" data-tab="statusPanel">◉ Status Jaringan</button>
+        <button type="button" class="tab-button" data-tab="announcementPanel">▤ Pengumuman</button>
+      </nav>
+
+      <section class="admin-panel active" id="statusPanel">
+        <div class="panel-heading"><div><span class="eyebrow">PEMANTAUAN MANUAL</span><h2>Status jaringan</h2><p>Perbarui status berdasarkan hasil pemeriksaan admin atau teknisi. Status ini tidak terhubung otomatis ke MikroTik/OLT.</p></div><span class="panel-pill">3 wilayah</span></div>
+        <form id="statusForm" class="editor-form">
+          <div class="field-grid two">
+            <div class="field"><label for="overallStatus">Status keseluruhan</label><select id="overallStatus"><option value="unknown">Belum diperbarui</option><option value="normal">Normal</option><option value="gangguan">Gangguan</option><option value="pemeliharaan">Pemeliharaan</option></select></div>
+            <div class="field"><label for="summary">Ringkasan kondisi jaringan</label><input id="summary" maxlength="500" required placeholder="Contoh: Jaringan terpantau normal berdasarkan pemeriksaan admin."></div>
+          </div>
+          <div class="subheading"><h3>Status per wilayah</h3><span>Atur setiap area secara terpisah</span></div>
+          <div class="area-edit-grid" id="areaFields"></div>
+          <div class="form-actions"><p>Waktu pembaruan akan diisi otomatis saat disimpan.</p><button class="btn btn-primary" type="submit">Simpan Status Jaringan <span>→</span></button></div>
+          <p class="form-feedback" id="statusFeedback" role="status"></p>
+        </form>
+      </section>
+
+      <section class="admin-panel" id="announcementPanel" hidden>
+        <div class="panel-heading"><div><span class="eyebrow">INFORMASI PELANGGAN</span><h2>Pengumuman</h2><p>Buat, ubah, dan hapus informasi gangguan, pemeliharaan, layanan, maupun promo.</p></div><span class="panel-pill" id="announcementPanelCount">0 item</span></div>
+        <form id="announcementForm" class="editor-form announcement-editor">
+          <input id="announcementId" type="hidden">
+          <div class="subheading"><h3 id="announcementFormTitle">Buat pengumuman baru</h3><span>Kolom bertanda wajib diisi</span></div>
+          <div class="field-grid two">
+            <div class="field"><label for="announcementTitle">Judul pengumuman *</label><input id="announcementTitle" required maxlength="120" placeholder="Contoh: Pemeliharaan jaringan wilayah Bades"></div>
+            <div class="field"><label for="announcementCategory">Kategori *</label><select id="announcementCategory"><option value="gangguan">Gangguan</option><option value="pemeliharaan">Pemeliharaan</option><option value="informasi">Informasi</option><option value="promo">Promo</option></select></div>
+            <div class="field"><label for="announcementDate">Tanggal dan waktu *</label><input id="announcementDate" type="datetime-local" required></div>
+            <div class="field"><label for="announcementArea">Wilayah</label><input id="announcementArea" maxlength="140" placeholder="Kalibendo, Bades, atau semua wilayah"></div>
+          </div>
+          <div class="field"><label for="announcementExcerpt">Ringkasan singkat *</label><textarea id="announcementExcerpt" rows="2" required maxlength="320" placeholder="Ringkasan yang terlihat pada daftar pengumuman."></textarea><small>Maksimal 320 karakter.</small></div>
+          <div class="field"><label for="announcementContent">Isi lengkap *</label><textarea id="announcementContent" rows="5" required maxlength="5000" placeholder="Tuliskan informasi lengkap untuk pelanggan, termasuk dampak dan tindakan yang perlu dilakukan."></textarea><small>Maksimal 5.000 karakter. Teks biasa, tidak perlu HTML.</small></div>
+          <div class="form-actions"><p id="announcementEditHint">Pengumuman akan langsung tampil setelah disimpan.</p><div class="action-buttons"><button class="btn btn-quiet" id="cancelEditButton" type="button" hidden>Batal</button><button class="btn btn-primary" type="submit"><span id="announcementSubmitLabel">Terbitkan Pengumuman</span> <span>→</span></button></div></div>
+          <p class="form-feedback" id="announcementFeedback" role="status"></p>
+        </form>
+        <div class="subheading list-subheading"><h3>Daftar pengumuman</h3><span>Urutan terbaru tampil lebih dahulu</span></div>
+        <div class="admin-announcement-list" id="adminAnnouncementList"><div class="list-empty">Belum ada pengumuman. Buat pengumuman pertama melalui formulir di atas.</div></div>
+      </section>
+      <footer class="admin-footer"><span>© 2026 ANANTA.NET · Admin Center</span><span>Data pelanggan publik hanya menampilkan informasi yang diterbitkan admin.</span></footer>
+    </section>
+    <div class="setup-warning" id="setupWarning" hidden><strong>Dashboard belum terhubung ke penyimpanan Cloudflare.</strong><p>Hubungkan KV dengan nama binding <code>ANANTA_DATA</code>, lalu tambahkan secret <code>ADMIN_PASSWORD</code> dan <code>SESSION_SECRET</code>. Panduan lengkap ada di README dalam ZIP ini.</p></div>
+  </main>
+  <script src="admin.js?rev=20261119-admin1" defer></script>
+</body>
+</html>

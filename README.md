@@ -27,11 +27,11 @@ Admin WhatsApp number update (2026-11-18):
 
 ## Status Jaringan dan Pengumuman Pelanggan (19 November 2026)
 
-Dua halaman baru ditambahkan: `status-jaringan.html` dan `pengumuman.html`. Keduanya memakai data JSON statis di folder `data/` agar admin dapat memperbarui informasi tanpa mengubah HTML atau JavaScript.
+Dua halaman baru ditambahkan: `status-jaringan.html` dan `pengumuman.html`. Data awal/cadangan disimpan di folder `data/`. Setelah Admin Dashboard dan Cloudflare KV dikonfigurasi, data yang ditampilkan berasal dari API dashboard; JSON statis digunakan sebagai fallback sebelum backend diaktifkan.
 
-### Memperbarui status jaringan
+### Metode cadangan: memperbarui status melalui JSON
 
-Edit `data/status-jaringan.json`, lalu isi:
+Metode ini dapat dipakai sebelum KV dikonfigurasi. Setelah dashboard aktif, gunakan dashboard sebagai sumber utama. Jika memakai metode JSON, edit `data/status-jaringan.json`, lalu isi:
 - `updatedAt`: waktu pembaruan ISO 8601 beserta zona waktu, misalnya `2026-11-19T09:30:00+07:00`.
 - `overallStatus`: `normal`, `gangguan`, `pemeliharaan`, atau `unknown`.
 - `summary`: ringkasan kondisi jaringan.
@@ -54,9 +54,9 @@ Contoh status normal setelah benar-benar dikonfirmasi:
 
 Jangan menandai status `normal` kecuali sudah diperiksa. Halaman ini **bukan monitoring otomatis** dari MikroTik/OLT; informasi hanya berubah setelah admin memperbarui JSON dan melakukan deployment.
 
-### Menambahkan pengumuman
+### Metode cadangan: menambahkan pengumuman melalui JSON
 
-Edit `data/pengumuman.json`. Tambahkan objek ke array `items`:
+Metode ini dapat dipakai sebelum KV dikonfigurasi. Setelah dashboard aktif, gunakan dashboard sebagai sumber utama. Jika memakai metode JSON, edit `data/pengumuman.json` dan tambahkan objek ke array `items`:
 
 ```json
 {
@@ -77,9 +77,9 @@ Edit `data/pengumuman.json`. Tambahkan objek ke array `items`:
 
 Kategori yang didukung: `gangguan`, `pemeliharaan`, `informasi`, `promo`. Hapus objek pengumuman yang tidak lagi relevan atau tambahkan informasi penyelesaian dengan tanggal baru.
 
-### Deployment
+### Deployment untuk metode JSON cadangan
 
-Setelah mengubah JSON, jalankan `git add .`, `git commit -m "Update network status and customer announcements"`, lalu `git push origin main`. Tunggu Cloudflare Pages berstatus Success. Berkas `/data/*` diberi header `Cache-Control: no-store` supaya pembaruan tidak tertahan cache browser/CDN.
+Jika mengedit file JSON secara manual, jalankan `git add .`, `git commit -m "Update network status and customer announcements"`, lalu `git push origin main`. Tunggu Cloudflare Pages berstatus Success. Untuk metode dashboard (KV), perubahan isi tidak memerlukan Git Push atau deployment ulang.
 
 Nomor admin WhatsApp tetap menggunakan `0815 1377 1177` (tujuan WhatsApp `6281513771177`).
 
@@ -90,4 +90,44 @@ Nomor admin WhatsApp tetap menggunakan `0815 1377 1177` (tujuan WhatsApp `628151
 - Area konten menggunakan latar lembut berpola, kartu dengan radius/border/shadow yang konsisten, tipografi Inter dari stylesheet utama, dan jarak responsif untuk HP.
 - Ringkasan status dan CTA memakai panel navy-teal, sementara kartu area dan pengumuman tetap terang agar informasi mudah dibaca.
 - Navigasi desktop disetel agar 11 tautan satu baris dan tidak terpotong menjadi dua baris pada lebar desktop. Pada layar lebih kecil, navigasi tetap menggunakan hamburger.
-- Sumber data tetap `data/status-jaringan.json` dan `data/pengumuman.json`; cara memperbaruinya tidak berubah.
+- Setelah Admin Dashboard aktif, halaman publik membaca `/api/status` dan `/api/announcements` dari KV. Sebelum KV dikonfigurasi, halaman memakai `data/status-jaringan.json` dan `data/pengumuman.json` sebagai fallback.
+
+
+## Admin Dashboard ANANTA.NET (19 November 2026)
+
+Website kini memiliki dashboard admin di `/admin/` untuk mengelola Status Jaringan dan Pengumuman dari HP atau laptop. Halaman publik tetap berada di URL biasa dan membaca data terbaru dari API Pages Functions. File JSON pada `data/` tetap dipertahankan sebagai cadangan/fallback statis.
+
+### Fitur dashboard
+- Login admin dengan cookie sesi bertanda tangan HMAC, `HttpOnly`, `Secure`, dan `SameSite=Strict` (masa sesi 8 jam).
+- Proteksi endpoint tulis dengan pemeriksaan `Origin` dan pembatasan percobaan login sederhana berbasis IP.
+- Mengubah status keseluruhan dan status Kalibendo, Bades, serta Gondoruso.
+- Membuat, mengedit, dan menghapus pengumuman Gangguan, Pemeliharaan, Informasi, dan Promo.
+- Data disimpan di Cloudflare Workers KV; halaman publik membaca `/api/status` dan `/api/announcements` tanpa cache.
+- Tidak ada kata sandi atau secret yang disimpan di repository.
+
+### Pengaturan Cloudflare yang wajib dilakukan satu kali
+
+> Dashboard tidak akan dapat login/simpan data sampai KV dan secrets dikonfigurasi. Jangan membuat kata sandi di file HTML atau commit ke Git.
+
+1. Buka Cloudflare Dashboard → **Workers & Pages** → **KV** (atau menu Storage & Databases → KV) → buat namespace, misalnya `ananta-net-content`.
+2. Buka project Pages **ananta-net** → **Settings → Bindings → Add → KV namespace**. Isi **Variable name** persis `ANANTA_DATA`, pilih namespace yang baru dibuat, lalu simpan. Lakukan untuk environment Production; Preview boleh menggunakan namespace terpisah. Redeploy agar binding aktif.
+3. Masih di project Pages, buka **Settings → Variables and Secrets**. Tambahkan dua nilai dengan tipe **Secret** pada Production:
+   - `ADMIN_PASSWORD`: buat kata sandi admin yang kuat dan unik. Jangan gunakan nomor telepon atau kata sandi yang dipakai di layanan lain.
+   - `SESSION_SECRET`: string acak minimal 32 karakter. Contoh membuatnya di terminal Node.js: `node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"`. Salin hasilnya sebagai secret, jangan tulis ke Git.
+4. Simpan pengaturan dan lakukan deployment ulang. Pastikan binding `ANANTA_DATA` dan kedua secrets berada di environment Production yang sama.
+5. Buka `https://ananta-net.pages.dev/admin/`, login menggunakan `ADMIN_PASSWORD`, lalu kelola Status Jaringan atau Pengumuman.
+
+Cloudflare Pages Functions memakai folder `functions/` di root dan `_routes.json` membatasi eksekusi Function hanya untuk `/api/*`, sehingga halaman dan aset statis lainnya tetap disajikan sebagai aset statis. Dokumentasi resmi: https://developers.cloudflare.com/pages/functions/routing/ ; https://developers.cloudflare.com/pages/functions/bindings/ ; https://developers.cloudflare.com/pages/functions/bindings/#secrets
+
+### Cara menggunakan dashboard
+- **Status Jaringan:** pilih status keseluruhan, tulis ringkasan, atur status dan catatan masing-masing wilayah, lalu klik Simpan Status Jaringan. Waktu pembaruan terisi otomatis.
+- **Pengumuman:** isi judul, kategori, tanggal/waktu, area, ringkasan, dan isi lengkap. Klik Terbitkan Pengumuman. Untuk mengubah atau menghapus pengumuman, gunakan tombol Edit atau Hapus pada daftar.
+- Setelah berhasil disimpan, API publik akan menyajikan data dari KV. Tidak perlu Git Push lagi untuk setiap perubahan isi status/pengumuman. Perubahan kode atau desain tetap memerlukan deployment.
+
+### Catatan operasional dan keamanan
+- Status jaringan tetap merupakan pembaruan manual admin; dashboard tidak membaca MikroTik atau OLT secara otomatis.
+- Simpan `ADMIN_PASSWORD` dan `SESSION_SECRET` secara aman. Jika `SESSION_SECRET` diganti, semua sesi login sebelumnya otomatis tidak berlaku.
+- Untuk logout, gunakan tombol Keluar di dashboard. Sesi juga berakhir otomatis setelah 8 jam.
+- Login dibatasi setelah 8 percobaan gagal dalam jendela 10 menit per IP. Untuk penggunaan produksi yang lebih luas, aktifkan juga aturan keamanan/rate limiting di Cloudflare.
+- Workers KV bersifat eventually consistent; setelah simpan, perubahan publik dapat membutuhkan waktu singkat untuk tersebar di edge Cloudflare.
+- Dashboard belum mengelola paket/harga, galeri, atau data pelanggan; hanya Status Jaringan dan Pengumuman sesuai tahap ini.

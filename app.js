@@ -433,12 +433,21 @@ function initAreaChecker(){
 }
 
 
-// Customer-facing network status and announcements are read from small JSON files.
-// They are intentionally manual updates; this static site does not poll live network equipment.
+// Customer-facing network status and announcements are read from the Admin Dashboard API first.
+// The static JSON files remain a fallback until the Cloudflare KV binding is configured.
+// Status values are still manually confirmed by an admin; the site does not poll MikroTik/OLT.
 const STATUS_DATA_URL = 'data/status-jaringan.json';
 const ANNOUNCEMENTS_DATA_URL = 'data/pengumuman.json';
 
-async function readPublicJson(path){
+async function readPublicJson(path, apiPath){
+  // Prefer live content from the protected Pages Functions + KV backend.
+  // Keep the static JSON as a graceful fallback during setup or if the API is unavailable.
+  if(apiPath){
+    try{
+      const live = await fetch(apiPath, {cache:'no-store', headers:{'Accept':'application/json'}});
+      if(live.ok) return await live.json();
+    }catch(error){ /* fallback below */ }
+  }
   const response = await fetch(`${path}?rev=20261119`, {cache:'no-store'});
   if(!response.ok) throw new Error(`Tidak dapat memuat ${path}`);
   return response.json();
@@ -516,8 +525,8 @@ async function initNetworkInformation(){
 
   let statusData = null;
   let announcementsData = null;
-  try { statusData = await readPublicJson(STATUS_DATA_URL); } catch(error) { statusData = null; }
-  try { announcementsData = await readPublicJson(ANNOUNCEMENTS_DATA_URL); } catch(error) { announcementsData = null; }
+  try { statusData = await readPublicJson(STATUS_DATA_URL, '/api/status'); } catch(error) { statusData = null; }
+  try { announcementsData = await readPublicJson(ANNOUNCEMENTS_DATA_URL, '/api/announcements'); } catch(error) { announcementsData = null; }
 
   if(statusData){
     if(statusPage) renderNetworkStatus(statusData, statusPage);

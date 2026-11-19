@@ -9,3 +9,15 @@
 
 /data/*
   Cache-Control: no-store, max-age=0
+
+/admin/*
+  Cache-Control: no-store, max-age=0
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+
+/api/*
+  Cache-Control: no-store, max-age=0
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: same-origin
