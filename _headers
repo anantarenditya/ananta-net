@@ -6,3 +6,6 @@
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 /sitemap.xml
   Content-Type: application/xml; charset=utf-8
+
+/data/*
+  Cache-Control: no-store, max-age=0

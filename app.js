@@ -54,6 +54,8 @@ function injectHeader(){
           <a href="tentang.html" data-nav="tentang.html">Tentang Kami</a>
           <a href="paket.html" data-nav="paket.html">Paket Langganan</a>
           <a href="area.html" data-nav="area.html">Area Layanan</a>
+          <a href="status-jaringan.html" data-nav="status-jaringan.html">Status Jaringan</a>
+          <a href="pengumuman.html" data-nav="pengumuman.html">Pengumuman</a>
           <a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a>
           <a href="galeri.html" data-nav="galeri.html">Galeri</a>
           <a href="faq.html" data-nav="faq.html">FAQ</a>
@@ -63,7 +65,7 @@ function injectHeader(){
         <div class="actions"><button class="menu-btn" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button></div>
       </div>
       <div class="container nav-mobile" id="mobileNav">
-        <a href="index.html" data-nav="index.html">Home</a><a href="tentang.html" data-nav="tentang.html">Tentang Kami</a><a href="paket.html" data-nav="paket.html">Paket Langganan</a><a href="area.html" data-nav="area.html">Area Layanan</a><a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a><a href="galeri.html" data-nav="galeri.html">Galeri</a><a href="faq.html" data-nav="faq.html">FAQ</a><a href="syarat-ketentuan.html" data-nav="syarat-ketentuan.html">S&K</a><a href="kontak.html" data-nav="kontak.html">Kontak</a>
+        <a href="index.html" data-nav="index.html">Home</a><a href="tentang.html" data-nav="tentang.html">Tentang Kami</a><a href="paket.html" data-nav="paket.html">Paket Langganan</a><a href="area.html" data-nav="area.html">Area Layanan</a><a href="status-jaringan.html" data-nav="status-jaringan.html">Status Jaringan</a><a href="pengumuman.html" data-nav="pengumuman.html">Pengumuman</a><a href="berlangganan.html" data-nav="berlangganan.html">Cara Berlangganan</a><a href="galeri.html" data-nav="galeri.html">Galeri</a><a href="faq.html" data-nav="faq.html">FAQ</a><a href="syarat-ketentuan.html" data-nav="syarat-ketentuan.html">S&K</a><a href="kontak.html" data-nav="kontak.html">Kontak</a>
       </div>
     </header>`;
   const fileName = value => {
@@ -79,7 +81,7 @@ function injectHeader(){
     }
   };
   const targetFiles = new Set([
-    'index.html','tentang.html','paket.html','area.html','berlangganan.html',
+    'index.html','tentang.html','paket.html','area.html','status-jaringan.html','pengumuman.html','berlangganan.html',
     'galeri.html','faq.html','syarat-ketentuan.html','kontak.html'
   ]);
   const pageToNav = {
@@ -88,6 +90,8 @@ function injectHeader(){
     paket:'paket.html', langganan:'paket.html', 'paket-langganan':'paket.html', 'paket.html':'paket.html',
     'detail-paket':'paket.html', 'detail-paket.html':'paket.html',
     area:'area.html', 'area-layanan':'area.html', 'area.html':'area.html',
+    status:'status-jaringan.html', 'status-jaringan':'status-jaringan.html', 'status-jaringan.html':'status-jaringan.html',
+    pengumuman:'pengumuman.html', 'pengumuman.html':'pengumuman.html',
     berlangganan:'berlangganan.html', 'cara-berlangganan':'berlangganan.html', 'berlangganan.html':'berlangganan.html',
     galeri:'galeri.html', 'galeri.html':'galeri.html',
     faq:'faq.html', bantuan:'faq.html', 'faq.html':'faq.html',
@@ -104,6 +108,8 @@ function injectHeader(){
     if (/detail[- ]paket|paket internet|paket langganan/.test(normalized)) return 'paket.html';
     if (/tentang kami/.test(normalized)) return 'tentang.html';
     if (/area layanan/.test(normalized)) return 'area.html';
+    if (/status jaringan|status layanan/.test(normalized)) return 'status-jaringan.html';
+    if (/pengumuman|informasi terbaru/.test(normalized)) return 'pengumuman.html';
     if (/cara berlangganan|berlangganan/.test(normalized)) return 'berlangganan.html';
     if (/galeri/.test(normalized)) return 'galeri.html';
     if (/(?:^|\W)faq(?:$|\W)|pusat bantuan/.test(normalized)) return 'faq.html';
@@ -158,7 +164,7 @@ function injectFooter(){
   const el=document.querySelector('[data-site-footer]'); if(!el) return;
   el.innerHTML=`<footer><div class="container"><div class="footer-grid">
     <div><div class="footer-brand"><img src="assets/logo-ananta.png" alt="ANANTA.NET" width="640" height="640" decoding="async" loading="lazy"><div><h4>ANANTA.NET</h4><div>WiFi Hemat Koneksi Mantap</div><p style="margin:8px 0 0;color:#b7c9d5">Layanan internet rumahan dengan pelayanan yang ramah, responsif, dan dukungan teknis.</p></div></div></div>
-    <div><h4>Menu</h4><div class="footer-links"><a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket Internet</a><a href="area.html">Area Layanan</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a></div></div>
+    <div><h4>Menu</h4><div class="footer-links"><a href="index.html">Home</a><a href="tentang.html">Tentang Kami</a><a href="paket.html">Paket Internet</a><a href="area.html">Area Layanan</a><a href="status-jaringan.html">Status Jaringan</a><a href="pengumuman.html">Pengumuman</a><a href="berlangganan.html">Cara Berlangganan</a><a href="galeri.html">Galeri</a><a href="faq.html">FAQ</a><a href="syarat-ketentuan.html">S&K</a><a href="kontak.html">Kontak</a></div></div>
     <div><h4>Didukung oleh</h4><div class="powered"><img src="assets/logo-chayo.png" alt="Logo CHAYO" width="240" height="96" decoding="async" loading="lazy"><div><strong style="color:#fff">PT Chayo Anugrah Teknologi</strong><div>Internet powered by PT Chayo Anugrah Teknologi</div></div></div></div>
   </div><div class="footer-bottom"><span>© 2026 ANANTA.NET. Seluruh hak dilindungi.</span><span>WiFi Hemat Koneksi Mantap</span></div></div></footer>`;
 }
@@ -426,7 +432,115 @@ function initAreaChecker(){
   select.addEventListener('change',()=>{const v=select.value; result.textContent=v==='Lainnya'?'Silakan hubungi admin untuk pengecekan titik pemasangan di area Anda.':`Area ${v} tercantum dalam wilayah layanan ANANTA.NET. Ketersediaan pemasangan tetap perlu dikonfirmasi melalui WhatsApp.`;});
 }
 
-initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp();
+
+// Customer-facing network status and announcements are read from small JSON files.
+// They are intentionally manual updates; this static site does not poll live network equipment.
+const STATUS_DATA_URL = 'data/status-jaringan.json';
+const ANNOUNCEMENTS_DATA_URL = 'data/pengumuman.json';
+
+async function readPublicJson(path){
+  const response = await fetch(`${path}?rev=20261119`, {cache:'no-store'});
+  if(!response.ok) throw new Error(`Tidak dapat memuat ${path}`);
+  return response.json();
+}
+function safeText(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function networkStatusMeta(status){
+  const value = String(status || 'unknown').toLowerCase();
+  const map = {
+    normal:{label:'Normal',className:'is-normal'},
+    gangguan:{label:'Gangguan',className:'is-outage'},
+    pemeliharaan:{label:'Pemeliharaan',className:'is-maintenance'},
+    unknown:{label:'Belum diperbarui',className:'is-unknown'},
+    'belum-diperbarui':{label:'Belum diperbarui',className:'is-unknown'}
+  };
+  return map[value] || map.unknown;
+}
+function formatLocalDate(value){
+  if(!value) return 'Belum tersedia';
+  const date = new Date(value);
+  if(Number.isNaN(date.getTime())) return 'Belum tersedia';
+  return new Intl.DateTimeFormat('id-ID',{dateStyle:'long',timeStyle:'short'}).format(date);
+}
+function renderNetworkStatus(data, root){
+  if(!root) return;
+  const overall = networkStatusMeta(data?.overallStatus);
+  const areas = Array.isArray(data?.areas) ? data.areas : [];
+  const summary = data?.summary || 'Status jaringan belum diperbarui oleh admin.';
+  const updated = formatLocalDate(data?.updatedAt);
+  const badge = root.querySelector('[data-status-overall]');
+  const message = root.querySelector('[data-status-message]');
+  const time = root.querySelector('[data-status-updated]');
+  const areaWrap = root.querySelector('[data-status-areas]');
+  if(badge){badge.className = `network-status-badge ${overall.className}`; badge.textContent = overall.label;}
+  if(message) message.textContent = summary;
+  if(time) time.textContent = updated;
+  if(areaWrap){
+    areaWrap.innerHTML = areas.map(area => {
+      const meta = networkStatusMeta(area.status);
+      return `<article class="network-area-status-card"><div class="network-area-status-top"><h3>${safeText(area.name || 'Wilayah')}</h3><span class="network-status-badge ${meta.className}">${meta.label}</span></div><p>${safeText(area.note || 'Belum ada pembaruan untuk wilayah ini.')}</p></article>`;
+    }).join('');
+    if(!areas.length) areaWrap.innerHTML = '<p class="status-empty-inline">Informasi wilayah belum tersedia.</p>';
+  }
+}
+function announcementCategoryMeta(category){
+  const c = String(category || 'informasi').toLowerCase();
+  const allowed = ['gangguan','pemeliharaan','informasi','promo'];
+  const normalized = allowed.includes(c) ? c : 'informasi';
+  const labels = {gangguan:'Gangguan',pemeliharaan:'Pemeliharaan',informasi:'Informasi',promo:'Promo'};
+  return {value:normalized,label:labels[normalized]};
+}
+function renderAnnouncementCard(item){
+  const category = announcementCategoryMeta(item.category);
+  const body = item.content || item.excerpt || '';
+  return `<article class="announcement-card"><div class="announcement-card-meta"><span class="announcement-tag tag-${category.value}">${category.label}</span><time datetime="${safeText(item.date || '')}">${safeText(formatLocalDate(item.date))}</time></div><h3>${safeText(item.title || 'Pengumuman ANANTA.NET')}</h3>${item.area ? `<p class="announcement-area">${safeText(item.area)}</p>` : ''}<p>${safeText(item.excerpt || body)}</p>${item.content && item.content !== item.excerpt ? `<details class="announcement-details"><summary>Baca informasi lengkap</summary><p>${safeText(item.content)}</p></details>` : ''}</article>`;
+}
+function renderAnnouncements(data, root, limit = 0){
+  if(!root) return;
+  const items = Array.isArray(data?.items) ? data.items.slice() : [];
+  items.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0));
+  const visible = limit > 0 ? items.slice(0,limit) : items;
+  if(!visible.length){
+    root.innerHTML = `<div class="announcement-empty"><span class="announcement-empty-icon" aria-hidden="true">i</span><div><strong>Belum ada pengumuman terbaru</strong><p>Jika ada informasi gangguan, pemeliharaan, atau pembaruan layanan, admin akan menampilkannya di sini.</p></div></div>`;
+    return;
+  }
+  root.innerHTML = visible.map(renderAnnouncementCard).join('');
+}
+async function initNetworkInformation(){
+  const statusPage = document.querySelector('[data-network-status-page]');
+  const statusPreview = document.querySelector('[data-network-status-preview]');
+  const announcementPage = document.querySelector('[data-announcements-list]');
+  const announcementPreview = document.querySelector('[data-announcements-preview]');
+  if(!statusPage && !statusPreview && !announcementPage && !announcementPreview) return;
+
+  let statusData = null;
+  let announcementsData = null;
+  try { statusData = await readPublicJson(STATUS_DATA_URL); } catch(error) { statusData = null; }
+  try { announcementsData = await readPublicJson(ANNOUNCEMENTS_DATA_URL); } catch(error) { announcementsData = null; }
+
+  if(statusData){
+    if(statusPage) renderNetworkStatus(statusData, statusPage);
+    if(statusPreview) renderNetworkStatus(statusData, statusPreview);
+  } else {
+    [statusPage,statusPreview].filter(Boolean).forEach(root => {
+      const badge = root.querySelector('[data-status-overall]');
+      const message = root.querySelector('[data-status-message]');
+      const time = root.querySelector('[data-status-updated]');
+      if(badge){badge.className='network-status-badge is-unknown';badge.textContent='Belum tersedia';}
+      if(message) message.textContent='Informasi status belum dapat dimuat. Silakan hubungi admin untuk konfirmasi.';
+      if(time) time.textContent='Belum tersedia';
+    });
+  }
+  if(announcementsData){
+    if(announcementPage) renderAnnouncements(announcementsData, announcementPage);
+    if(announcementPreview) renderAnnouncements(announcementsData, announcementPreview, 2);
+  } else {
+    [announcementPage,announcementPreview].filter(Boolean).forEach(root => renderAnnouncements({items:[]},root));
+  }
+}
+
+initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation();
 
 // Recover normal page scrolling if the browser restores this page from its
 // back/forward cache after a gallery preview was opened. The page itself must

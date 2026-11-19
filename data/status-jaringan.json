@@ -1,0 +1,22 @@
+{
+  "updatedAt": null,
+  "overallStatus": "unknown",
+  "summary": "Status jaringan belum diperbarui oleh admin. Hubungi admin ANANTA.NET untuk memastikan kondisi terbaru sebelum melakukan pengecekan atau kunjungan teknisi.",
+  "areas": [
+    {
+      "name": "Kalibendo",
+      "status": "unknown",
+      "note": "Belum ada pembaruan status untuk wilayah Kalibendo."
+    },
+    {
+      "name": "Bades",
+      "status": "unknown",
+      "note": "Belum ada pembaruan status untuk wilayah Bades."
+    },
+    {
+      "name": "Gondoruso",
+      "status": "unknown",
+      "note": "Belum ada pembaruan status untuk wilayah Gondoruso."
+    }
+  ]
+}
