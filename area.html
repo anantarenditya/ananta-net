@@ -307,7 +307,7 @@
       if (dusunBox) {
         const names = selectedArea && areas[selectedArea].dusuns.length ? areas[selectedArea].dusuns : [];
         const escapeText = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-        dusunBox.innerHTML = '<span class="availability-status-dot" aria-hidden="true"></span><div class="area-dusun-content"><strong>' + (selectedArea ? 'Dusun di ' + selectedArea + ' · ' + names.length + ' dusun' : '12 dusun terjangkau') + '</strong>' + (names.length ? '<div class="area-dusun-grid">' + names.map(name => '<span class="area-dusun-chip"><span aria-hidden="true">⌖</span>' + escapeText(name) + '<small>Terjangkau</small></span>').join('') + '</div>' : '<p class="area-dusun-empty">Pilih salah satu desa untuk melihat daftar dusun.</p>') + '</div>';
+        dusunBox.innerHTML = '<span class="availability-status-dot" aria-hidden="true"></span><div><strong>' + (selectedArea ? 'Dusun di ' + selectedArea : '12 dusun terjangkau') + '</strong><p>' + (names.length ? names.map(name => '<span class="area-dusun-chip">' + escapeText(name) + '</span>').join(' ') : 'Pilih salah satu desa untuk melihat daftar dusun.') + '</p></div>';
       }
       if (openMapsBtn) {
         openMapsBtn.textContent = selectedArea ? 'Buka ' + selectedArea + ' di Google Maps ↗' : 'Buka seluruh area di Google Maps ↗';
