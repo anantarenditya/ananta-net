@@ -131,3 +131,17 @@ Cloudflare Pages Functions memakai folder `functions/` di root dan `_routes.json
 - Login dibatasi setelah 8 percobaan gagal dalam jendela 10 menit per IP. Untuk penggunaan produksi yang lebih luas, aktifkan juga aturan keamanan/rate limiting di Cloudflare.
 - Workers KV bersifat eventually consistent; setelah simpan, perubahan publik dapat membutuhkan waktu singkat untuk tersebar di edge Cloudflare.
 - Dashboard belum mengelola paket/harga, galeri, atau data pelanggan; hanya Status Jaringan dan Pengumuman sesuai tahap ini.
+
+
+## Admin Dashboard Konten Website (19 November 2026)
+
+Admin `/admin/` kini memiliki menu **Konten Website** untuk mengelola tiga koleksi data:
+- Paket internet: nama, kecepatan, harga, deskripsi, perangkat, label populer, dan status aktif.
+- Wilayah layanan: nama, label, koordinat latitude/longitude, status cakupan (`covered`, `planned`, `unavailable`), dan catatan.
+- FAQ: kategori, pertanyaan, jawaban, dan status aktif.
+
+Data disimpan pada key Cloudflare KV `public:content` melalui endpoint `/api/admin/content`. Halaman publik membaca `/api/content`. Pengubahan data melalui Admin Dashboard tidak memerlukan Git Push/deployment ulang; perubahan kode/desain tetap memerlukan deployment.
+
+Nilai awal paket mengikuti katalog website saat ini (Home 20 Mbps Rp115.000, Family 35 Mbps Rp165.000, Pro 50 Mbps Rp225.000, Promax 100 Mbps Rp335.000). Titik awal Kalibendo, Bades, dan Gondoruso mengikuti koordinat yang sudah tertanam pada peta area website. Koordinat ini dipertahankan, bukan hasil survei batas cakupan. Status cakupan harus dikonfirmasi admin dan pengecekan titik rumah tetap perlu konfirmasi admin/teknisi.
+
+Menu Konten Website menggunakan editor JSON untuk mengelola daftar. Gunakan tombol Muat Ulang untuk membatalkan perubahan lokal dan mengambil data terbaru dari KV. Tombol Simpan Konten memvalidasi semua koleksi sebelum menyimpan. Pastikan JSON valid; jangan memasukkan HTML atau script ke kolom teks.

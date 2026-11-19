@@ -212,3 +212,36 @@ document.querySelectorAll('.tab-button').forEach(button => button.addEventListen
     $('#setupWarning p').textContent = error.message || 'API admin belum siap. Periksa konfigurasi Cloudflare.';
   }
 })();
+
+async function loadManagedContent(){
+  const data = await api('/api/admin/content');
+  $('#packagesJson').value = JSON.stringify(data.packages || [], null, 2);
+  $('#areasJson').value = JSON.stringify(data.areas || [], null, 2);
+  $('#faqsJson').value = JSON.stringify(data.faqs || [], null, 2);
+}
+$('#reloadContentButton')?.addEventListener('click', async () => {
+  try { await loadManagedContent(); showFeedback($('#contentFeedback'),'Data berhasil dimuat ulang dari Cloudflare.','success'); }
+  catch(error) { showFeedback($('#contentFeedback'),error.message); }
+});
+$('#saveContentButton')?.addEventListener('click', async () => {
+  const feedback = $('#contentFeedback');
+  try {
+    const body = {
+      packages: JSON.parse($('#packagesJson').value),
+      areas: JSON.parse($('#areasJson').value),
+      faqs: JSON.parse($('#faqsJson').value)
+    };
+    const result = await api('/api/admin/content',{method:'PUT',body:JSON.stringify(body)});
+    $('#packagesJson').value = JSON.stringify(result.data.packages,null,2);
+    $('#areasJson').value = JSON.stringify(result.data.areas,null,2);
+    $('#faqsJson').value = JSON.stringify(result.data.faqs,null,2);
+    showFeedback(feedback,'Paket, wilayah, dan FAQ berhasil disimpan ke Cloudflare KV.','success');
+  } catch(error) {
+    showFeedback(feedback,error instanceof SyntaxError ? 'Format JSON belum valid. Periksa tanda kurung, koma, dan tanda kutip.' : error.message);
+  }
+});
+const originalLoadDashboard = loadDashboard;
+loadDashboard = async function(){
+  await originalLoadDashboard();
+  await loadManagedContent();
+};

@@ -38,10 +38,11 @@
       <nav class="admin-tabs" aria-label="Bagian dashboard">
         <button type="button" class="tab-button active" data-tab="statusPanel">◉ Status Jaringan</button>
         <button type="button" class="tab-button" data-tab="announcementPanel">▤ Pengumuman</button>
+      <button type="button" class="tab-button" data-tab="contentPanel">▦ Konten Website</button>
       </nav>
 
       <section class="admin-panel active" id="statusPanel">
-        <div class="panel-heading"><div><span class="eyebrow">PENGELOLAAN STATUS</span><h2>Status jaringan</h2><p>Perbarui informasi berdasarkan hasil pemeriksaan admin atau teknisi. Perubahan akan ditampilkan pada halaman informasi jaringan pelanggan.</p></div><span class="panel-pill">3 wilayah</span></div>
+        <div class="panel-heading"><div><span class="eyebrow">PEMANTAUAN MANUAL</span><h2>Status jaringan</h2><p>Perbarui status berdasarkan hasil pemeriksaan admin atau teknisi. Status ini tidak terhubung otomatis ke MikroTik/OLT.</p></div><span class="panel-pill">3 wilayah</span></div>
         <form id="statusForm" class="editor-form">
           <div class="field-grid two">
             <div class="field"><label for="overallStatus">Status keseluruhan</label><select id="overallStatus"><option value="unknown">Belum diperbarui</option><option value="normal">Normal</option><option value="gangguan">Gangguan</option><option value="pemeliharaan">Pemeliharaan</option></select></div>
@@ -72,6 +73,18 @@
         </form>
         <div class="subheading list-subheading"><h3>Daftar pengumuman</h3><span>Urutan terbaru tampil lebih dahulu</span></div>
         <div class="admin-announcement-list" id="adminAnnouncementList"><div class="list-empty">Belum ada pengumuman. Buat pengumuman pertama melalui formulir di atas.</div></div>
+      </section>
+
+
+      <section class="admin-panel" id="contentPanel" hidden>
+        <div class="panel-heading"><div><span class="eyebrow">KONTEN WEBSITE</span><h2>Paket, wilayah & FAQ</h2><p>Kelola seluruh daftar konten yang ditampilkan kepada pelanggan. Data disimpan di Cloudflare KV dan tidak memerlukan Git Push.</p></div><span class="panel-pill">3 koleksi data</span></div>
+        <div class="content-editor-grid">
+          <div class="field"><label for="packagesJson">Paket internet (JSON)</label><textarea id="packagesJson" rows="14" spellcheck="false"></textarea><small>Atur nama, kecepatan, harga, deskripsi, status aktif, dan label populer. Harga dalam Rupiah.</small></div>
+          <div class="field"><label for="areasJson">Wilayah layanan (JSON)</label><textarea id="areasJson" rows="14" spellcheck="false"></textarea><small>Koordinat latitude/longitude harus benar. Status: covered, planned, unavailable. Titik awal Kalibendo, Bades, Gondoruso sudah diisi sesuai peta website.</small></div>
+          <div class="field"><label for="faqsJson">FAQ & bantuan (JSON)</label><textarea id="faqsJson" rows="14" spellcheck="false"></textarea><small>Atur kategori, pertanyaan, jawaban, dan status aktif. Gunakan teks biasa, bukan HTML.</small></div>
+        </div>
+        <div class="form-actions"><p>Gunakan format JSON yang valid. Simpan akan memvalidasi semua daftar sebelum menerbitkannya.</p><div class="action-buttons"><button class="btn btn-quiet" id="reloadContentButton" type="button">Muat Ulang</button><button class="btn btn-primary" id="saveContentButton" type="button">Simpan Konten <span>→</span></button></div></div>
+        <p class="form-feedback" id="contentFeedback" role="status"></p>
       </section>
       <footer class="admin-footer"><span>© 2026 ANANTA.NET · Admin Center</span><span>Data pelanggan publik hanya menampilkan informasi yang diterbitkan admin.</span></footer>
     </section>

@@ -138,7 +138,7 @@
     const mapElement = document.getElementById('serviceMap');
     if (!mapElement) return;
 
-    function initServiceMap(){
+    async function initServiceMap(){
     const select = document.getElementById('areaSelect');
     const result = document.querySelector('[data-area-result]');
     const openMapsBtn = document.getElementById('openMapsBtn');
@@ -147,12 +147,28 @@
     const chipLabel = document.querySelector('[data-map-area-chip-label]');
     if (!select || !window.L) return;
 
-    const areas = {
+    let areas = {
       Kalibendo: {lat:-8.2288, lng:113.1021, label:'Desa Kalibendo'},
       Bades: {lat:-8.2342, lng:113.1095, label:'Desa Bades'},
       Gondoruso: {lat:-8.2423, lng:113.0714, label:'Desa Gondoruso'}
     };
+    try {
+      const response = await fetch('/api/content',{cache:'no-store'});
+      if(response.ok){
+        const content = await response.json();
+        if(Array.isArray(content.areas) && content.areas.length){
+          areas = Object.fromEntries(content.areas.map(area=>[area.name,{
+            lat:Number(area.lat),lng:Number(area.lng),label:area.label || `Desa ${area.name}`,
+            status:area.status,note:area.note || ''
+          }]));
+        }
+      }
+    } catch(error) { console.warn('Data wilayah memakai daftar bawaan.',error); }
     const allAreaUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Kalibendo, Bades, Gondoruso, Lumajang, Jawa Timur');
+    const currentValue = select.value;
+    select.replaceChildren(new Option('Pilih wilayah','semua'));
+    Object.keys(areas).forEach(name=>select.add(new Option(areas[name].label,name)));
+    select.value = areas[currentValue] ? currentValue : 'semua';
     const nameMarkers = {};
     let selectedArea = null;
 

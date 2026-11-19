@@ -1,7 +1,7 @@
 const WA_NUMBER = '6281513771177';
 const WA_BASE = `https://wa.me/${WA_NUMBER}`;
 
-const packages = [
+let packages = [
   {id:'hemat',name:'Home',speed:20,price:115000,devices:'3–5 perangkat terhubung',activeDevices:'sekitar 2–3 aktif bersamaan',description:'Cocok untuk kebutuhan internet sehari-hari.'},
   {id:'normal',name:'Family',speed:35,price:165000,devices:'5–8 perangkat terhubung',activeDevices:'sekitar 3–4 aktif bersamaan',description:'Cocok untuk kebutuhan keluarga.'},
   {id:'premium',name:'Pro',speed:50,price:225000,devices:'8–12 perangkat terhubung',activeDevices:'sekitar 4–6 aktif bersamaan',description:'Cocok untuk kebutuhan internet aktif tinggi.'},
@@ -549,7 +549,40 @@ async function initNetworkInformation(){
   }
 }
 
-initHeroLetterAnimation(); injectHeader(); injectFooter(); renderPackages(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation();
+async function loadManagedPublicContent(){
+  try {
+    const response = await fetch('/api/content',{cache:'no-store'});
+    if(!response.ok) return;
+    const content = await response.json();
+    if(Array.isArray(content.packages) && content.packages.length){
+      packages = content.packages.filter(p=>p.active!==false).map(p=>({
+        ...p,
+        devices:p.devices || 'Sesuai kebutuhan rumah',
+        activeDevices:p.activeDevices || 'Menyesuaikan penggunaan'
+      }));
+      renderPackages();
+    }
+    const faqRoot = document.querySelector('.help-accordion');
+    if(faqRoot && Array.isArray(content.faqs) && content.faqs.length){
+      const activeFaqs = content.faqs.filter(item=>item.active!==false);
+      faqRoot.replaceChildren();
+      activeFaqs.forEach((item,index)=>{
+        const article=document.createElement('article'); article.className='faq-item help-accordion-item'; article.dataset.faqItem='';
+        const button=document.createElement('button'); button.className='faq-q help-accordion-trigger'; button.type='button'; button.setAttribute('aria-expanded','false'); button.setAttribute('aria-controls',`managed-faq-${index}`);
+        const number=document.createElement('span'); number.className='help-item-number'; number.textContent=String(index+1).padStart(2,'0');
+        const question=document.createElement('span'); question.className='help-question-text'; question.textContent=item.question;
+        const chevron=document.createElement('span'); chevron.className='help-chevron'; chevron.setAttribute('aria-hidden','true'); chevron.textContent='⌄';
+        button.append(number,question,chevron);
+        const answer=document.createElement('div'); answer.className='faq-a help-accordion-panel'; answer.id=`managed-faq-${index}`; answer.setAttribute('aria-hidden','true');
+        const category=document.createElement('small'); category.className='faq-category'; category.textContent=item.category;
+        const paragraph=document.createElement('p'); paragraph.textContent=item.answer; answer.append(category,paragraph);
+        article.append(button,answer); faqRoot.append(article);
+      });
+      initFAQ();
+    }
+  } catch(error) { console.warn('Konten ANANTA.NET belum dapat dimuat dari API.',error); }
+}
+ renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
 
 // Recover normal page scrolling if the browser restores this page from its
 // back/forward cache after a gallery preview was opened. The page itself must
