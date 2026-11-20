@@ -582,7 +582,8 @@ async function loadManagedPublicContent(){
     }
   } catch(error) { console.warn('Konten ANANTA.NET belum dapat dimuat dari API.',error); }
 }
- injectHeader(); injectFooter(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
+ injectHeader(); injectFooter();
+ renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
 
 // Recover normal page scrolling if the browser restores this page from its
 // back/forward cache after a gallery preview was opened. The page itself must
