@@ -608,7 +608,7 @@ function initHomeHeroTitle(){
   title.dataset.animated='true';
 }
 
- initHomeHeroTitle(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
+ injectHeader(); injectFooter(); initHomeHeroTitle(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
 
 // Recover normal page scrolling if the browser restores this page from its
 // back/forward cache after a gallery preview was opened. The page itself must
