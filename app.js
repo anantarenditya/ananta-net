@@ -586,26 +586,54 @@ async function loadManagedPublicContent(){
 // Restore the animated ANANTA.NET home headline. The HTML keeps readable
 // fallback text; this enhancement wraps each character only when JS is ready.
 function initHomeHeroTitle(){
-  const title=document.querySelector('.hero-home .hero-title-motion');
-  if(!title || title.dataset.animated==='true') return;
+  const titles=document.querySelectorAll('.hero-title-motion, .page-hero h1');
   const reduceMotion=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduceMotion) return;
-  title.querySelectorAll('.hero-title-line').forEach(line=>{
-    const word=line.querySelector('.hero-word');
-    if(!word) return;
-    const text=word.textContent || '';
-    word.replaceChildren();
-    let index=0;
-    for(const character of text){
-      const span=document.createElement('span');
-      span.className='hero-char';
-      span.textContent=character === ' ' ? '\u00a0' : character;
-      span.style.setProperty('--char-delay', `${index * 0.045}s`);
-      word.appendChild(span);
-      index++;
+
+  titles.forEach(title=>{
+    if(title.dataset.animated==='true') return;
+
+    // Plain page headings are split into two balanced color lines, matching Home.
+    if(!title.querySelector('.hero-title-line')){
+      const text=(title.textContent || '').replace(/\s+/g,' ').trim();
+      if(!text) return;
+      const words=text.split(' ');
+      const split=Math.ceil(words.length/2);
+      const first=words.slice(0,split).join(' ');
+      const second=words.slice(split).join(' ');
+      title.textContent='';
+      title.classList.add('hero-title-motion','page-title-motion');
+      title.setAttribute('aria-label',text);
+      [first,second].filter(Boolean).forEach((part,index)=>{
+        const line=document.createElement('span');
+        line.className=`hero-title-line hero-title-line-${index===0?'one':'two'}`;
+        line.setAttribute('aria-hidden','true');
+        const word=document.createElement('span');
+        word.className='hero-word';
+        word.textContent=part;
+        line.appendChild(word);
+        title.appendChild(line);
+      });
     }
+
+    title.querySelectorAll('.hero-title-line').forEach(line=>{
+      const word=line.querySelector('.hero-word') || line;
+      if(word.dataset.charsReady==='true') return;
+      const text=word.textContent || '';
+      word.replaceChildren();
+      let index=0;
+      for(const character of text){
+        const span=document.createElement('span');
+        span.className='hero-char';
+        span.textContent=character === ' ' ? '\u00a0' : character;
+        span.style.setProperty('--char-delay', `${index * 0.045}s`);
+        word.appendChild(span);
+        index++;
+      }
+      word.dataset.charsReady='true';
+    });
+    title.dataset.animated='true';
   });
-  title.dataset.animated='true';
 }
 
  injectHeader(); injectFooter(); initHomeHeroTitle(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();

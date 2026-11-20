@@ -2865,3 +2865,34 @@ body.home-page .footer-links{
     will-change:auto;
   }
 }
+
+
+/* ANANTA.NET V11: consistent animated page headings across the site */
+.page-hero .hero-title-motion,
+.page-hero h1.hero-title-motion {
+  color:#102b43;
+  font-weight:900;
+  letter-spacing:-.035em;
+}
+.page-hero .hero-title-line{
+  display:block;
+  line-height:1.12;
+}
+.page-hero .hero-title-line-one{color:#102b43}
+.page-hero .hero-title-line-two{color:#1d9f87}
+.page-hero .hero-word{display:inline;white-space:normal}
+.page-hero .hero-char{
+  display:inline-block;
+  white-space:pre;
+  color:inherit;
+  opacity:0;
+  transform:translate3d(-.34em,0,0);
+  animation:heroCharCycle 7.4s cubic-bezier(.2,.72,.25,1) var(--char-delay,0s) infinite both;
+  will-change:transform,opacity;
+}
+.page-hero h1:not(.hero-title-motion){
+  color:#102b43;
+}
+@media (prefers-reduced-motion:reduce){
+  .page-hero .hero-char{opacity:1;transform:none;animation:none}
+}
