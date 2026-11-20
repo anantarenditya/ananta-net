@@ -2825,3 +2825,43 @@ body.home-page .footer-links{
 
 /* Area coverage: dusun list */
 .area-dusun-chip{display:inline-block;margin:3px 4px 3px 0;padding:5px 9px;border-radius:999px;background:rgba(13,148,136,.10);color:#087f75;font-size:.78rem;font-weight:650}
+
+
+/* ===== V9: restore animated home headline and normalize its scale ===== */
+.hero-home .hero-title-motion{
+  font-size:clamp(2.15rem,4.7vw,3.65rem)!important;
+  line-height:1.08!important;
+  letter-spacing:-.04em!important;
+  margin:22px auto 16px!important;
+  font-weight:900!important;
+  color:#102b43;
+}
+.hero-home .hero-title-line-one,
+.hero-home .hero-title-line-one .hero-char{color:#102b43!important}
+.hero-home .hero-title-line-two,
+.hero-home .hero-title-line-two .hero-char{color:#1d9f87!important}
+.hero-home .hero-word{display:inline;white-space:normal}
+.hero-home .hero-char{
+  display:inline-block;
+  white-space:pre;
+  opacity:0;
+  transform:translate3d(-.24em,0,0);
+  animation:heroCharCycleV31 6.8s cubic-bezier(.2,.72,.25,1) var(--char-delay,0s) infinite both;
+  will-change:transform,opacity;
+}
+@media(max-width:580px){
+  .hero-home .hero-title-motion{
+    font-size:clamp(2rem,7.7vw,2.65rem)!important;
+    line-height:1.1!important;
+    letter-spacing:-.035em!important;
+    margin:19px auto 14px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-home .hero-char{
+    animation:none!important;
+    opacity:1!important;
+    transform:none!important;
+    will-change:auto;
+  }
+}

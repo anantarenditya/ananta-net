@@ -582,8 +582,33 @@ async function loadManagedPublicContent(){
     }
   } catch(error) { console.warn('Konten ANANTA.NET belum dapat dimuat dari API.',error); }
 }
- injectHeader(); injectFooter();
- renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
+
+// Restore the animated ANANTA.NET home headline. The HTML keeps readable
+// fallback text; this enhancement wraps each character only when JS is ready.
+function initHomeHeroTitle(){
+  const title=document.querySelector('.hero-home .hero-title-motion');
+  if(!title || title.dataset.animated==='true') return;
+  const reduceMotion=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+  title.querySelectorAll('.hero-title-line').forEach(line=>{
+    const word=line.querySelector('.hero-word');
+    if(!word) return;
+    const text=word.textContent || '';
+    word.replaceChildren();
+    let index=0;
+    for(const character of text){
+      const span=document.createElement('span');
+      span.className='hero-char';
+      span.textContent=character === ' ' ? '\u00a0' : character;
+      span.style.setProperty('--char-delay', `${index * 0.045}s`);
+      word.appendChild(span);
+      index++;
+    }
+  });
+  title.dataset.animated='true';
+}
+
+ initHomeHeroTitle(); renderDetail(); initFAQ(); initTerms(); initGallery(); initCalculator(); initAreaChecker(); initRegistrationForm(); initWhatsApp(); initNetworkInformation(); loadManagedPublicContent();
 
 // Recover normal page scrolling if the browser restores this page from its
 // back/forward cache after a gallery preview was opened. The page itself must
